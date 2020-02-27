@@ -1,10 +1,18 @@
 import Vue from 'vue';
-import App from './App.vue';
+
+// Element-ui imports
+import ElementUI from 'element-ui';
+import './style/element-variables.scss';
+
 import router from './router';
 import store from './store/store';
 
-Vue.config.productionTip = false;
+import App from './App.vue';
 
+// Element-ui config
+Vue.use(ElementUI);
+
+Vue.config.productionTip = false;
 
 new Vue({
   router,
