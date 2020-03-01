@@ -1,6 +1,8 @@
 <template>
   <el-container>
-    <el-header class="header">
+    <el-header
+      class="header"
+      height="50px">
       <app-header />
     </el-header>
     <el-main>

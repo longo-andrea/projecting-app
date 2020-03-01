@@ -5,3 +5,19 @@ $--lighter-background: #ffedbd;
 $--base-border: #303030;
 $--light-border: #8c8c8c;
 $--lighter-border: #c9c9c9;
+
+$--base-text: #454545;
+$--light-text: #696969;
+$--lighter-text: #949494;
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
