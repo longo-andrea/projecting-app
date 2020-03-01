@@ -31,7 +31,7 @@
   height: 100%;
 
   .navbar-logo {
-    width: 32px;
+    height: 24px;
   }
 
   .navbar-link {
