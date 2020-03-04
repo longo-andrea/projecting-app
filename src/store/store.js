@@ -129,6 +129,12 @@ const store = new Vuex.Store({
     },
   },
   getters: {
+    /**
+     * Get the working on tasks
+     *
+     * @param {state} object the vuex state object.
+     * @return {Array} array of objects that contains working on tasks' information.
+     */
     getWorkingOnTasks: (state) => {
       const workingOnTasks = [];
       state.projects.forEach((project) => {
