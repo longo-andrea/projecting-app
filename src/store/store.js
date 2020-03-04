@@ -13,10 +13,38 @@ const store = new Vuex.Store({
           {
             date: '2020-03-16',
             completed: false,
+            tasks: [
+              {
+                name: 'Task 1',
+                description: 'I have to finish this tasks!',
+                completed: false,
+                workingOn: false,
+              },
+            ],
           },
           {
             date: '2020-03-18',
             completed: false,
+            tasks: [
+              {
+                name: 'Task 1',
+                description: 'I have to finish this tasks!',
+                completed: false,
+                workingOn: true,
+              },
+              {
+                name: 'Task 2',
+                description: 'I have to finish this tasks!',
+                completed: false,
+                workingOn: true,
+              },
+              {
+                name: 'Task 3',
+                description: 'I have to finish this tasks!',
+                completed: false,
+                workingOn: false,
+              },
+            ],
           },
           {
             date: '2020-03-120',
@@ -35,6 +63,14 @@ const store = new Vuex.Store({
           {
             date: '2020-03-16',
             completed: false,
+            tasks: [
+              {
+                name: 'Task 1',
+                description: 'I have to finish this tasks!',
+                completed: false,
+                workingOn: false,
+              },
+            ],
           },
           {
             date: '2020-03-18',
@@ -109,7 +145,7 @@ const store = new Vuex.Store({
      * @param {state} object the vuex state object.
      * @return {Array} an array of objects that containts projects and their next uncompleted deadline
      */
-    getIncogmingDeadlines: (state) => state.projects.map((project) => {
+    getIncomingDeadlines: (state) => state.projects.map((project) => {
       const projectDeadline = {
         name: project.name,
       };
