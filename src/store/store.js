@@ -12,39 +12,11 @@ const store = new Vuex.Store({
         deadlines: [
           {
             date: '2020-03-16',
-            completed: false,
-            tasks: [
-              {
-                name: 'Task 1',
-                description: 'I have to finish this tasks!',
-                completed: false,
-                workingOn: false,
-              },
-            ],
+            completed: true,
           },
           {
             date: '2020-03-18',
             completed: false,
-            tasks: [
-              {
-                name: 'Task 1',
-                description: 'I have to finish this tasks!',
-                completed: false,
-                workingOn: true,
-              },
-              {
-                name: 'Task 2',
-                description: 'I have to finish this tasks!',
-                completed: false,
-                workingOn: true,
-              },
-              {
-                name: 'Task 3',
-                description: 'I have to finish this tasks!',
-                completed: false,
-                workingOn: false,
-              },
-            ],
           },
           {
             date: '2020-03-120',
@@ -53,6 +25,29 @@ const store = new Vuex.Store({
           {
             date: '2020-03-24',
             completed: false,
+          },
+        ],
+        tasks: [
+          {
+            name: 'Task 1',
+            description: 'I have to finish this tasks!',
+            deadlineIndex: 0,
+            completed: false,
+            workingOn: true,
+          },
+          {
+            name: 'Task 2',
+            description: 'I have to finish this tasks!',
+            deadlineIndex: 2,
+            completed: false,
+            workingOn: false,
+          },
+          {
+            name: 'Task 3',
+            description: 'I have to finish this tasks!',
+            deadlineIndex: 3,
+            completed: false,
+            workingOn: true,
           },
         ],
       },
@@ -62,15 +57,7 @@ const store = new Vuex.Store({
         deadlines: [
           {
             date: '2020-03-16',
-            completed: false,
-            tasks: [
-              {
-                name: 'Task 1',
-                description: 'I have to finish this tasks!',
-                completed: false,
-                workingOn: false,
-              },
-            ],
+            completed: true,
           },
           {
             date: '2020-03-18',
@@ -85,36 +72,29 @@ const store = new Vuex.Store({
             completed: false,
           },
         ],
-      },
-    ],
-    workingOnTasks: [
-      {
-        name: 'Task 1',
-        description: 'I have to finish this tasks!',
-        project: 'Project 1',
-        deadline: '2020-03-20',
-        completed: false,
-      },
-      {
-        name: 'Task 2',
-        description: 'I have to finish this tasks!',
-        project: 'Project 2',
-        deadline: '2020-03-20',
-        completed: false,
-      },
-      {
-        name: 'Task 3',
-        description: 'I have to finish this tasks!',
-        project: 'Project 2',
-        deadline: '2020-03-20',
-        completed: false,
-      },
-      {
-        name: 'Task 4',
-        description: 'I have to finish this tasks!',
-        project: 'Project 2',
-        deadline: '2020-03-20',
-        completed: false,
+        tasks: [
+          {
+            name: 'Task 1',
+            description: 'I have to finish this tasks!',
+            deadlineIndex: 0,
+            completed: false,
+            workingOn: false,
+          },
+          {
+            name: 'Task 2',
+            description: 'I have to finish this tasks!',
+            deadlineIndex: 2,
+            completed: false,
+            workingOn: true,
+          },
+          {
+            name: 'Task 3',
+            description: 'I have to finish this tasks!',
+            deadlineIndex: 3,
+            completed: false,
+            workingOn: true,
+          },
+        ],
       },
     ],
   },
@@ -139,6 +119,22 @@ const store = new Vuex.Store({
     },
   },
   getters: {
+    getWorkingOnTasks: (state) => {
+      const workingOnTasks = [];
+      state.projects.forEach((project) => {
+        project.tasks.forEach((task) => {
+          if (!task.completed && task.workingOn) {
+            workingOnTasks.push({
+              projectName: project.name,
+              deadlineId: task.deadlineIndex,
+              taskName: task.name,
+              taskDescription: task.description,
+            });
+          }
+        });
+      });
+      return workingOnTasks;
+    },
     /**
      * Get the incoming deadlines
      *

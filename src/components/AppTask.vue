@@ -40,7 +40,7 @@ export default {
       required: true,
     },
     deadline: {
-      type: String,
+      type: Number,
       required: true,
     },
   },
