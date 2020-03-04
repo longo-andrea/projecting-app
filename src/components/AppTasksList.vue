@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-card class="card"
+  <div class="tasks-list">
+    <el-card class="task-item"
       v-for="task in workingTasks"
       :key="task.name"
       shadow="hover">
@@ -8,7 +8,7 @@
         v-bind:name="task.name"
         v-bind:description="task.description"
         v-bind:project="task.project"
-        v-bind:deadline="task.deadline" />
+        v-bind:deadline="task.deadline"/>
     </el-card>
   </div>
 </template>
@@ -23,14 +23,20 @@ export default {
   },
   computed: {
     workingTasks() {
-      return this.$store.state.workingOnTasks;
+      const workingTasks = this.$store.state.workingOnTasks.filter((task) => !task.completed);
+      return workingTasks;
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-.card {
-  margin-bottom: 1.2rem;
+.tasks-list {
+  max-height: 70vh;
+  overflow: scroll;
+
+  .task-item {
+    margin-bottom: 1.2rem;
+  }
 }
 </style>

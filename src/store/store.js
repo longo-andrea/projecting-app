@@ -27,6 +27,13 @@ const store = new Vuex.Store({
         deadline: '2020-03-20',
         completed: false,
       },
+      {
+        name: 'Task 4',
+        description: 'I have to finish this tasks!',
+        project: 'Project 2',
+        deadline: '2020-03-20',
+        completed: false,
+      },
     ],
   },
   mutations: {
