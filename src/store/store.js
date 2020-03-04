@@ -5,6 +5,52 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    projects: [
+      {
+        name: 'Project 1',
+        info: ['project infos will be here'],
+        deadlines: [
+          {
+            date: '2020-03-16',
+            completed: false,
+          },
+          {
+            date: '2020-03-18',
+            completed: false,
+          },
+          {
+            date: '2020-03-120',
+            completed: false,
+          },
+          {
+            date: '2020-03-24',
+            completed: false,
+          },
+        ],
+      },
+      {
+        name: 'Project 2',
+        info: ['project infos will be here'],
+        deadlines: [
+          {
+            date: '2020-03-16',
+            completed: false,
+          },
+          {
+            date: '2020-03-18',
+            completed: false,
+          },
+          {
+            date: '2020-03-120',
+            completed: false,
+          },
+          {
+            date: '2020-03-24',
+            completed: false,
+          },
+        ],
+      },
+    ],
     workingOnTasks: [
       {
         name: 'Task 1',
@@ -55,6 +101,21 @@ const store = new Vuex.Store({
         }
       }
     },
+  },
+  getters: {
+    /**
+     * Get the incoming deadlines
+     *
+     * @param {state} object the vuex state object.
+     * @return {Array} an array of objects that containts projects and their next uncompleted deadline
+     */
+    getIncogmingDeadlines: (state) => state.projects.map((project) => {
+      const projectDeadline = {
+        name: project.name,
+      };
+      projectDeadline.deadline = project.deadlines.find((deadline) => !deadline.completed).date;
+      return projectDeadline;
+    }),
   },
 });
 
