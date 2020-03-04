@@ -5,10 +5,12 @@
       :key="task.name"
       shadow="hover">
       <app-task
+        v-bind:taskId="task.taskId"
         v-bind:name="task.taskName"
         v-bind:description="task.taskDescription"
+        v-bind:projectId="task.projectId"
         v-bind:project="task.projectName"
-        v-bind:deadline="task.deadlineId"/>
+        v-bind:deadline="task.taskDeadline"/>
     </el-card>
   </div>
 </template>

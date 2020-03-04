@@ -4,7 +4,7 @@
       type="flex"
       align="middle">
       <el-col :span="2">
-        <el-checkbox @change="completeTask(name)"/>
+        <el-checkbox @change="completeTask(projectId, taskId)"/>
       </el-col>
       <el-col :span="22">
         <h1
@@ -27,6 +27,10 @@
 export default {
   name: 'AppTask',
   props: {
+    taskId: {
+      type: Number,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -35,12 +39,16 @@ export default {
       type: String,
       required: true,
     },
+    projectId: {
+      type: Number,
+      required: true,
+    },
     project: {
       type: String,
       required: true,
     },
     deadline: {
-      type: Number,
+      type: String,
       required: true,
     },
   },
@@ -53,8 +61,8 @@ export default {
     toggleTask() {
       this.isTaskOpen = !this.isTaskOpen;
     },
-    completeTask(name) {
-      this.$store.commit('completeTask', name);
+    completeTask(projectId, taskId) {
+      this.$store.commit('completeTask', { projectId, taskId });
     },
   },
 };

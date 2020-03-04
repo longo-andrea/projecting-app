@@ -7,6 +7,7 @@ const store = new Vuex.Store({
   state: {
     projects: [
       {
+        id: 0,
         name: 'Project 1',
         info: ['project infos will be here'],
         deadlines: [
@@ -29,6 +30,7 @@ const store = new Vuex.Store({
         ],
         tasks: [
           {
+            id: 0,
             name: 'Task 1',
             description: 'I have to finish this tasks!',
             deadlineIndex: 0,
@@ -36,6 +38,7 @@ const store = new Vuex.Store({
             workingOn: true,
           },
           {
+            id: 1,
             name: 'Task 2',
             description: 'I have to finish this tasks!',
             deadlineIndex: 2,
@@ -43,6 +46,7 @@ const store = new Vuex.Store({
             workingOn: false,
           },
           {
+            id: 2,
             name: 'Task 3',
             description: 'I have to finish this tasks!',
             deadlineIndex: 3,
@@ -52,6 +56,7 @@ const store = new Vuex.Store({
         ],
       },
       {
+        id: 1,
         name: 'Project 2',
         info: ['project infos will be here'],
         deadlines: [
@@ -74,6 +79,7 @@ const store = new Vuex.Store({
         ],
         tasks: [
           {
+            id: 0,
             name: 'Task 1',
             description: 'I have to finish this tasks!',
             deadlineIndex: 0,
@@ -81,6 +87,7 @@ const store = new Vuex.Store({
             workingOn: false,
           },
           {
+            id: 1,
             name: 'Task 2',
             description: 'I have to finish this tasks!',
             deadlineIndex: 2,
@@ -88,6 +95,7 @@ const store = new Vuex.Store({
             workingOn: true,
           },
           {
+            id: 2,
             name: 'Task 3',
             description: 'I have to finish this tasks!',
             deadlineIndex: 3,
@@ -105,15 +113,17 @@ const store = new Vuex.Store({
      * @param {state} object the vuex state object.
      * @param {name} string the task's name.
      */
-    completeTask(state, name) {
-      if (name) {
-        // loop until the end or matching the correct task
-        let i = 0;
-        for (i = 0; i < state.workingOnTasks.length; i += 1) {
-          if (name === state.workingOnTasks[i].name) {
-            state.workingOnTasks[i].completed = true;
-            break;
+    completeTask(state, { projectId, taskId }) {
+      for (let i = 0; i < state.projects.length; i += 1) {
+        if (state.projects[i].id === projectId) {
+          for (let j = 0; j < state.projects[i].tasks.length; j += 1) {
+            if (state.projects[i].tasks[j].id === taskId) {
+              state.projects[i].tasks[j].completed = true;
+              state.projects[i].tasks[j].workingOn = false;
+              break;
+            }
           }
+          break;
         }
       }
     },
@@ -125,10 +135,12 @@ const store = new Vuex.Store({
         project.tasks.forEach((task) => {
           if (!task.completed && task.workingOn) {
             workingOnTasks.push({
+              projectId: project.id,
               projectName: project.name,
-              deadlineId: task.deadlineIndex,
+              taskId: task.id,
               taskName: task.name,
               taskDescription: task.description,
+              taskDeadline: project.deadlines[task.deadlineIndex].date,
             });
           }
         });
