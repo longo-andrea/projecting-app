@@ -12,18 +12,22 @@ const store = new Vuex.Store({
         info: ['project infos will be here'],
         deadlines: [
           {
+            id: 0,
             date: '2020-03-16',
             completed: true,
           },
           {
+            id: 1,
             date: '2020-03-18',
             completed: false,
           },
           {
+            id: 2,
             date: '2020-03-120',
             completed: false,
           },
           {
+            id: 3,
             date: '2020-03-24',
             completed: false,
           },
@@ -61,18 +65,22 @@ const store = new Vuex.Store({
         info: ['project infos will be here'],
         deadlines: [
           {
+            id: 0,
             date: '2020-03-16',
             completed: true,
           },
           {
+            id: 1,
             date: '2020-03-18',
             completed: false,
           },
           {
+            id: 2,
             date: '2020-03-120',
             completed: false,
           },
           {
+            id: 3,
             date: '2020-03-24',
             completed: false,
           },
@@ -159,13 +167,18 @@ const store = new Vuex.Store({
      * @param {state} object the vuex state object.
      * @return {Array} an array of objects that containts projects and their next uncompleted deadline
      */
-    getIncomingDeadlines: (state) => state.projects.map((project) => {
-      const projectDeadline = {
-        name: project.name,
-      };
-      projectDeadline.deadline = project.deadlines.find((deadline) => !deadline.completed).date;
-      return projectDeadline;
-    }),
+    getIncomingDeadlines: (state) => {
+      const incomingDeadlines = [];
+      state.projects.forEach((project) => {
+        const incomingDeadline = project.deadlines.find((deadline) => !deadline.completed);
+        incomingDeadlines.push({
+          projectName: project.name,
+          deadlineId: incomingDeadline.id,
+          deadlineDate: incomingDeadline.date,
+        });
+      });
+      return incomingDeadlines;
+    },
   },
 });
 
