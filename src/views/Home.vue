@@ -2,6 +2,11 @@
   <div>
     <app-quick-info class="section section-first" />
     <app-projects-list class="section section-first" />
+    <el-button
+      type="primary"
+      :circle=true
+      icon="el-icon-circle-plus-outline"
+      id="add-project" />
   </div>
 </template>
 
@@ -17,3 +22,12 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+#add-project {
+  position: fixed;
+  bottom: 2rem;
+  right: 1.5rem;
+  font-size: 1.6rem;
+}
+</style>
