@@ -13,6 +13,19 @@ $--lighter-text: #949494;
 $--title: #303030;
 $--subtitle: #454545;
 
+/* useful classes */
+.section {
+  margin: 2rem 0;
+
+  &.section-first {
+    margin-top: 0;
+  }
+
+  &.section-last {
+    margin-bottom: 0;
+  }
+}
+
 .text-left {
   text-align: left;
 }

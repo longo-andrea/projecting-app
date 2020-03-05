@@ -9,7 +9,8 @@ const store = new Vuex.Store({
       {
         id: 0,
         name: 'Project 1',
-        info: ['project infos will be here'],
+        infos: ['project infos will be here'],
+        completed: false,
         deadlines: [
           {
             id: 0,
@@ -62,7 +63,8 @@ const store = new Vuex.Store({
       {
         id: 1,
         name: 'Project 2',
-        info: ['project infos will be here'],
+        infos: ['project infos will be here'],
+        completed: false,
         deadlines: [
           {
             id: 0,
@@ -137,11 +139,29 @@ const store = new Vuex.Store({
     },
   },
   getters: {
+  /**
+   * Get active projects
+   *
+   * @param {state} object the vuex state object.
+   * @return {Array} array of objects that contains working on tasks' information.
+   */
+    getActiveProjects: (state) => {
+      const activeProjects = [];
+      state.projects.forEach((project) => {
+        if (!project.completed) {
+          activeProjects.push({
+            name: project.name,
+            infos: project.infos,
+          });
+        }
+      });
+      return activeProjects;
+    },
     /**
      * Get the working on tasks
      *
      * @param {state} object the vuex state object.
-     * @return {Array} array of objects that contains working on tasks' information.
+     * @return {Array} array of objects that contains projects information.
      */
     getWorkingOnTasks: (state) => {
       const workingOnTasks = [];

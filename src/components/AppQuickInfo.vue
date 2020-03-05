@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      activeTab: 'deadlines',
+      activeTab: 'working-on',
     };
   },
 };
