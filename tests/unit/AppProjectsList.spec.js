@@ -2,6 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import { expect } from 'chai';
 import Vuex from 'vuex';
 import AppProjectsList from '../../src/components/AppProjectsList.vue';
+import AppProjectInfo from '../../src/components/AppProjectInfo.vue';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -15,7 +16,7 @@ describe('AppProjectsList', () => {
       },
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('el-card').exists()).to.be.false;
+    expect(wrapper.find(AppProjectInfo).exists()).to.be.false;
   });
   it('has a card', () => {
     const wrapper = shallowMount(AppProjectsList, {
@@ -30,6 +31,6 @@ describe('AppProjectsList', () => {
       },
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('el-card').exists()).to.be.true;
+    expect(wrapper.find(AppProjectInfo).exists()).to.be.true;
   });
 });

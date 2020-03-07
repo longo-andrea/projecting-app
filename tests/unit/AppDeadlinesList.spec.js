@@ -2,6 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import { expect } from 'chai';
 import Vuex from 'vuex';
 import AppDeadlinesList from '../../src/components/AppDeadlinesList.vue';
+import AppDeadline from '../../src/components/AppDeadline.vue';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -15,7 +16,7 @@ describe('AppDeadlinesList', () => {
       },
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('el-card').exists()).to.be.false;
+    expect(wrapper.find(AppDeadline).exists()).to.be.false;
   });
   it('has a card', () => {
     const wrapper = shallowMount(AppDeadlinesList, {
@@ -29,6 +30,6 @@ describe('AppDeadlinesList', () => {
       },
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('el-card').exists()).to.be.true;
+    expect(wrapper.find(AppDeadline).exists()).to.be.true;
   });
 });
