@@ -4,7 +4,8 @@
     <el-divider />
     <p
       v-for="(info, index) in infos"
-      v-bind:key="index">
+      v-bind:key="index"
+      class="project-info">
       {{ info }}
     </p>
   </div>
