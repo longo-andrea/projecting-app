@@ -1,31 +1,32 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import { expect } from 'chai';
 import Vuex from 'vuex';
-import AppDeadlinesList from '../../src/components/AppDeadlinesList.vue';
+import AppProjectsList from '../../src/components/AppProjectsList.vue';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
-describe('AppDeadlinesList', () => {
-  it('has no card if there are not deadlines', () => {
-    const wrapper = shallowMount(AppDeadlinesList, {
+describe('AppProjectsList', () => {
+  it('has no card if there are not projects', () => {
+    const wrapper = shallowMount(AppProjectsList, {
       localVue,
       computed: {
-        incomingDeadlines: () => [],
+        activeProjects: () => [],
       },
     });
     /* eslint-disable no-unused-expressions */
     expect(wrapper.find('el-card').exists()).to.be.false;
   });
   it('has a card', () => {
-    const wrapper = shallowMount(AppDeadlinesList, {
+    const wrapper = shallowMount(AppProjectsList, {
       localVue,
       computed: {
-        incomingDeadlines: () => ({
-          id: 0,
-          projectName: 'Test Project',
-          deadlineDate: '2020-03-05',
-        }),
+        activeProjects: () => [
+          {
+            name: 'Test Project',
+            infos: ['Here will go project infos.'],
+          },
+        ],
       },
     });
     /* eslint-disable no-unused-expressions */
