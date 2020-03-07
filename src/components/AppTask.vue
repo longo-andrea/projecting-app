@@ -12,7 +12,7 @@
           class="task-title">{{ name }}</h1>
       </el-col>
     </el-row>
-    <div v-if="isTaskOpen">
+    <div v-show="isTaskOpen">
     <el-divider />
       <h2 class="task-subtitle">{{ description }}</h2>
       <div class="task-infos">
