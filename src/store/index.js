@@ -209,8 +209,9 @@ export const mutations = {
       if (state.projects[i].id === projectId) {
         for (let j = 0; j < state.projects[i].tasks.length; j += 1) {
           if (state.projects[i].tasks[j].id === taskId) {
-            // state.projects[i].tasks[j].completed = true;
-            // state.projects[i].tasks[j].workingOn = false;
+            /* eslint-disable no-param-reassign */
+            state.projects[i].tasks[j].completed = true;
+            state.projects[i].tasks[j].workingOn = false;
             break;
           }
         }
