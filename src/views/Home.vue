@@ -2,11 +2,13 @@
   <div>
     <app-quick-info class="section section-first" />
     <app-projects-list class="section section-first" />
-    <el-button
-      type="primary"
-      :circle=true
-      icon="el-icon-circle-plus-outline"
-      id="add-project" />
+    <router-link to="/add-project">
+      <el-button
+        type="primary"
+        :circle=true
+        icon="el-icon-circle-plus-outline"
+        id="add-project" />
+    </router-link>
   </div>
 </template>
 
