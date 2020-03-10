@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import locale from 'element-ui/lib/locale/lang/en';
 
 // Element-ui imports
 import ElementUI from 'element-ui';
@@ -11,7 +12,7 @@ import store from './store/index';
 import App from './App.vue';
 
 // Element-ui config
-Vue.use(ElementUI);
+Vue.use(ElementUI, { locale });
 
 Vue.config.productionTip = false;
 

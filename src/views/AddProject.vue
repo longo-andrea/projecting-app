@@ -4,7 +4,7 @@
       ref="addProjectForm"
       :model="addProjectForm"
       :rules="rules"
-      label-position="top">
+      label-position="left">
       <el-form-item
         label="Project Name"
         prop="projectName">
@@ -21,25 +21,29 @@
           v-model="addProjectForm.projectDescription" />
       </el-form-item>
       <el-form-item
-        label="Project Deadlines"
-        prop="projectDeadlines">
-        <el-input-number
-          v-model="addProjectForm.projectDeadlines"
-          :min="1"
-          :max="5"
-          controls-position="right"
-          size="small" />
-      </el-form-item>
-      <el-form-item
-        label="Deadline 1"
-        prop="deadlineDate">
+        v-for="(deadlineDate, index) in addProjectForm.deadlinesDate"
+        v-bind:key="index"
+        v-bind:label="'Deadline ' + (index + 1)"
+        :rules="[
+          { required: true, message: 'Please insert a deadline\'s date!', trigger: ['blur', 'change'] },
+        ]"
+        :prop="'deadlinesDate.' + index + '.value'" >
         <el-date-picker
-          v-model="addProjectForm.deadlineDate"
+          v-model="addProjectForm.deadlinesDate[index].value"
           type="date"
-          placeholder="Pick a day" />
+          placeholder="Pick a day"
+          @change="checkDeadlineDate"
+          :picker-options="deadlinesDateOptions"
+          :id="'date-picker-' + index" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('addProjectForm')">Add Project</el-button>
+        <el-button
+          @click="addDeadline"
+          :disabled="!isLastDeadlinesDateDefined"
+          class="button">
+          New deadline
+        </el-button>
+        <el-button type="primary" class="button">Add Project</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -49,21 +53,18 @@
 export default {
   name: 'AddProject',
   data() {
-    const checkDeadlineDate = (rule, value, callback) => {
-      const now = new Date();
-      if (!value) {
-        callback(new Error('Please input a deadline\'s date!'));
-      } else if (now >= value) {
-        callback(new Error('Please input a valid deadline\'s date!'));
-      }
-      callback();
-    };
     return {
       addProjectForm: {
         projectName: '',
         projectDescription: '',
-        projectDeadlines: 0,
-        deadlineDate: '',
+        deadlinesDate: [],
+        maxDeadlines: 5,
+        lastDeadlineDate: new Date(Date.now()),
+      },
+      deadlinesDateOptions: {
+        disabledDate(time) {
+          return time.getTime() <= Date.now();
+        },
       },
       rules: {
         projectName: [
@@ -82,21 +83,44 @@ export default {
             min: 1, max: 300, message: 'Length should be 1 to 300!', trigger: 'blur',
           },
         ],
-        projectDeadlines: [
-          {
-            required: true, message: 'Please input the number of project\'s deadlines!', trigger: 'blur',
-          },
-        ],
-        deadlineDate: [
-          {
-            validator: checkDeadlineDate, trigger: 'blur',
-          },
-        ],
       },
     };
+  },
+  computed: {
+    isLastDeadlinesDateDefined() {
+      if (this.addProjectForm.deadlinesDate.length > 0) {
+        return this.addProjectForm.deadlinesDate[this.addProjectForm.deadlinesDate.length - 1].value !== '';
+      }
+      return true;
+    },
+  },
+  methods: {
+    addDeadline() {
+      if (this.addProjectForm.deadlinesDate.length < this.addProjectForm.maxDeadlines) {
+        if (this.addProjectForm.deadlinesDate.length > 0) {
+          const lastDeadlineDateIndex = this.addProjectForm.deadlinesDate.length - 1;
+          this.addProjectForm.lastDeadlineDate = this.addProjectForm.deadlinesDate[lastDeadlineDateIndex].value;
+        }
+        this.addProjectForm.deadlinesDate.push({
+          key: this.addProjectForm.deadlinesDate.length,
+          value: '',
+        });
+      }
+    },
+    checkDeadlineDate(selectedDate) {
+      if (selectedDate > this.addProjectForm.lastDeadlineDate) {
+        console.log('Ok');
+      } else {
+        console.log('Nope');
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.button {
+  display: block;
+  margin: 2rem 0;
+}
 </style>
