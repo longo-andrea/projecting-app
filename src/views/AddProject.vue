@@ -14,7 +14,7 @@
       </el-form-item>
       <el-form-item
         label="Project Description"
-        prop="projectDescription">
+        prop="projectDescription" >
         <el-input
           type="textarea"
           rows="5"
@@ -24,17 +24,14 @@
         v-for="(deadlineDate, index) in addProjectForm.deadlinesDate"
         v-bind:key="index"
         v-bind:label="'Deadline ' + (index + 1)"
-        :rules="[
-          { required: true, message: 'Please insert a deadline\'s date!', trigger: ['blur', 'change'] },
-        ]"
-        :prop="'deadlinesDate.' + index + '.value'" >
+        :prop="'deadlinesDate.' + index + '.date'"
+        :error="deadlineDate.error">
         <el-date-picker
-          v-model="addProjectForm.deadlinesDate[index].value"
+          v-model="addProjectForm.deadlinesDate[index].date"
           type="date"
           placeholder="Pick a day"
-          @change="checkDeadlineDate"
-          :picker-options="deadlinesDateOptions"
-          :id="'date-picker-' + index" />
+          @change="checkDeadlineDate($event, index)"
+          :picker-options="deadlinesDateOptions" />
       </el-form-item>
       <el-form-item>
         <el-button
@@ -58,8 +55,7 @@ export default {
         projectName: '',
         projectDescription: '',
         deadlinesDate: [],
-        maxDeadlines: 5,
-        lastDeadlineDate: new Date(Date.now()),
+        maxDeadlines: 2,
       },
       deadlinesDateOptions: {
         disabledDate(time) {
@@ -89,7 +85,7 @@ export default {
   computed: {
     isLastDeadlinesDateDefined() {
       if (this.addProjectForm.deadlinesDate.length > 0) {
-        return this.addProjectForm.deadlinesDate[this.addProjectForm.deadlinesDate.length - 1].value !== '';
+        return this.addProjectForm.deadlinesDate[this.addProjectForm.deadlinesDate.length - 1].date !== '';
       }
       return true;
     },
@@ -97,21 +93,24 @@ export default {
   methods: {
     addDeadline() {
       if (this.addProjectForm.deadlinesDate.length < this.addProjectForm.maxDeadlines) {
+        let previousDate = new Date(Date.now());
         if (this.addProjectForm.deadlinesDate.length > 0) {
           const lastDeadlineDateIndex = this.addProjectForm.deadlinesDate.length - 1;
-          this.addProjectForm.lastDeadlineDate = this.addProjectForm.deadlinesDate[lastDeadlineDateIndex].value;
+          previousDate = this.addProjectForm.deadlinesDate[lastDeadlineDateIndex].date;
         }
         this.addProjectForm.deadlinesDate.push({
           key: this.addProjectForm.deadlinesDate.length,
-          value: '',
+          date: '',
+          previousDate,
+          error: '',
         });
       }
     },
-    checkDeadlineDate(selectedDate) {
-      if (selectedDate > this.addProjectForm.lastDeadlineDate) {
-        console.log('Ok');
+    checkDeadlineDate(selectedDate, index) {
+      if (selectedDate > this.addProjectForm.deadlinesDate[index].previousDate) {
+        this.addProjectForm.deadlinesDate[index].error = '';
       } else {
-        console.log('Nope');
+        this.addProjectForm.deadlinesDate[index].error = 'Select a later date!';
       }
     },
   },
