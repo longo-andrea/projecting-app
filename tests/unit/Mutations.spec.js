@@ -59,8 +59,32 @@ describe('mutations', () => {
     mutations.addProject(state, {
       projectName: 'Project Name',
       projectInfos: 'Project info',
-      projectDeadlines: [{ key: 0}],
+      projectDeadlines: [
+        {
+          key: 0,
+          date: 'Wed Mar 17 2020 00:00:00 GMT+0100 (Ora standard dell’Europa centrale)',
+          previousDate: 'Thu Mar 18 2020 00:00:00 GMT+0100 (Ora standard dell’Europa centrale)',
+          error: '',
+        },
+      ],
     });
-    expect(state.projects).to.be.empty;
+    expect(state.projects).to.deep.equal(
+      [
+        {
+          id: 0,
+          name: 'Project Name',
+          infos: ['Project info'],
+          completed: false,
+          deadlines: [
+            {
+              id: 0,
+              date: 'Wed Mar 17 2020 00:00:00 GMT+0100 (Ora standard dell’Europa centrale)',
+              completed: false,
+            },
+          ],
+          tasks: [],
+        },
+      ],
+    );
   });
 });
