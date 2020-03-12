@@ -24,6 +24,7 @@
         v-for="(deadlineDate, index) in addProjectForm.deadlinesDate"
         v-bind:key="index"
         v-bind:label="'Deadline ' + (index + 1)"
+        :rules="{ required: true, message: 'Please input deadline\'s date!', trigger: ['blur', 'change'] }"
         :prop="'deadlinesDate.' + index + '.date'"
         :error="deadlineDate.error">
         <el-date-picker
@@ -36,9 +37,15 @@
       <el-form-item>
         <el-button
           @click="addDeadline"
-          :disabled="!isLastDeadlinesDateDefined"
+          :disabled="!isLastDeadlinesDateDefined || isDeadlinesDateFull"
           class="button">
           New deadline
+        </el-button>
+        <el-button
+          @click="removeDeadline"
+          :disabled="isDeadlinesDateEmpty"
+          class="button">
+          Remove
         </el-button>
         <el-button type="primary" class="button">Add Project</el-button>
       </el-form-item>
@@ -84,16 +91,33 @@ export default {
   },
   computed: {
     isLastDeadlinesDateDefined() {
+      // if there is at least one deadline
       if (this.addProjectForm.deadlinesDate.length > 0) {
+        // wether last deadline's date it's alredy been defined
         return this.addProjectForm.deadlinesDate[this.addProjectForm.deadlinesDate.length - 1].date !== '';
       }
+      // if there is no deadlines
       return true;
+    },
+    isDeadlinesDateFull() {
+      if (this.addProjectForm.deadlinesDate.length === this.addProjectForm.maxDeadlines) {
+        return true;
+      }
+      return false;
+    },
+    isDeadlinesDateEmpty() {
+      if (this.addProjectForm.deadlinesDate.length === 0) {
+        return true;
+      }
+      return false;
     },
   },
   methods: {
     addDeadline() {
+      // check if there if deadlines's count haven't reached the limit
       if (this.addProjectForm.deadlinesDate.length < this.addProjectForm.maxDeadlines) {
         let previousDate = new Date(Date.now());
+        // if there is more than one deadline, set previous date correctly
         if (this.addProjectForm.deadlinesDate.length > 0) {
           const lastDeadlineDateIndex = this.addProjectForm.deadlinesDate.length - 1;
           previousDate = this.addProjectForm.deadlinesDate[lastDeadlineDateIndex].date;
@@ -106,7 +130,13 @@ export default {
         });
       }
     },
+    removeDeadline() {
+      if (this.addProjectForm.deadlinesDate.length > 0) {
+        this.addProjectForm.deadlinesDate.splice(this.addProjectForm.deadlinesDate.length - 1, 1);
+      }
+    },
     checkDeadlineDate(selectedDate, index) {
+      // check if selected date is at least next the previous one
       if (selectedDate > this.addProjectForm.deadlinesDate[index].previousDate) {
         this.addProjectForm.deadlinesDate[index].error = '';
       } else {
