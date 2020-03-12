@@ -64,8 +64,13 @@ export default {
       addProjectForm: {
         projectName: '',
         projectDescription: '',
-        deadlinesDate: [],
-        maxDeadlines: 2,
+        deadlinesDate: [{
+          key: 0,
+          date: '',
+          previousDate: '',
+          error: '',
+        }],
+        maxDeadlines: 5,
       },
       deadlinesDateOptions: {
         disabledDate(time) {
@@ -109,7 +114,7 @@ export default {
       return false;
     },
     isDeadlinesDateEmpty() {
-      if (this.addProjectForm.deadlinesDate.length === 0) {
+      if (this.addProjectForm.deadlinesDate.length === 1) {
         return true;
       }
       return false;
@@ -134,7 +139,7 @@ export default {
       }
     },
     removeDeadline() {
-      if (this.addProjectForm.deadlinesDate.length > 0) {
+      if (this.addProjectForm.deadlinesDate.length > 1) {
         this.addProjectForm.deadlinesDate.splice(this.addProjectForm.deadlinesDate.length - 1, 1);
       }
     },
@@ -149,15 +154,15 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          // store the results of form
           this.$store.commit('addProject', {
             projectName: this.addProjectForm.projectName,
             projectInfos: this.addProjectForm.projectDescription,
             projectDeadlines: this.addProjectForm.deadlinesDate,
           });
-          return true;
+          // reset the form
+          this.$refs[formName].resetFields();
         }
-        console.log('Error');
-        return false;
       });
     },
   },

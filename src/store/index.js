@@ -196,7 +196,7 @@ export const getters = {
 
 export const mutations = {
   /**
-   * Check selected task as completed
+   * Set selected task as completed
    *
    * @param {state} object the vuex state object.
    * @param {name} string the task's name.
@@ -219,6 +219,14 @@ export const mutations = {
       }
     }
   },
+  /**
+   * Add a new project with given parameters
+   *
+   * @param {state} object the vuex state object.
+   * @param {projectName} string that represents the project's name.
+   * @param {projectInfos} string that represents the project's description.
+   * @param {projectDeadlines} array that contains the project's deadlines.
+   */
   addProject: (state, {
     projectName,
     projectInfos,
@@ -226,12 +234,19 @@ export const mutations = {
   }) => {
     if (projectName !== '' && projectInfos !== '' && projectDeadlines !== '') {
       const projectId = state.projects.length;
+      const deadlines = projectDeadlines.map((deadline) => (
+        {
+          id: deadline.key,
+          date: deadline.date,
+          completed: false,
+        }
+      ));
       state.projects.push({
         id: projectId,
         name: projectName,
         infos: [projectInfos],
         completed: false,
-        deadlines: projectDeadlines,
+        deadlines,
         tasks: [],
       });
     }

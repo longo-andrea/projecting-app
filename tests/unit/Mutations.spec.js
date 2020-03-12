@@ -41,4 +41,26 @@ describe('mutations', () => {
     expect(state.projects[0].tasks[0].completed).to.be.true;
     expect(state.projects[0].tasks[0].workingOn).to.be.false;
   });
+  it('no project was added after submittion of empty parameters', () => {
+    const state = {
+      projects: [],
+    };
+    mutations.addProject(state, {
+      projectName: '',
+      projectInfos: '',
+      projectDeadlines: [],
+    });
+    expect(state.projects).to.be.empty;
+  });
+  it('project was added', () => {
+    const state = {
+      projects: [],
+    };
+    mutations.addProject(state, {
+      projectName: 'Project Name',
+      projectInfos: 'Project info',
+      projectDeadlines: [{ key: 0}],
+    });
+    expect(state.projects).to.be.empty;
+  });
 });
