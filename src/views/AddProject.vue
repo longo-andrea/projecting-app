@@ -47,7 +47,10 @@
           class="button">
           Remove
         </el-button>
-        <el-button type="primary" class="button">Add Project</el-button>
+        <el-button
+          @click="submitForm('addProjectForm')"
+          type="primary"
+          class="button">Add Project</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -142,6 +145,20 @@ export default {
       } else {
         this.addProjectForm.deadlinesDate[index].error = 'Select a later date!';
       }
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$store.commit('addProject', {
+            projectName: this.addProjectForm.projectName,
+            projectInfos: this.addProjectForm.projectDescription,
+            projectDeadlines: this.addProjectForm.deadlinesDate,
+          });
+          return true;
+        }
+        console.log('Error');
+        return false;
+      });
     },
   },
 };

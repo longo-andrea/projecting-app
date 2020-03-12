@@ -219,6 +219,23 @@ export const mutations = {
       }
     }
   },
+  addProject: (state, {
+    projectName,
+    projectInfos,
+    projectDeadlines,
+  }) => {
+    if (projectName !== '' && projectInfos !== '' && projectDeadlines !== '') {
+      const projectId = state.projects.length;
+      state.projects.push({
+        id: projectId,
+        name: projectName,
+        infos: [projectInfos],
+        completed: false,
+        deadlines: projectDeadlines,
+        tasks: [],
+      });
+    }
+  },
 };
 
 export default new Vuex.Store({
