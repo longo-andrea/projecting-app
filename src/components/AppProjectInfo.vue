@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1 class="project-title">{{ name }}</h1>
+    <router-link :to="'/project/' + id">
+      <h1 class="project-title">{{ name }}</h1>
+    </router-link>
     <el-divider />
     <p
       v-for="(info, index) in infos"
@@ -15,6 +17,10 @@
 export default {
   name: 'AppProjectInfo',
   props: {
+    id: {
+      type: Number,
+      required: true,
+    },
     name: {
       type: String,
       required: true,

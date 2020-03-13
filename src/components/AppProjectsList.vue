@@ -5,6 +5,7 @@
       v-bind:key="project.name"
       class="project-item">
       <app-project-info
+        v-bind:id="project.id"
         v-bind:name="project.name"
         v-bind:infos="project.infos" />
     </el-card>
