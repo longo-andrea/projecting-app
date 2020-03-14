@@ -24,7 +24,7 @@ const state = {
         },
         {
           id: 2,
-          date: '2020-03-120',
+          date: '2020-03-12',
           completed: false,
         },
         {

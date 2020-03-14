@@ -4,22 +4,26 @@
       v-bind:projectName="projectName"
       v-bind:projectInfo="projectInfo" />
     <app-project-stats
-      v-bind:totalTasks="projectTasks"
+      v-bind:totalTasks="projectTasksCount"
       v-bind:completedTasks="projectCompletedTasks"
-      v-bind:totalDeadlines="projectDeadlines"
+      v-bind:totalDeadlines="projectDeadlinesCount"
       v-bind:completedDeadlines="projectCompletedDeadlines" />
+    <app-deadline-roadmap
+      v-bind:deadlines="projectDeadlines" />
   </div>
 </template>
 
 <script>
 import AppProjectHeader from '../components/AppProjectHeader.vue';
 import AppProjectStats from '../components/AppProjectStats.vue';
+import AppDeadlineRoadmap from '../components/AppDeadlineRoadmap.vue';
 
 export default {
   name: 'Project',
   components: {
     AppProjectHeader,
     AppProjectStats,
+    AppDeadlineRoadmap,
   },
   data() {
     return {
@@ -35,7 +39,7 @@ export default {
       const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
       return currentProject.infos[0];
     },
-    projectTasks() {
+    projectTasksCount() {
       const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
       const projectTasksCount = currentProject.tasks.length;
       return projectTasksCount;
@@ -46,6 +50,10 @@ export default {
       return projectCompletedTasksCount;
     },
     projectDeadlines() {
+      const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
+      return currentProject.deadlines;
+    },
+    projectDeadlinesCount() {
       const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
       const projectDeadlinesCount = currentProject.deadlines.length;
       return projectDeadlinesCount;
