@@ -1,7 +1,7 @@
 <template>
   <div>
-    <router-link :to="'/project/' + id">
-      <h1 class="project-title">{{ name }}</h1>
+    <router-link :to="'/project/' + id" class="project-title">
+      <h1>{{ name }}</h1>
     </router-link>
     <el-divider />
     <p
@@ -38,5 +38,6 @@ export default {
   margin: 0;
   font-size: 1.5rem;
   color: $--title;
+  text-decoration: none;
 }
 </style>

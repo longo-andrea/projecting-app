@@ -118,6 +118,13 @@ const state = {
 };
 
 export const getters = {
+  getProjects: (state) => {
+    const projects = [];
+    if (state.projects) {
+      state.projects.forEach((project) => projects.push(project));
+    }
+    return projects;
+  },
   /**
    * Get active projects
    *
