@@ -309,6 +309,25 @@ export const mutations = {
       });
     }
   },
+  addTask: (state, {
+    taskName,
+    taskDescription,
+    projectId,
+    deadlineId,
+  }) => {
+    if (taskName !== '' && taskDescription !== '' && projectId !== '' && deadlineId !== '') {
+      const currentProject = state.projects[projectId];
+      const taskId = currentProject.tasks.length;
+      currentProject.push({
+        id: taskId,
+        name: taskName,
+        description: taskDescription,
+        deadlineIndex: deadlineId,
+        completed: false,
+        workingOn: false,
+      });
+    }
+  },
 };
 
 export default new Vuex.Store({
