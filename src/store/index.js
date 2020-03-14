@@ -243,6 +243,40 @@ export const mutations = {
       }
     }
   },
+  workingOnTask: (state, {
+    projectId,
+    taskId,
+  }) => {
+    for (let i = 0; i < state.projects.length; i += 1) {
+      if (state.projects[i].id === projectId) {
+        for (let j = 0; j < state.projects[i].tasks.length; j += 1) {
+          if (state.projects[i].tasks[j].id === taskId) {
+            /* eslint-disable no-param-reassign */
+            state.projects[i].tasks[j].workingOn = true;
+            break;
+          }
+        }
+        break;
+      }
+    }
+  },
+  unworkingOnTask: (state, {
+    projectId,
+    taskId,
+  }) => {
+    for (let i = 0; i < state.projects.length; i += 1) {
+      if (state.projects[i].id === projectId) {
+        for (let j = 0; j < state.projects[i].tasks.length; j += 1) {
+          if (state.projects[i].tasks[j].id === taskId) {
+            /* eslint-disable no-param-reassign */
+            state.projects[i].tasks[j].workingOn = false;
+            break;
+          }
+        }
+        break;
+      }
+    }
+  },
   /**
    * Add a new project with given parameters
    *

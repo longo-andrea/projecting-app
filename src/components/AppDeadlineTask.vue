@@ -5,6 +5,7 @@
       v-bind:key="task.id">
       <el-checkbox
         :checked="task.workingOn"
+        @change="toggleTaskWorkingOn($event, projectId, task.id)"
         label="Working On" />
       <el-checkbox
         :checked="task.completed"
@@ -35,6 +36,13 @@ export default {
         this.$store.commit('completeTask', { projectId, taskId });
       } else {
         this.$store.commit('uncompleteTask', { projectId, taskId });
+      }
+    },
+    toggleTaskWorkingOn(event, projectId, taskId) {
+      if (event) {
+        this.$store.commit('workingOnTask', { projectId, taskId });
+      } else {
+        this.$store.commit('unworkingOnTask', { projectId, taskId });
       }
     },
   },
