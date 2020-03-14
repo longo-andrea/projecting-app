@@ -9,7 +9,9 @@
       v-bind:totalDeadlines="projectDeadlinesCount"
       v-bind:completedDeadlines="projectCompletedDeadlines" />
     <app-deadline-roadmap
-      v-bind:deadlines="projectDeadlines" />
+      v-bind:projectId="currentProjectId"
+      v-bind:deadlines="projectDeadlines"
+      v-bind:tasks="projectTasks" />
   </div>
 </template>
 
@@ -38,6 +40,10 @@ export default {
     projectInfo() {
       const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
       return currentProject.infos[0];
+    },
+    projectTasks() {
+      const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
+      return currentProject.tasks;
     },
     projectTasksCount() {
       const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
