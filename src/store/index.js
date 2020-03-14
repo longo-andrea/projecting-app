@@ -55,7 +55,7 @@ const state = {
           name: 'Task 3',
           description: 'I have to finish this tasks!',
           deadlineIndex: 3,
-          completed: false,
+          completed: true,
           workingOn: true,
         },
       ],
