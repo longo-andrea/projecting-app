@@ -8,7 +8,7 @@
         label="Working On" />
       <el-checkbox
         :checked="task.completed"
-        @change="completeTask(projectId, task.id)"
+        @change="toggleTaskCompleted($event, projectId, task.id)"
         label="Completed" />
       <p>{{ task.name }}</p>
       <p>{{ task.description }}</p>
@@ -30,8 +30,12 @@ export default {
     },
   },
   methods: {
-    completeTask(projectId, taskId) {
-      this.$store.commit('completeTask', { projectId, taskId });
+    toggleTaskCompleted(event, projectId, taskId) {
+      if (event) {
+        this.$store.commit('completeTask', { projectId, taskId });
+      } else {
+        this.$store.commit('uncompleteTask', { projectId, taskId });
+      }
     },
   },
 };

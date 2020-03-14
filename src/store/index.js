@@ -226,6 +226,23 @@ export const mutations = {
       }
     }
   },
+  uncompleteTask: (state, {
+    projectId,
+    taskId,
+  }) => {
+    for (let i = 0; i < state.projects.length; i += 1) {
+      if (state.projects[i].id === projectId) {
+        for (let j = 0; j < state.projects[i].tasks.length; j += 1) {
+          if (state.projects[i].tasks[j].id === taskId) {
+            /* eslint-disable no-param-reassign */
+            state.projects[i].tasks[j].completed = false;
+            break;
+          }
+        }
+        break;
+      }
+    }
+  },
   /**
    * Add a new project with given parameters
    *
