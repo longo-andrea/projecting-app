@@ -317,7 +317,9 @@ export const mutations = {
     projectInfos,
     projectDeadlines,
   }) => {
-    if (projectName !== '' && projectInfos !== '' && projectDeadlines !== '') {
+    if (projectName !== undefined
+      && projectInfos !== undefined
+      && projectDeadlines !== undefined) {
       const projectId = state.projects.length;
       const deadlines = projectDeadlines.map((deadline) => (
         {
@@ -336,13 +338,25 @@ export const mutations = {
       });
     }
   },
+  /**
+   * Add a new task with given parameters
+   *
+   * @param {state} object the vuex state object.
+   * @param {taskName} string that represents the task's name.
+   * @param {taskDescription} string that represents the tasks's description.
+   * @param {projectId} number that represents the task's project id
+   * @param {deadlineId} number that represent the task's deadline id
+   */
   addTask: (state, {
     taskName,
     taskDescription,
     projectId,
     deadlineId,
   }) => {
-    if (taskName !== '' && taskDescription !== '' && projectId !== '' && deadlineId !== '') {
+    if (taskName !== undefined
+      && taskDescription !== undefined
+      && projectId !== undefined
+      && deadlineId !== undefined) {
       const currentProject = state.projects[projectId];
       const taskId = currentProject.tasks.length;
       currentProject.tasks.push({

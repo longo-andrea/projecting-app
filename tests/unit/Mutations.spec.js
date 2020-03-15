@@ -142,11 +142,7 @@ describe('mutations', () => {
     const state = {
       projects: [],
     };
-    mutations.addProject(state, {
-      projectName: '',
-      projectInfos: '',
-      projectDeadlines: [],
-    });
+    mutations.addProject(state, {});
     expect(state.projects).to.be.empty;
   });
   it('project was added', () => {
@@ -183,5 +179,64 @@ describe('mutations', () => {
         },
       ],
     );
+  });
+  it('no task was added after submittion of empty parameters', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: false,
+          deadlines: [
+            {
+              id: 0,
+              date: '2020-03-05',
+              completed: false,
+            },
+          ],
+          tasks: [],
+        },
+      ],
+    };
+    mutations.addTask(state, {
+    });
+    expect(state.projects[0].tasks).to.be.empty;
+  });
+  it('task was added', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: false,
+          deadlines: [
+            {
+              id: 0,
+              date: '2020-03-05',
+              completed: false,
+            },
+          ],
+          tasks: [],
+        },
+      ],
+    };
+    mutations.addTask(state, {
+      taskName: 'Task Name',
+      taskDescription: 'Task description',
+      projectId: 0,
+      deadlineId: 0,
+    });
+    expect(state.projects[0].tasks).to.deep.equal([
+      {
+        id: 0,
+        name: 'Task Name',
+        description: 'Task description',
+        deadlineIndex: 0,
+        completed: false,
+        workingOn: false,
+      },
+    ]);
   });
 });
