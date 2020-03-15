@@ -318,7 +318,7 @@ export const mutations = {
     if (taskName !== '' && taskDescription !== '' && projectId !== '' && deadlineId !== '') {
       const currentProject = state.projects[projectId];
       const taskId = currentProject.tasks.length;
-      currentProject.push({
+      currentProject.tasks.push({
         id: taskId,
         name: taskName,
         description: taskDescription,

@@ -23,7 +23,7 @@
             <el-input type="textarea" v-model="addTaskForm.taskDescription" placeholder="Type task description" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('addTaskForm')">Query</el-button>
+            <el-button type="primary" @click="submitAddTask('addTaskForm', deadline.id)">Add Task</el-button>
           </el-form-item>
         </el-form>
       </el-collapse-item>
@@ -72,18 +72,18 @@ export default {
   },
   methods: {
     getDeadlineTasks: (tasks, index) => tasks.filter((task) => task.deadlineIndex === index),
-    submitAddTask(formName) {
-      this.$refs[formName].validate((valid) => {
+    submitAddTask(formName, deadlineId) {
+      this.$refs[formName][deadlineId].validate((valid) => {
         if (valid) {
           // store the results of form
           this.$store.commit('addTask', {
-            // project id
-            // deadline id
+            projectId: this.projectId,
+            deadlineId,
             taskName: this.addTaskForm.taskName,
             taskDescription: this.addTaskForm.taskDescription,
           });
           // reset the form
-          this.$refs[formName].resetFields();
+          this.$refs[formName][deadlineId].resetFields();
         }
       });
     },
