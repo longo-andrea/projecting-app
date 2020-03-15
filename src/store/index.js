@@ -118,6 +118,12 @@ const state = {
 };
 
 export const getters = {
+  /**
+   * Get projects list
+   *
+   * @param {state} object the vuex state object.
+   * @return {Array} array of objects that represents the projects
+   */
   getProjects: (state) => {
     const projects = [];
     if (state.projects) {

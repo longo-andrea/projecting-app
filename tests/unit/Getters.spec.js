@@ -4,9 +4,42 @@ import { getters } from '../../src/store/index';
 describe('getters', () => {
   it('get empty array if there are no projects', () => {
     const state = {};
-    const result = getters.getActiveProjects(state);
+    const result = getters.getProjects(state);
     /* eslint-disable no-unused-expressions */
     expect(result).to.deep.equal([]);
+  });
+  it('get array with projects list', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project 1',
+          infos: 'Project info',
+          completed: false,
+        },
+        {
+          id: 1,
+          name: 'Project 2',
+          infos: 'Project info',
+          completed: true,
+        },
+      ],
+    };
+    const result = getters.getProjects(state);
+    /* eslint-disable no-unused-expressions */
+    expect(result).to.deep.equal([
+      {
+        id: 0,
+        name: 'Project 1',
+        infos: 'Project info',
+        completed: false,
+      }, {
+        id: 1,
+        name: 'Project 2',
+        infos: 'Project info',
+        completed: true,
+      },
+    ]);
   });
   it('get empty array if all projects are completed', () => {
     const state = {
