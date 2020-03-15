@@ -233,10 +233,11 @@ export const mutations = {
     }
   },
   /**
-   * Get the working on tasks
+   * Unset task as complete
    *
    * @param {state} object the vuex state object.
-   * @return {Array} array of objects that contains projects information.
+   * @param { projectId } number which represents task's project id
+   * @param { taskId } number which represent task's id
    */
   uncompleteTask: (state, {
     projectId,
@@ -255,6 +256,13 @@ export const mutations = {
       }
     }
   },
+  /**
+   * Set task as working on
+   *
+   * @param {state} object the vuex state object.
+   * @param { projectId } number which represents task's project id
+   * @param { taskId } number which represent task's id
+   */
   workingOnTask: (state, {
     projectId,
     taskId,
@@ -272,6 +280,13 @@ export const mutations = {
       }
     }
   },
+  /**
+   * Unset task as working on
+   *
+   * @param {state} object the vuex state object.
+   * @param { projectId } number which represents task's project id
+   * @param { taskId } number which represent task's id
+   */
   unworkingOnTask: (state, {
     projectId,
     taskId,
