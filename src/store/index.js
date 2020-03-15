@@ -232,6 +232,12 @@ export const mutations = {
       }
     }
   },
+  /**
+   * Get the working on tasks
+   *
+   * @param {state} object the vuex state object.
+   * @return {Array} array of objects that contains projects information.
+   */
   uncompleteTask: (state, {
     projectId,
     taskId,

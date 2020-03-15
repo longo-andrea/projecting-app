@@ -37,9 +37,42 @@ describe('mutations', () => {
         },
       ],
     };
+    expect(state.projects[0].tasks[0].completed).to.be.false;
     mutations.completeTask(state, { projectId: 0, taskId: 0 });
     expect(state.projects[0].tasks[0].completed).to.be.true;
     expect(state.projects[0].tasks[0].workingOn).to.be.false;
+  });
+  it('is task uncompleted', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: false,
+          deadlines: [
+            {
+              id: 0,
+              date: '2020-03-05',
+              completed: false,
+            },
+          ],
+          tasks: [
+            {
+              id: 0,
+              name: 'Task 1',
+              description: 'I have to finish this tasks!',
+              deadlineIndex: 0,
+              completed: true,
+              workingOn: true,
+            },
+          ],
+        },
+      ],
+    };
+    expect(state.projects[0].tasks[0].completed).to.be.true;
+    mutations.uncompleteTask(state, { projectId: 0, taskId: 0 });
+    expect(state.projects[0].tasks[0].completed).to.be.false;
   });
   it('no project was added after submittion of empty parameters', () => {
     const state = {
