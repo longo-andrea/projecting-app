@@ -374,6 +374,12 @@ export const mutations = {
       });
     }
   },
+  /**
+   * Set max deadline for project
+   *
+   * @param {state} object the vuex state object.
+   * @param {maxDeadlinesCount} number that represents the deadlines's count.
+   */
   updateMaxDeadlinesSetting: (state, { maxDeadlinesCount }) => {
     if (maxDeadlinesCount > 0 && maxDeadlinesCount < 7) {
       state.settings.project.maxDeadlines = maxDeadlinesCount;

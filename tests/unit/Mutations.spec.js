@@ -239,4 +239,16 @@ describe('mutations', () => {
       },
     ]);
   });
+  it('max deadline is not update if new value is lower then 0', () => {
+    const state = {
+      settings: {
+        project: {
+          maxDeadlines: 3,
+        },
+      },
+    };
+    expect(state.settings.project.maxDeadlines).to.equal(3);
+    mutations.updateMaxDeadlinesSetting(state, { maxDeadlinesCount: 0 });
+    expect(state.settings.project.maxDeadlines).to.equal(3);
+  });
 });
