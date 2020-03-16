@@ -1,7 +1,12 @@
 {
   "name": "projecting-app",
   "version": "0.1.0",
-  "private": true,
+  "homepage": "https://github.com/longo-andrea/projecting-app",
+  "author": "longoandrea.dev@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:longo-andrea/projecting-app.git"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
