@@ -9,6 +9,7 @@
         :max="6" />
     </div>
     <el-divider />
+    <router-link to="/about">About</router-link>
   </div>
 </template>
 

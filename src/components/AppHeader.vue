@@ -16,8 +16,8 @@
       :span="4"
       :offset="16"
       class="text-right">
-      <router-link to="/about" type="primary">
-        <i class="el-icon-info navbar-link"></i>
+      <router-link to="/settings" type="primary">
+        <i class="el-icon-setting navbar-link" />
       </router-link>
     </el-col>
   </el-row>
