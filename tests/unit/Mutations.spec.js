@@ -251,4 +251,28 @@ describe('mutations', () => {
     mutations.updateMaxDeadlinesSetting(state, { maxDeadlinesCount: 0 });
     expect(state.settings.project.maxDeadlines).to.equal(3);
   });
+  it('max deadline is not update if new value is greater then the limit', () => {
+    const state = {
+      settings: {
+        project: {
+          maxDeadlines: 3,
+        },
+      },
+    };
+    expect(state.settings.project.maxDeadlines).to.equal(3);
+    mutations.updateMaxDeadlinesSetting(state, { maxDeadlinesCount: 7 });
+    expect(state.settings.project.maxDeadlines).to.equal(3);
+  });
+  it('max deadline is updated if new value is into the edges', () => {
+    const state = {
+      settings: {
+        project: {
+          maxDeadlines: 3,
+        },
+      },
+    };
+    expect(state.settings.project.maxDeadlines).to.equal(3);
+    mutations.updateMaxDeadlinesSetting(state, { maxDeadlinesCount: 2 });
+    expect(state.settings.project.maxDeadlines).to.equal(2);
+  });
 });
