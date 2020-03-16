@@ -115,6 +115,11 @@ const state = {
       ],
     },
   ],
+  settings: {
+    project: {
+      maxDeadlines: 3,
+    },
+  },
 };
 
 export const getters = {
@@ -367,6 +372,11 @@ export const mutations = {
         completed: false,
         workingOn: false,
       });
+    }
+  },
+  updateMaxDeadlinesSetting: (state, { maxDeadlinesCount }) => {
+    if (maxDeadlinesCount > 0 && maxDeadlinesCount < 7) {
+      state.settings.project.maxDeadlines = maxDeadlinesCount;
     }
   },
 };

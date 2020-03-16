@@ -67,10 +67,8 @@ export default {
         deadlinesDate: [{
           key: 0,
           date: '',
-          previousDate: '',
-          error: '',
+          previousDate: new Date(Date.now()),
         }],
-        maxDeadlines: 5,
       },
       deadlinesDateOptions: {
         disabledDate(time) {
@@ -98,6 +96,9 @@ export default {
     };
   },
   computed: {
+    maxDeadlines() {
+      return this.$store.state.settings.project.maxDeadlines;
+    },
     isLastDeadlinesDateDefined() {
       // if there is at least one deadline
       if (this.addProjectForm.deadlinesDate.length > 0) {
@@ -108,7 +109,7 @@ export default {
       return true;
     },
     isDeadlinesDateFull() {
-      if (this.addProjectForm.deadlinesDate.length === this.addProjectForm.maxDeadlines) {
+      if (this.addProjectForm.deadlinesDate.length === this.maxDeadlines) {
         return true;
       }
       return false;
@@ -123,7 +124,7 @@ export default {
   methods: {
     addDeadline() {
       // check if there if deadlines's count haven't reached the limit
-      if (this.addProjectForm.deadlinesDate.length < this.addProjectForm.maxDeadlines) {
+      if (this.addProjectForm.deadlinesDate.length < this.maxDeadlines) {
         let previousDate = new Date(Date.now());
         // if there is more than one deadline, set previous date correctly
         if (this.addProjectForm.deadlinesDate.length > 0) {
@@ -134,7 +135,6 @@ export default {
           key: this.addProjectForm.deadlinesDate.length,
           date: '',
           previousDate,
-          error: '',
         });
       }
     },
