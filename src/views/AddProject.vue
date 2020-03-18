@@ -25,14 +25,14 @@
         v-bind:key="index"
         v-bind:label="'Deadline ' + (index + 1)"
         :rules="{ required: true, message: 'Please input deadline\'s date!', trigger: ['blur', 'change'] }"
-        :prop="'deadlinesDate.' + index + '.date'"
-        :error="deadlineDate.error">
+        :prop="'deadlinesDate.' + index + '.date'">
         <el-date-picker
           v-model="addProjectForm.deadlinesDate[index].date"
           type="date"
           placeholder="Pick a day"
           @change="checkDeadlineDate($event, index)"
           :picker-options="deadlinesDateOptions" />
+        <p class="deadline-error">{{ deadlineDate.error }}</p>
       </el-form-item>
       <el-form-item>
         <el-button
@@ -68,6 +68,7 @@ export default {
           key: 0,
           date: '',
           previousDate: new Date(Date.now()),
+          error: '',
         }],
       },
       deadlinesDateOptions: {
@@ -135,6 +136,7 @@ export default {
           key: this.addProjectForm.deadlinesDate.length,
           date: '',
           previousDate,
+          error: '',
         });
       }
     },
@@ -173,5 +175,8 @@ export default {
 .button {
   display: block;
   margin: 2rem 0;
+}
+.deadline-error {
+  color: $--danger;
 }
 </style>
