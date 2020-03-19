@@ -17,7 +17,7 @@
       <h2 class="task-subtitle">{{ description }}</h2>
       <div class="task-infos">
         <p>{{ project }}</p>
-        <p>{{ deadline }}</p>
+        <p>{{ deadlineDate }}</p>
       </div>
     </div>
   </div>
@@ -56,6 +56,15 @@ export default {
     return {
       isTaskOpen: false,
     };
+  },
+  computed: {
+    deadlineDate() {
+      const date = new Date(this.deadline);
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      return `${year}/${month}/${day}`;
+    },
   },
   methods: {
     toggleTask() {

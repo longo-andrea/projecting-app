@@ -4,9 +4,9 @@
       <el-collapse-item
         v-for="deadline in deadlines"
         v-bind:key="deadline.id"
-        :title="'Deadline ' + (deadline.id + 1) + ' - ' + deadline.date"
+        :title="'Deadline ' + (deadline.id + 1) + ' - ' + getStringfiyDate(deadline.date)"
         :name="deadline.id">
-        {{ deadline.date }}
+        {{ getStringfiyDate(deadline.date) }}
         <app-deadline-task
           v-bind:projectId="projectId"
           v-bind:tasks="getDeadlineTasks(tasks, deadline.id)" />
@@ -86,6 +86,13 @@ export default {
           this.$refs[formName][deadlineId].resetFields();
         }
       });
+    },
+    getStringfiyDate(date) {
+      const dateObject = new Date(date);
+      const year = dateObject.getFullYear();
+      const month = dateObject.getMonth();
+      const day = dateObject.getDate();
+      return `${year}/${month}/${day}`;
     },
   },
 };

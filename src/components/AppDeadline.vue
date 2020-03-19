@@ -7,7 +7,7 @@
         <h1 class="deadline-title">{{ project }}</h1>
       </el-col>
       <el-col :span="12">
-        <h2 class="deadline-date">{{ date }}</h2>
+        <h2 class="deadline-date">{{ deadlineDate }}</h2>
       </el-col>
     </el-row>
   </div>
@@ -24,6 +24,15 @@ export default {
     date: {
       type: String,
       required: true,
+    },
+  },
+  computed: {
+    deadlineDate() {
+      const date = new Date(this.date);
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      return `${year}/${month}/${day}`;
     },
   },
 };
