@@ -6,114 +6,6 @@ Vue.use(Vuex);
 /* eslint no-shadow: ["error", { "allow": ["state"] }] */
 const state = {
   projects: [
-    {
-      id: 0,
-      name: 'Project 1',
-      infos: ['project infos will be here'],
-      completed: false,
-      deadlines: [
-        {
-          id: 0,
-          date: '2020-03-16',
-          completed: true,
-        },
-        {
-          id: 1,
-          date: '2020-03-18',
-          completed: false,
-        },
-        {
-          id: 2,
-          date: '2020-03-12',
-          completed: false,
-        },
-        {
-          id: 3,
-          date: '2020-03-24',
-          completed: false,
-        },
-      ],
-      tasks: [
-        {
-          id: 0,
-          name: 'Task 1',
-          description: 'I have to finish this tasks!',
-          deadlineIndex: 0,
-          completed: false,
-          workingOn: true,
-        },
-        {
-          id: 1,
-          name: 'Task 2',
-          description: 'I have to finish this tasks!',
-          deadlineIndex: 2,
-          completed: false,
-          workingOn: false,
-        },
-        {
-          id: 2,
-          name: 'Task 3',
-          description: 'I have to finish this tasks!',
-          deadlineIndex: 0,
-          completed: true,
-          workingOn: false,
-        },
-      ],
-    },
-    {
-      id: 1,
-      name: 'Project 2',
-      infos: ['project infos will be here'],
-      completed: false,
-      deadlines: [
-        {
-          id: 0,
-          date: '2020-03-16',
-          completed: true,
-        },
-        {
-          id: 1,
-          date: '2020-03-18',
-          completed: false,
-        },
-        {
-          id: 2,
-          date: '2020-03-120',
-          completed: false,
-        },
-        {
-          id: 3,
-          date: '2020-03-24',
-          completed: false,
-        },
-      ],
-      tasks: [
-        {
-          id: 0,
-          name: 'Task 1',
-          description: 'I have to finish this tasks!',
-          deadlineIndex: 0,
-          completed: false,
-          workingOn: false,
-        },
-        {
-          id: 1,
-          name: 'Task 2',
-          description: 'I have to finish this tasks!',
-          deadlineIndex: 2,
-          completed: false,
-          workingOn: true,
-        },
-        {
-          id: 2,
-          name: 'Task 3',
-          description: 'I have to finish this tasks!',
-          deadlineIndex: 3,
-          completed: false,
-          workingOn: true,
-        },
-      ],
-    },
   ],
   settings: {
     project: {
@@ -385,10 +277,23 @@ export const mutations = {
       state.settings.project.maxDeadlines = maxDeadlinesCount;
     }
   },
+  initialiseStore(state) {
+    if (localStorage.getItem('store')) {
+      this.replaceState(
+        Object.assign(state, JSON.parse(localStorage.getItem('store'))),
+      );
+    }
+  },
 };
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state,
   getters,
   mutations,
 });
+
+store.subscribe((mutation, state) => {
+  localStorage.setItem('store', JSON.stringify(state));
+});
+
+export default store;
