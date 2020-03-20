@@ -34,14 +34,15 @@ describe('AppTask', () => {
     expect(wrapper.find('.task-infos > p:nth-child(1)').text()).to.equals(projectName);
   });
   it('has task deadline date info', () => {
-    const deadlineDate = '2020-03-05';
+    const deadlineDate = new Date('2020-03-09');
+    const dateString = `${deadlineDate.getFullYear()}/${deadlineDate.getMonth()}/${deadlineDate.getDate()}`;
     const wrapper = shallowMount(AppTask, {
       propsData: {
-        deadline: deadlineDate,
+        deadline: deadlineDate.toString(),
       },
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('.task-infos > p:nth-child(2)').text()).to.equals(deadlineDate);
+    expect(wrapper.find('.task-infos > p:nth-child(2)').text()).to.equals(dateString);
   });
   it('is task information card close as default', () => {
     const wrapper = shallowMount(AppTask);
