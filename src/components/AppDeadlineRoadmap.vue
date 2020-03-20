@@ -1,5 +1,5 @@
 <template>
-  <div class="deadline-section">
+  <div>
     <el-collapse v-model="activeDeadline">
       <el-collapse-item
         v-for="deadline in deadlines"
@@ -99,7 +99,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.deadline-section {
-  margin: 2rem 0;
-}
 </style>

@@ -2,16 +2,19 @@
   <div>
     <app-project-header
       v-bind:projectName="projectName"
-      v-bind:projectInfo="projectInfo" />
+      v-bind:projectInfo="projectInfo"
+      class="section section-first" />
     <app-project-stats
       v-bind:totalTasks="projectTasksCount"
       v-bind:completedTasks="projectCompletedTasks"
       v-bind:totalDeadlines="projectDeadlinesCount"
-      v-bind:completedDeadlines="projectCompletedDeadlines" />
+      v-bind:completedDeadlines="projectCompletedDeadlines"
+      class="section" />
     <app-deadline-roadmap
       v-bind:projectId="currentProjectId"
       v-bind:deadlines="projectDeadlines"
-      v-bind:tasks="projectTasks" />
+      v-bind:tasks="projectTasks"
+      class="section section-last" />
   </div>
 </template>
 

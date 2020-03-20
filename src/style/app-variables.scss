@@ -1,41 +1,90 @@
-$--danger: #F56C6C;
+/* FONT */
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+$--font-family: 'Roboto', sans-serif;
+$--font-regular: 400;
+$--font-bold: 700;
+$--font-size-base: 1rem; 
 
-$--base-background: #ffda73;
-$--light-background: #ffda73;
-$--lighter-background: #fff5d9;
-
-$--base-border: #303030;
-$--light-border: #8c8c8c;
-$--lighter-border: #c9c9c9;
-
+/* COLOR */
+/* text */
 $--base-text: #454545;
 $--light-text: #696969;
 $--lighter-text: #949494;
 
-$--title: #303030;
-$--subtitle: #454545;
+/* background */
+$--base-background: #ffc107;
+$--light-background: #ffd454;
+$--lighter-background: #fff5d9; 
 
-/* useful classes */
+/* border */
+$--base-border: #303030;
+$--light-border: #8c8c8c;
+$--lighter-border: #c9c9c9;
+
+/* utils */
+$--danger: #F56C6C;
+$--succes:#67C23A;
+$--warning: #E6A23C;
+
+/* TYPOGRAPHY */
+/* title */
+$--font-weight-title: 700;
+$--font-size-title: 1.5rem;
+$--color-title: #303030;
+
+/* sub-title */
+$--font-weight-subtitle: 400;
+$--font-size-subtitle: 1.2rem;
+$--color-subtitle: #454545;
+
+/* description */
+$--font-weight-description: 400;
+$--font-size-description: 1rem;
+$--color-description: #696969;
+
+/* DEFAULT */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  font-family: $--font-family;
+  font-weight: $--font-regular;
+  font-size: $--font-size-base;
+}
+
+/* paragraph */
+p {
+  font-size: $--font-size-base;
+  color: $--light-text;
+}
+
+/* section */
 .section {
   margin: 2rem 0;
-
   &.section-first {
     margin-top: 0;
   }
-
   &.section-last {
     margin-bottom: 0;
   }
 }
 
-.text-left {
-  text-align: left;
+/* headers */
+.title {
+  font-weight: $--font-weight-title;
+  font-size: $--font-size-title;
+  color: $--color-title;
 }
-
-.text-center {
-  text-align: center;
+.subtitle {
+  font-weight: $--font-weight-subtitle;
+  font-size: $--font-size-subtitle;
+  color: $--color-subtitle;
 }
-
-.text-right {
-  text-align: right;
+.description {
+  font-weight: $--font-weight-description;
+  font-size: $--font-size-description;
+  color: $--color-description;
 }

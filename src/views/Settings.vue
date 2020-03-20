@@ -1,7 +1,9 @@
 <template>
   <div>
+    <h1 class="title">Settings</h1>
     <div>
-      <h2>Max deadlines for a project</h2>
+      <h2 class="subtitle">Project</h2>
+      <p class="description">Max deadlines for a project</p>
       <el-input-number
         v-model="maxDeadlines"
         @change="updateMaxDeadlines"
@@ -9,7 +11,9 @@
         :max="6" />
     </div>
     <el-divider />
-    <router-link to="/about">About</router-link>
+    <router-link to="/about">
+      <h2 class="subtitle">About</h2>
+    </router-link>
   </div>
 </template>
 
@@ -29,5 +33,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 </style>

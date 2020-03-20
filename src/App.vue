@@ -22,15 +22,8 @@ export default {
 </script>
 
 <style lang='scss'>
-@import url('style/app-variables.scss');
-
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
 .header {
-  background: $--light-background;
+  background: $--base-background;
   box-shadow: 0 0 8px $--light-border;
 }
 </style>

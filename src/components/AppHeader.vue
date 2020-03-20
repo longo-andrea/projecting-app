@@ -15,9 +15,9 @@
     <el-col
       :span="4"
       :offset="16"
-      class="text-right">
+      class="settings-icon">
       <router-link to="/settings" type="primary">
-        <i class="el-icon-setting navbar-link" />
+        <i class="el-icon-setting" />
       </router-link>
     </el-col>
   </el-row>
@@ -34,9 +34,13 @@
     height: 24px;
   }
 
-  .navbar-link {
-    font-size: 24px;
-    color: $--base-text;
+  .settings-icon {
+    text-align: right;
+
+    i {
+      font-size: 24px;
+      color: $--base-text;
+    }
   }
 }
 </style>

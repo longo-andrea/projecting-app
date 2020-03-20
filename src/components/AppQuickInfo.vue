@@ -37,7 +37,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.checkbox {
-  width: 100%;
-}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <app-quick-info class="section section-first" />
-    <app-projects-list class="section section-first" />
+    <app-projects-list class="section section-last" />
     <router-link to="/add-project">
       <el-button
         type="primary"
@@ -30,6 +30,5 @@ export default {
   position: fixed;
   bottom: 2rem;
   right: 1.5rem;
-  font-size: 1.6rem;
 }
 </style>

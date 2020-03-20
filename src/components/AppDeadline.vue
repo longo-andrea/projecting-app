@@ -4,10 +4,10 @@
       type="flex"
       align="middle">
       <el-col :span="12">
-        <h1 class="deadline-title">{{ project }}</h1>
+        <h1 class="title">{{ project }}</h1>
       </el-col>
       <el-col :span="12">
-        <h2 class="deadline-date">{{ deadlineDate }}</h2>
+        <h2 class="subtitle">{{ deadlineDate }}</h2>
       </el-col>
     </el-row>
   </div>
@@ -39,11 +39,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.deadline-title {
-  color: $--title;
-}
-
-.deadline-date {
-  color: $--subtitle;
-}
 </style>

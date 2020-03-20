@@ -1,13 +1,13 @@
 <template>
   <div>
-    <router-link :to="'/project/' + id" class="project-title">
-      <h1>{{ name }}</h1>
+    <router-link :to="'/project/' + id" class="title-project">
+      <h1 class="title">{{ name }}</h1>
     </router-link>
     <el-divider />
     <p
       v-for="(info, index) in infos"
       v-bind:key="index"
-      class="project-info">
+      class="description">
       {{ info }}
     </p>
   </div>
@@ -34,10 +34,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.project-title {
-  margin: 0;
-  font-size: 1.5rem;
-  color: $--title;
+.title-project {
   text-decoration: none;
 }
 </style>

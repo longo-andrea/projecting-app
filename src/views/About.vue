@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>About the app</h1>
+    <h1 class="title">About the app</h1>
     <div>
-      <h2>Description</h2>
+      <h2 class="subtitle">Description</h2>
       <p>
         Projecting is an easy and intuitive application, and its purpose is to provide to beginner
         developers a tool to support them during the development of their projects.
@@ -14,23 +14,23 @@
     </div>
     <el-divider />
     <div>
-      <h2>Contacts</h2>
+      <h2 class="subtitle">Contacts</h2>
       <p>
-        <el-link type="primary" href="https://github.com/longo-andrea/projecting-app">GitHub repository</el-link>
+        <el-link href="https://github.com/longo-andrea/projecting-app">GitHub repository</el-link>
       </p>
       <p>
-        <el-link type="primary" href="http://andreawdev.com/#/">Author webpage</el-link>
+        <el-link href="http://andreawdev.com/#/">Author webpage</el-link>
       </p>
       <p>
-        <el-link type="primary" href="mailto:longoandrea.dev@gmail.com">Mail</el-link>
+        <el-link href="mailto:longoandrea.dev@gmail.com">Mail</el-link>
       </p>
       <p>
-        <el-link type="primary" href="https://www.instagram.com/andrea.wdev/?hl=it">Instagram page</el-link>
+        <el-link href="https://www.instagram.com/andrea.wdev/?hl=it">Instagram page</el-link>
       </p>
     </div>
     <el-divider />
     <div>
-      <h2>License</h2>
+      <h2 class="subtitle">License</h2>
       <el-collapse>
         <el-collapse-item title="This software is under MIT License">
           Copyright (c) 2020 longo-andrea
@@ -64,5 +64,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="title">Add project</h1>
     <el-form
       ref="addProjectForm"
       :model="addProjectForm"

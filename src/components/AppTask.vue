@@ -9,12 +9,12 @@
       <el-col :span="22">
         <h1
           @click="toggleTask()"
-          class="task-title">{{ name }}</h1>
+          class="title title-task">{{ name }}</h1>
       </el-col>
     </el-row>
     <div v-show="isTaskOpen">
     <el-divider />
-      <h2 class="task-subtitle">{{ description }}</h2>
+      <p class="description">{{ description }}</p>
       <div class="task-infos">
         <p>{{ project }}</p>
         <p>{{ deadlineDate }}</p>
@@ -78,16 +78,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.task-title {
+.title-task {
   margin: 0;
-  font-size: 1.5rem;
-  color: $--title;
-}
-
-.task-subtitle {
-  margin-top: 1rem;
-  font-size: 1rem;
-  color: $--subtitle;
 }
 
 .task-infos {
