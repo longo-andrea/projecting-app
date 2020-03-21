@@ -9,11 +9,11 @@
       <el-col :span="22">
         <h1
           @click="toggleTask()"
-          class="title">{{ name }}</h1>
+          class="title">{{ name }} {{ isDesktop }} </h1>
       </el-col>
     </el-row>
     <el-collapse-transition>
-      <div v-show="isTaskOpen">
+      <div v-show="isDesktop || isTaskOpen">
       <el-divider />
         <p class="description">{{ description }}</p>
         <div class="task-infos">
@@ -57,6 +57,7 @@ export default {
   data() {
     return {
       isTaskOpen: false,
+      isDesktop: false,
     };
   },
   computed: {
@@ -75,6 +76,15 @@ export default {
     completeTask(projectId, taskId) {
       this.$store.commit('completeTask', { projectId, taskId });
     },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      if (window.innerWidth >= 768) {
+        this.isDesktop = true;
+      } else {
+        this.isDesktop = false;
+      }
+    });
   },
 };
 </script>

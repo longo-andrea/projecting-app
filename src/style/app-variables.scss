@@ -45,7 +45,11 @@ $--font-weight-description: 400;
 $--font-size-description: 1rem;
 $--color-description: #696969;
 
-/* DEFAULT */
+/* media queries */
+$--md-screen: 768px;
+$--bg-screen: 1024px;
+
+/* ELEMENT DEFAULT */
 html,
 body {
   margin: 0;
@@ -56,6 +60,7 @@ body {
   font-family: $--font-family;
   font-weight: $--font-regular;
   font-size: $--font-size-base;
+  box-sizing: border-box;
 }
 
 /* paragraph */

@@ -36,9 +36,30 @@ export default {
 .tasks-list {
   max-height: 70vh;
   overflow: scroll;
+  overflow-x: hidden;
 
   .task-item {
     margin-bottom: 1.2rem;
+  }
+}
+
+@media screen and (min-width: $--md-screen) {
+  .tasks-list {
+    height: 30vh;
+    display: flex;
+    flex-wrap: wrap;
+
+    .task-item {
+      margin-left: 2.5%;
+      margin-right: 2.5%;
+      flex-basis: 45%;
+    }
+  }
+}
+
+@media screen and (min-width: $--bg-screen) {
+  .tasks-list {
+    height: 60vh;
   }
 }
 </style>
