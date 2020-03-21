@@ -12,14 +12,16 @@
           class="title title-task">{{ name }}</h1>
       </el-col>
     </el-row>
-    <div v-show="isTaskOpen">
-    <el-divider />
-      <p class="description">{{ description }}</p>
-      <div class="task-infos">
-        <p>{{ project }}</p>
-        <p>{{ deadlineDate }}</p>
+    <el-collapse-transition>
+      <div v-show="isTaskOpen">
+      <el-divider />
+        <p class="description">{{ description }}</p>
+        <div class="task-infos">
+          <p>{{ project }}</p>
+          <p>{{ deadlineDate }}</p>
+        </div>
       </div>
-    </div>
+    </el-collapse-transition>
   </div>
 </template>
 
