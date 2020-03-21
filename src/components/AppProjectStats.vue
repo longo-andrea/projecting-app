@@ -4,11 +4,11 @@
       type="flex"
       justify="center">
       <el-col :span=12 class="info-item">
-        <p>Tasks</p>
+        <p class="title title-stats">Tasks</p>
         <p>{{ completedTasks }} / {{ totalTasks }}</p>
       </el-col>
       <el-col :span=12 class="info-item">
-        <p>Deadlines</p>
+        <p class="title title-stats">Deadlines</p>
         <p>{{ completedDeadlines }} / {{ totalDeadlines }}</p>
       </el-col>
     </el-row>
@@ -42,5 +42,10 @@ export default {
 <style lang="scss" scoped>
 .info-item {
   text-align: center;
+}
+
+.title-stats {
+  font-weight: $--font-bold;
+  font-size: $--font-size-base;
 }
 </style>

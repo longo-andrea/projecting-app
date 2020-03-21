@@ -118,6 +118,6 @@ export default {
 .title-deadline {
   margin: .3rem;
   font-weight: $--font-bold;
-  font-size: 1rem;
+  font-size: $--font-size-base;
 }
 </style>
