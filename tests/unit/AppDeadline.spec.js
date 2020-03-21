@@ -24,4 +24,17 @@ describe('AppDeadline', () => {
     /* eslint-disable no-unused-expressions */
     expect(wrapper.find('.description').text()).to.equals(dateString);
   });
+  it('has days left to next deadline', () => {
+    const deadlineDate = new Date('2020-03-09');
+    const currentDate = new Date(Date.now());
+    const timeLeft = Math.abs(deadlineDate - currentDate);
+    const daysLeft = Math.ceil(timeLeft / (1000 * 60 * 60 * 24));
+    const wrapper = shallowMount(AppDeadline, {
+      propsData: {
+        date: deadlineDate.toString(),
+      },
+    });
+    /* eslint-disable no-unused-expressions */
+    expect(wrapper.find('.subtitle').text()).to.equals(`${daysLeft} days left`);
+  });
 });
