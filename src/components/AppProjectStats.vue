@@ -1,13 +1,15 @@
 <template>
   <el-card shadow="never">
-    <el-row>
-      <el-col :span=12 class="tasks-section">
-        <p>Total tasks: {{ totalTasks }}</p>
-        <p>Completed tasks: {{ completedTasks }}</p>
+    <el-row
+      type="flex"
+      justify="center">
+      <el-col :span=12 class="info-item">
+        <p>Tasks:</p>
+        <p>{{ completedTasks }} / {{ totalTasks }}</p>
       </el-col>
-      <el-col :span=11 :push=1>
-        <p>Total deadlines: {{ totalDeadlines }}</p>
-        <p>Completed deadlines: {{ completedDeadlines }}</p>
+      <el-col :span=12 class="info-item">
+        <p>Deadlines:</p>
+        <p>{{ completedDeadlines }} / {{ totalDeadlines }}</p>
       </el-col>
     </el-row>
   </el-card>
@@ -38,7 +40,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tasks-section {
-  border-right: 1px solid $--lighter-border;
+.info-item {
+  text-align: center;
 }
 </style>
