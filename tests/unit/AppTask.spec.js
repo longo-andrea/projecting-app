@@ -11,7 +11,7 @@ describe('AppTask', () => {
       },
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('.title-task').text()).to.equals(taskName);
+    expect(wrapper.find('.title').text()).to.equals(taskName);
   });
   it('has task description', () => {
     const taskDescription = 'I have to finish this task!';
@@ -52,7 +52,7 @@ describe('AppTask', () => {
   it('is task information card open after the task name being clicked', () => {
     const wrapper = shallowMount(AppTask);
     /* eslint-disable no-unused-expressions */
-    wrapper.find('.title-task').trigger('click');
+    wrapper.find('.title').trigger('click');
     expect(wrapper.vm.$data.isTaskOpen).to.be.true;
   });
 });

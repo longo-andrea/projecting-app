@@ -9,7 +9,7 @@
       <el-col :span="22">
         <h1
           @click="toggleTask()"
-          class="title title-task">{{ name }}</h1>
+          class="title">{{ name }}</h1>
       </el-col>
     </el-row>
     <el-collapse-transition>
@@ -80,8 +80,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.title-task {
+.title {
   margin: 0;
+}
+
+.description {
+  margin-top: 0;
 }
 
 .task-infos {
