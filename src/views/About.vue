@@ -16,16 +16,16 @@
     <div>
       <h2 class="subtitle">Contacts</h2>
       <p>
-        <el-link href="https://github.com/longo-andrea/projecting-app">GitHub repository</el-link>
+        <el-link href="https://github.com/longo-andrea/projecting-app" class="link-contacts">GitHub repository</el-link>
       </p>
       <p>
-        <el-link href="http://andreawdev.com/#/">Author webpage</el-link>
+        <el-link href="http://andreawdev.com/#/" class="link-contacts">Author webpage</el-link>
       </p>
       <p>
-        <el-link href="mailto:longoandrea.dev@gmail.com">Mail</el-link>
+        <el-link href="mailto:longoandrea.dev@gmail.com" class="link-contacts">Mail</el-link>
       </p>
       <p>
-        <el-link href="https://www.instagram.com/andrea.wdev/?hl=it">Instagram page</el-link>
+        <el-link href="https://www.instagram.com/andrea.wdev/?hl=it" class="link-contacts">Instagram page</el-link>
       </p>
     </div>
     <el-divider />
@@ -65,4 +65,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.link-contacts {
+  color: $--base-link;
+}
 </style>
