@@ -77,6 +77,10 @@ p {
   font-weight: $--font-weight-title;
   font-size: $--font-size-title;
   color: $--color-title;
+
+  &.title-big {
+    font-size: $--font-size-title * 1.8;
+  }
 }
 .subtitle {
   font-weight: $--font-weight-subtitle;

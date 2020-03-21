@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title">{{ projectName }}</h1>
+    <h1 class="title title-big">{{ projectName }}</h1>
     <h2 class="subtitle">{{ projectInfo }}</h2>
   </div>
 </template>
@@ -22,4 +22,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0;
+}
 </style>
