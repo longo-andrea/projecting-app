@@ -6,7 +6,6 @@
         v-bind:key="deadline.id"
         :title="'Deadline ' + (deadline.id + 1) + ' - ' + getStringfiyDate(deadline.date)"
         :name="deadline.id">
-        {{ getStringfiyDate(deadline.date) }}
         <app-deadline-task
           v-bind:projectId="projectId"
           v-bind:tasks="getDeadlineTasks(tasks, deadline.id)" />

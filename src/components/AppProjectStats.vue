@@ -4,11 +4,11 @@
       type="flex"
       justify="center">
       <el-col :span=12 class="info-item">
-        <p>Tasks:</p>
+        <p>Tasks</p>
         <p>{{ completedTasks }} / {{ totalTasks }}</p>
       </el-col>
       <el-col :span=12 class="info-item">
-        <p>Deadlines:</p>
+        <p>Deadlines</p>
         <p>{{ completedDeadlines }} / {{ totalDeadlines }}</p>
       </el-col>
     </el-row>

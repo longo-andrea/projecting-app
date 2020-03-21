@@ -2,17 +2,24 @@
   <div>
     <div
       v-for="task in tasks"
-      v-bind:key="task.id">
-      <el-checkbox
-        :checked="task.workingOn"
-        @change="toggleTaskWorkingOn($event, projectId, task.id)"
-        label="Working On" />
-      <el-checkbox
-        :checked="task.completed"
-        @change="toggleTaskCompleted($event, projectId, task.id)"
-        label="Completed" />
-      <p>{{ task.name }}</p>
-      <p>{{ task.description }}</p>
+      v-bind:key="task.id"
+      class="task">
+      <p class="title">{{ task.name }}</p>
+      <p class="description">{{ task.description }}</p>
+      <el-row class="checkbox">
+        <el-col :span=12 class="checkbox-item">
+        <el-checkbox
+          :checked="task.workingOn"
+          @change="toggleTaskWorkingOn($event, projectId, task.id)"
+          label="Working On" />
+        </el-col>
+        <el-col :span=12 class="checkbox-item">
+        <el-checkbox
+          :checked="task.completed"
+          @change="toggleTaskCompleted($event, projectId, task.id)"
+          label="Completed" />
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -50,4 +57,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.task {
+  margin-bottom: .5rem;
+  padding: 1rem;
+  border: 1px solid $--lighter-border;
+  border-radius: 4px;
+}
+
+.title {
+  margin: 0;
+}
+
+.description {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.checkbox {
+  padding-top: 1rem;
+  border-top: 1px solid $--lighter-border;
+
+  .checkbox-item {
+    text-align: center;
+  }
+}
 </style>
