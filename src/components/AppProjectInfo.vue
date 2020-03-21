@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link :to="'/project/' + id" class="title-project">
+    <router-link :to="'/project/' + id" class="project-link">
       <h1 class="title">{{ name }}</h1>
     </router-link>
     <el-divider />
@@ -34,7 +34,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.title-project {
+.project-link {
   text-decoration: none;
+}
+
+.title {
+  margin: 0;
+}
+
+.description {
+  margin: 0;
 }
 </style>
