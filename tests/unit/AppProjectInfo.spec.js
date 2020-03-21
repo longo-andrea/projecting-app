@@ -8,7 +8,7 @@ describe('AppProjectInfo', () => {
       propsData: {},
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('.project-title').exists() && wrapper.find('.project-info').exists()).to.be.false;
+    expect(wrapper.find('.title').exists() && wrapper.find('.description').exists()).to.be.false;
   });
   it('has project name', () => {
     const projectName = 'Test Project';
@@ -18,7 +18,7 @@ describe('AppProjectInfo', () => {
       },
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('.project-title').text()).to.equals(projectName);
+    expect(wrapper.find('.title').text()).to.equals(projectName);
   });
   it('has project infos', () => {
     const projectInfos = ['Here will go projec infos.'];
@@ -28,6 +28,6 @@ describe('AppProjectInfo', () => {
       },
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('.project-info').text()).to.equals(projectInfos[0]);
+    expect(wrapper.find('.description').text()).to.equals(projectInfos[0]);
   });
 });

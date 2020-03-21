@@ -11,7 +11,7 @@ describe('AppTask', () => {
       },
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('.task-title').text()).to.equals(taskName);
+    expect(wrapper.find('.title-task').text()).to.equals(taskName);
   });
   it('has task description', () => {
     const taskDescription = 'I have to finish this task!';
@@ -21,7 +21,7 @@ describe('AppTask', () => {
       },
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('.task-subtitle').text()).to.equals(taskDescription);
+    expect(wrapper.find('.description').text()).to.equals(taskDescription);
   });
   it('has task project name info', () => {
     const projectName = 'Test project';
@@ -35,7 +35,7 @@ describe('AppTask', () => {
   });
   it('has task deadline date info', () => {
     const deadlineDate = new Date('2020-03-09');
-    const dateString = `${deadlineDate.getFullYear()}/${deadlineDate.getMonth()}/${deadlineDate.getDate()}`;
+    const dateString = `${deadlineDate.getFullYear()}/${deadlineDate.getMonth() + 1}/${deadlineDate.getDate()}`;
     const wrapper = shallowMount(AppTask, {
       propsData: {
         deadline: deadlineDate.toString(),
@@ -52,7 +52,7 @@ describe('AppTask', () => {
   it('is task information card open after the task name being clicked', () => {
     const wrapper = shallowMount(AppTask);
     /* eslint-disable no-unused-expressions */
-    wrapper.find('.task-title').trigger('click');
+    wrapper.find('.title-task').trigger('click');
     expect(wrapper.vm.$data.isTaskOpen).to.be.true;
   });
 });

@@ -11,17 +11,17 @@ describe('AppDeadline', () => {
       },
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('.deadline-title').text()).to.equals(projectName);
+    expect(wrapper.find('.title').text()).to.equals(projectName);
   });
   it('has deadline date', () => {
     const deadlineDate = new Date('2020-03-09');
-    const dateString = `${deadlineDate.getFullYear()}/${deadlineDate.getMonth()}/${deadlineDate.getDate()}`;
+    const dateString = `${deadlineDate.getFullYear()}/${deadlineDate.getMonth() + 1}/${deadlineDate.getDate()}`;
     const wrapper = shallowMount(AppDeadline, {
       propsData: {
         date: deadlineDate.toString(),
       },
     });
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.find('.deadline-date').text()).to.equals(dateString);
+    expect(wrapper.find('.description').text()).to.equals(dateString);
   });
 });

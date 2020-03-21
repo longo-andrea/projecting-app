@@ -33,7 +33,7 @@ export default {
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
-      return `${year}/${month}/${day}`;
+      return `${year}/${month + 1}/${day}`;
     },
     daysToDeadline() {
       const deadlineDate = new Date(this.date);

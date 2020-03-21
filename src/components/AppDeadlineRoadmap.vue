@@ -92,7 +92,7 @@ export default {
       const year = dateObject.getFullYear();
       const month = dateObject.getMonth();
       const day = dateObject.getDate();
-      return `${year}/${month}/${day}`;
+      return `${year}/${month + 1}/${day}`;
     },
   },
 };
