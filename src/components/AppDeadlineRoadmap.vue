@@ -4,27 +4,42 @@
       <el-collapse-item
         v-for="deadline in deadlines"
         v-bind:key="deadline.id"
-        :title="'Deadline ' + (deadline.id + 1) + ' - ' + getStringfiyDate(deadline.date)"
         :name="deadline.id">
+        <template slot="title">
+          <span class="title title-deadline">
+            Deadline {{ deadline.id + 1 }}
+          </span>
+          - {{ getStringfiyDate(deadline.date) }}
+        </template>
         <app-deadline-task
           v-bind:projectId="projectId"
           v-bind:tasks="getDeadlineTasks(tasks, deadline.id)" />
-        <el-form
-          :inline="true"
-          :model="addTaskForm"
-          :rules="rules"
-          :hide-required-asterisk="true"
-          ref="addTaskForm">
-          <el-form-item label="Task name" prop="taskName">
-            <el-input v-model="addTaskForm.taskName" placeholder="Type task name" />
-          </el-form-item>
-          <el-form-item label="Task description" prop="taskDescription">
-            <el-input type="textarea" v-model="addTaskForm.taskDescription" placeholder="Type task description" />
-          </el-form-item>
-          <el-form-item>
+        <el-button
+          type="plain"
+          @click="isAddTaskDialogVisible = true">
+            Add Task
+        </el-button>
+        <el-dialog
+          title="Add Task"
+          :visible.sync="isAddTaskDialogVisible"
+          width="80%">
+          <el-form
+            :model="addTaskForm"
+            :rules="rules"
+            :hide-required-asterisk="true"
+            ref="addTaskForm">
+            <el-form-item label="Task name" prop="taskName">
+              <el-input v-model="addTaskForm.taskName" placeholder="Type task name" />
+            </el-form-item>
+            <el-form-item label="Task description" prop="taskDescription">
+              <el-input type="textarea" v-model="addTaskForm.taskDescription" placeholder="Type task description" />
+            </el-form-item>
+          </el-form>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="isAddTaskDialogVisible = false">Cancel</el-button>
             <el-button type="primary" @click="submitAddTask('addTaskForm', deadline.id)">Add Task</el-button>
-          </el-form-item>
-        </el-form>
+          </span>
+        </el-dialog>
       </el-collapse-item>
     </el-collapse>
   </div>
@@ -55,6 +70,7 @@ export default {
   data() {
     return {
       activeDeadline: [0],
+      isAddTaskDialogVisible: false,
       addTaskForm: {
         taskName: '',
         taskDescription: '',
@@ -83,6 +99,7 @@ export default {
           });
           // reset the form
           this.$refs[formName][deadlineId].resetFields();
+          this.isAddTaskDialogVisible = false;
         }
       });
     },
@@ -98,4 +115,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title-deadline {
+  margin: .3rem;
+  font-weight: $--font-bold;
+  font-size: 1rem;
+}
 </style>
