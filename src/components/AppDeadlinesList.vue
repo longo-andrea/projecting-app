@@ -46,6 +46,7 @@ export default {
     height: 30vh;
     display: flex;
     flex-wrap: wrap;
+    align-content: start;
 
     .deadline-item {
       margin-left: 2.5%;
