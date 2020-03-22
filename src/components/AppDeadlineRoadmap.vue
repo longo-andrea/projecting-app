@@ -6,10 +6,21 @@
         v-bind:key="deadline.id"
         :name="deadline.id">
         <template slot="title">
-          <span class="title title-deadline">
-            Deadline {{ deadline.id + 1 }}
-          </span>
-          - {{ getStringfiyDate(deadline.date) }}
+          <el-row
+            type="flex"
+            justify="middle">
+            <el-col :span=2>
+              <el-checkbox
+                :checked="deadline.completed"
+                @change="toggleDeadline($event, projectId, deadline.id)"/>
+            </el-col>
+            <el-col :span=22>
+              <span class="title title-deadline">
+                Deadline {{ deadline.id + 1 }}
+              </span>
+              - {{ getStringfiyDate(deadline.date) }}
+            </el-col>
+          </el-row>
         </template>
         <app-deadline-task
           v-bind:projectId="projectId"
@@ -110,6 +121,13 @@ export default {
       const month = dateObject.getMonth();
       const day = dateObject.getDate();
       return `${year}/${month + 1}/${day}`;
+    },
+    toggleDeadline(event, projectId, deadlineId) {
+      if (event) {
+        this.$store.commit('completeDeadline', { projectId, deadlineId });
+      } else {
+        this.$store.commit('uncompleteDeadline', { projectId, deadlineId });
+      }
     },
   },
 };
