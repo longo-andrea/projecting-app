@@ -6,8 +6,10 @@
       class="deadline-item"
       shadow="hover">
       <app-deadline
-        v-bind:project="deadline.projectName"
-        v-bind:date="deadline.deadlineDate" />
+        v-bind:projectId="deadline.projectId"
+        v-bind:projectName="deadline.projectName"
+        v-bind:deadlineId="deadline.deadlineId"
+        v-bind:deadlineDate="deadline.deadlineDate" />
     </el-card>
   </div>
 </template>

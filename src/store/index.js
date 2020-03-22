@@ -106,6 +106,32 @@ export const getters = {
 
 export const mutations = {
   /**
+   * Set selected deadline as completed and unmark all its tasks as Working On
+   *
+   * @param {state} object the vuex state object.
+   * @param {projectId} number represents the project's id.
+   * @param {deadlineId} number represents deadline's id
+   */
+  completeDeadline: (state, {
+    projectId,
+    deadlineId,
+  }) => {
+    // set deadline as completed
+    state.projects[projectId].deadlines.forEach((deadline) => {
+      if (deadline.id === deadlineId) {
+        /* eslint-disable no-param-reassign */
+        deadline.completed = true;
+      }
+    });
+
+    // unset WokingOn on deadline's tasks
+    state.projects[projectId].tasks.forEach((task) => {
+      if (task.deadlineIndex === deadlineId) {
+        task.workingOn = false;
+      }
+    });
+  },
+  /**
    * Set selected task as completed
    *
    * @param {state} object the vuex state object.

@@ -3,15 +3,17 @@
     <el-row
       type="flex"
       align="middle">
-      <el-col :span="16">
-        <h1 class="title">{{ project }}</h1>
-        <p class="description">{{ deadlineDate }}</p>
+      <el-col :span=2>
+        <el-checkbox @change="completeDeadline(projectId, deadlineId)"/>
       </el-col>
-      <el-col :span="8">
+      <el-col :span=14>
+        <h1 class="title">{{ projectName }}</h1>
+        <p class="description">{{ deadlineDateString }}</p>
+      </el-col>
+      <el-col :span=8>
         <h2 class="subtitle"
           :class="{ 'incoming-deadline-warning': incomingDeadline,
-                  'incoming-deadline-danger': expiredDeadline }"
-        >
+                  'incoming-deadline-danger': expiredDeadline }">
           {{ daysToDeadline }}
         </h2>
       </el-col>
@@ -23,18 +25,26 @@
 export default {
   name: 'AppDeadline',
   props: {
-    project: {
+    projectId: {
+      type: Number,
+      required: true,
+    },
+    projectName: {
       type: String,
       required: true,
     },
-    date: {
+    deadlineId: {
+      type: Number,
+      required: true,
+    },
+    deadlineDate: {
       type: String,
       required: true,
     },
   },
   computed: {
-    deadlineDate() {
-      const date = new Date(this.date);
+    deadlineDateString() {
+      const date = new Date(this.deadlineDate);
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -42,7 +52,7 @@ export default {
       return `${year}/${month + 1}/${day}`;
     },
     daysToDeadline() {
-      const deadlineDate = new Date(this.date);
+      const deadlineDate = new Date(this.deadlineDate);
       const currentDate = new Date(Date.now());
       let timeLeft = deadlineDate - currentDate;
 
@@ -61,7 +71,7 @@ export default {
       return daysLeft > 1 ? `${daysLeft} days ago` : `${daysLeft} day ago`;
     },
     incomingDeadline() {
-      const deadlineDate = new Date(this.date);
+      const deadlineDate = new Date(this.deadlineDate);
       const currentDate = new Date(Date.now());
       const timeLeft = deadlineDate - currentDate;
 
@@ -82,7 +92,7 @@ export default {
       return false;
     },
     expiredDeadline() {
-      const deadlineDate = new Date(this.date);
+      const deadlineDate = new Date(this.deadlineDate);
       const currentDate = new Date(Date.now());
       const timeLeft = deadlineDate - currentDate;
 
@@ -94,7 +104,11 @@ export default {
       // if deadline isn't still expired
       return false;
     },
-
+  },
+  methods: {
+    completeDeadline(projectId, deadlineId) {
+      this.$store.commit('completeDeadline', { projectId, deadlineId });
+    },
   },
 };
 </script>
