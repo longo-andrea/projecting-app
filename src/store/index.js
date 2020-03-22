@@ -130,7 +130,7 @@ export const mutations = {
     if (state.projects[projectId].tasks) {
       state.projects[projectId].tasks.forEach((task) => {
         if (task.deadlineIndex === deadlineId) {
-          task.workingOn = false;
+          Vue.set(task, 'workingOn', false);
         }
       });
     }

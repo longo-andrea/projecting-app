@@ -25,6 +25,7 @@
         <app-deadline-task
           v-bind:projectId="projectId"
           v-bind:tasks="getDeadlineTasks(tasks, deadline.id)"
+          :key="deadlineKey"
           class="task-item" />
         <el-button
           type="plain"
@@ -81,6 +82,7 @@ export default {
   },
   data() {
     return {
+      deadlineKey: 0,
       activeDeadline: [0],
       isAddTaskDialogVisible: false,
       addTaskForm: {
@@ -98,7 +100,9 @@ export default {
     };
   },
   methods: {
-    getDeadlineTasks: (tasks, index) => tasks.filter((task) => task.deadlineIndex === index),
+    getDeadlineTasks(tasks, index) {
+      return tasks.filter((task) => task.deadlineIndex === index);
+    },
     submitAddTask(formName, deadlineId) {
       this.$refs[formName][deadlineId].validate((valid) => {
         if (valid) {
@@ -125,9 +129,14 @@ export default {
     toggleDeadline(event, projectId, deadlineId) {
       if (event) {
         this.$store.commit('completeDeadline', { projectId, deadlineId });
+        this.rerenderTasks();
       } else {
         this.$store.commit('uncompleteDeadline', { projectId, deadlineId });
+        this.rerenderTasks();
       }
+    },
+    rerenderTasks() {
+      this.deadlineKey += 1;
     },
   },
 };
