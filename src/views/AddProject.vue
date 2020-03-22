@@ -40,7 +40,7 @@
           @click="addDeadline"
           :disabled="!isLastDeadlinesDateDefined || isDeadlinesDateFull"
           class="button">
-          New deadline
+          Add
         </el-button>
         <el-button
           @click="removeDeadline"
@@ -51,7 +51,7 @@
         <el-button
           @click="submitForm('addProjectForm')"
           type="primary"
-          class="button">Add Project</el-button>
+          class="button" id="submit-button">Add Project</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -174,8 +174,12 @@ export default {
 
 <style lang="scss" scoped>
 .button {
-  display: block;
-  margin: 2rem 0;
+  margin: 1rem 0;
+  margin-right: .5rem;
+
+  &#submit-button {
+    display: block;
+  }
 }
 .deadline-error {
   color: $--danger;
