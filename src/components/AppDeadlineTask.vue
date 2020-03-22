@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="tasks-list">
     <div
       v-for="task in tasks"
       v-bind:key="task.id"
-      class="task">
+      class="task-item">
       <p class="title">{{ task.name }}</p>
       <p class="description">{{ task.description }}</p>
       <el-row class="checkbox">
@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.task {
+.task-item {
   margin-bottom: .5rem;
   padding: 1rem;
   border: 1px solid $--lighter-border;
@@ -79,6 +79,40 @@ export default {
 
   .checkbox-item {
     text-align: center;
+  }
+}
+
+@media screen and (min-width: $--md-screen) {
+  .tasks-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    .task-item {
+      flex-basis: 48%;
+
+      &:not(:nth-child(2n)) {
+        margin-right: 4%;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: $--bg-screen) {
+  .tasks-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    .task-item {
+      flex-basis: 30%;
+
+      &:not(:nth-child(2n)) {
+        margin-right: 0;
+      }
+
+      &:not(:nth-child(3n)) {
+        margin-right: 5%;
+      }
+    }
   }
 }
 </style>

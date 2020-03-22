@@ -13,7 +13,8 @@
         </template>
         <app-deadline-task
           v-bind:projectId="projectId"
-          v-bind:tasks="getDeadlineTasks(tasks, deadline.id)" />
+          v-bind:tasks="getDeadlineTasks(tasks, deadline.id)"
+          class="task-item" />
         <el-button
           type="plain"
           @click="isAddTaskDialogVisible = true">
@@ -119,9 +120,5 @@ export default {
   margin: .3rem;
   font-weight: $--font-bold;
   font-size: $--font-size-base;
-}
-
-@media screen and (min-width: $--md-screen) {
-
 }
 </style>
