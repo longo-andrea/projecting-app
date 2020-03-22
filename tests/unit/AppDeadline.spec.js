@@ -7,7 +7,7 @@ describe('AppDeadline', () => {
     const projectName = 'Test Project';
     const wrapper = shallowMount(AppDeadline, {
       propsData: {
-        project: projectName,
+        projectName,
       },
     });
     /* eslint-disable no-unused-expressions */
@@ -18,7 +18,7 @@ describe('AppDeadline', () => {
     const dateString = `${deadlineDate.getFullYear()}/${deadlineDate.getMonth() + 1}/${deadlineDate.getDate()}`;
     const wrapper = shallowMount(AppDeadline, {
       propsData: {
-        date: deadlineDate.toString(),
+        deadlineDate: deadlineDate.toString(),
       },
     });
     /* eslint-disable no-unused-expressions */
@@ -31,7 +31,7 @@ describe('AppDeadline', () => {
     const daysLeft = Math.ceil(timeLeft / (1000 * 60 * 60 * 24));
     const wrapper = shallowMount(AppDeadline, {
       propsData: {
-        date: deadlineDate.toString(),
+        deadlineDate: deadlineDate.toString(),
       },
     });
     /* eslint-disable no-unused-expressions */

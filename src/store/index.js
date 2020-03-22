@@ -117,19 +117,23 @@ export const mutations = {
     deadlineId,
   }) => {
     // set deadline as completed
-    state.projects[projectId].deadlines.forEach((deadline) => {
-      if (deadline.id === deadlineId) {
-        /* eslint-disable no-param-reassign */
-        deadline.completed = true;
-      }
-    });
+    if (state.projects[projectId].deadlines) {
+      state.projects[projectId].deadlines.forEach((deadline) => {
+        if (deadline.id === deadlineId) {
+          /* eslint-disable no-param-reassign */
+          deadline.completed = true;
+        }
+      });
+    }
 
     // unset WokingOn on deadline's tasks
-    state.projects[projectId].tasks.forEach((task) => {
-      if (task.deadlineIndex === deadlineId) {
-        task.workingOn = false;
-      }
-    });
+    if (state.projects[projectId].tasks) {
+      state.projects[projectId].tasks.forEach((task) => {
+        if (task.deadlineIndex === deadlineId) {
+          task.workingOn = false;
+        }
+      });
+    }
   },
   /**
    * Set selected task as completed
