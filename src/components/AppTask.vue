@@ -9,7 +9,7 @@
       <el-col :span="22">
         <h1
           @click="toggleTask()"
-          class="title">{{ name }} {{ isDesktop }} </h1>
+          class="title">{{ name }}</h1>
       </el-col>
     </el-row>
     <el-collapse-transition>
