@@ -102,6 +102,20 @@ export const getters = {
     }
     return incomingDeadlines;
   },
+  /**
+   * Return a function that check whether given deadline is completed
+   *
+   * @param {state} object the vuex state object.
+   * @return {Function} which return if given deadline fot given project is completed
+   */
+  isDeadlineCompleted: (state) => (projectId, deadlineId) => {
+    if (state.projects[projectId]) {
+      if (state.projects[projectId].deadlines.find((deadline) => deadline.id === deadlineId).completed === true) {
+        return true;
+      }
+    }
+    return false;
+  },
 };
 
 export const mutations = {

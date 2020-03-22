@@ -397,4 +397,27 @@ describe('getters', () => {
       },
     ]);
   });
+  it('get an array with incoming deadlines on different projects', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project name',
+          infos: ['project infos will be here'],
+          completed: false,
+          deadlines: [
+            {
+              id: 0,
+              date: '2020/03/04',
+              completed: true,
+            },
+          ],
+        },
+      ],
+    };
+    const result = getters.isDeadlineCompleted(state)(0, 0);
+
+    /* eslint-disable no-unused-expressions */
+    expect(result).to.be.true;
+  });
 });
