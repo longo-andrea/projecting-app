@@ -11,6 +11,7 @@
         <el-checkbox
           :checked="task.workingOn"
           @change="toggleTaskWorkingOn($event, projectId, task.id)"
+          :key="workingOnCheckboxKey"
           label="Working On" />
         </el-col>
         <el-col :span=12 class="checkbox-item">
@@ -37,6 +38,11 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      workingOnCheckboxKey: 0,
+    };
+  },
   methods: {
     toggleTaskCompleted(event, projectId, taskId) {
       if (event) {
@@ -47,7 +53,15 @@ export default {
     },
     toggleTaskWorkingOn(event, projectId, taskId) {
       if (event) {
-        this.$store.commit('workingOnTask', { projectId, taskId });
+        try {
+          this.$store.commit('workingOnTask', { projectId, taskId });
+        } catch (error) {
+          this.$message({
+            message: error,
+            type: 'error',
+          });
+          this.workingOnCheckboxKey += 1;
+        }
       } else {
         this.$store.commit('unworkingOnTask', { projectId, taskId });
       }

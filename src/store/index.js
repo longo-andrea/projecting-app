@@ -229,18 +229,19 @@ export const mutations = {
     projectId,
     taskId,
   }) => {
-    for (let i = 0; i < state.projects.length; i += 1) {
-      if (state.projects[i].id === projectId) {
-        for (let j = 0; j < state.projects[i].tasks.length; j += 1) {
-          if (state.projects[i].tasks[j].id === taskId) {
-            /* eslint-disable no-param-reassign */
-            state.projects[i].tasks[j].workingOn = true;
-            break;
+    state.projects.forEach((project) => {
+      if (project.id === projectId) {
+        project.tasks.forEach((task) => {
+          if (task.id === taskId) {
+            if (!state.projects[projectId].deadlines[task.deadlineIndex].completed) {
+              Vue.set(task, 'workingOn', true);
+            } else {
+              throw new Error('You can\'t set a task as working on if dealines is completed!');
+            }
           }
-        }
-        break;
+        });
       }
-    }
+    });
   },
   /**
    * Unset task as working on
