@@ -38,10 +38,13 @@ export default {
   .projects-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 
     .project-item {
       flex-basis: 48%;
+
+      &:not(:nth-child(2n)) {
+        margin-right: 4%;
+      }
     }
   }
 }
@@ -52,7 +55,15 @@ export default {
     flex-wrap: wrap;
 
     .project-item {
-      flex-basis: 33%;
+      flex-basis: 30%;
+
+      &:not(:nth-child(2n)) {
+        margin-right: 0;
+      }
+
+      &:not(:nth-child(3n)) {
+        margin-right: 5%;
+      }
     }
   }
 }

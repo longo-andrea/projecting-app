@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-collapse v-model="activeDeadline">
+  <div class="deadlines-list">
+    <el-collapse v-model="activeDeadline" class="deadline-item">
       <el-collapse-item
         v-for="deadline in deadlines"
         v-bind:key="deadline.id"
@@ -119,5 +119,9 @@ export default {
   margin: .3rem;
   font-weight: $--font-bold;
   font-size: $--font-size-base;
+}
+
+@media screen and (min-width: $--md-screen) {
+
 }
 </style>
