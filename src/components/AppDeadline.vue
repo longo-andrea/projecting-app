@@ -67,7 +67,6 @@ export default {
       // if deadline date is expired
       timeLeft = Math.abs(timeLeft);
       const daysLeft = Math.ceil(timeLeft / (1000 * 60 * 60 * 24));
-
       return daysLeft > 1 ? `${daysLeft} days ago` : `${daysLeft} day ago`;
     },
     incomingDeadline() {
