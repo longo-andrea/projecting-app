@@ -136,6 +136,27 @@ export const mutations = {
     }
   },
   /**
+   * Unset selected deadline as completed and unmark all its tasks as Working On
+   *
+   * @param {state} object the vuex state object.
+   * @param {projectId} number represents the project's id.
+   * @param {deadlineId} number represents deadline's id
+   */
+  uncompleteDeadline: (state, {
+    projectId,
+    deadlineId,
+  }) => {
+    // set deadline as completed
+    if (state.projects[projectId].deadlines) {
+      state.projects[projectId].deadlines.forEach((deadline) => {
+        if (deadline.id === deadlineId) {
+          /* eslint-disable no-param-reassign */
+          deadline.completed = false;
+        }
+      });
+    }
+  },
+  /**
    * Set selected task as completed
    *
    * @param {state} object the vuex state object.
