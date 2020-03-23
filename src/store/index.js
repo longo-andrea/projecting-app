@@ -26,6 +26,7 @@ export const getters = {
     if (state.projects) {
       state.projects.forEach((project) => projects.push(project));
     }
+
     return projects;
   },
   /**
@@ -47,6 +48,7 @@ export const getters = {
         }
       });
     }
+
     return activeProjects;
   },
   /**
@@ -119,6 +121,20 @@ export const getters = {
 };
 
 export const mutations = {
+  /**
+   * Set selected project as completed
+   *
+   * @param {state} object the vuex state object.
+   * @param {projectId} number represents the project's id.
+   */
+  completeProject: (state, {
+    projectId,
+  }) => {
+    if (state.projects[projectId]) {
+      /* eslint-disable no-param-reassign */
+      state.projects[projectId].completed = true;
+    }
+  },
   /**
    * Set selected deadline as completed and unmark all its tasks as Working On
    *
