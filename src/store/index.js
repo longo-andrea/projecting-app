@@ -158,6 +158,20 @@ export const mutations = {
     }
   },
   /**
+   * Unset selected project as completed
+   *
+   * @param {state} object the vuex state object.
+   * @param {projectId} number represents the project's id.
+   */
+  uncompleteProject: (state, {
+    projectId,
+  }) => {
+    if (state.projects[projectId]) {
+      /* eslint-disable no-param-reassign */
+      state.projects[projectId].completed = false;
+    }
+  },
+  /**
    * Set all selected project's deadlines as completed
    *
    * @param {state} object the vuex state object.

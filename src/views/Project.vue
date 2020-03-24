@@ -1,6 +1,7 @@
 <template>
   <div>
     <app-project-header
+      v-bind:projectId="currentProjectId"
       v-bind:projectName="projectName"
       v-bind:projectInfo="projectInfo"
       class="section section-first" />
