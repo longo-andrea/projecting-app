@@ -222,15 +222,6 @@ export const mutations = {
         }
       });
     }
-
-    // unset WokingOn on deadline's tasks
-    if (state.projects[projectId].tasks) {
-      state.projects[projectId].tasks.forEach((task) => {
-        if (task.deadlineIndex === deadlineId) {
-          Vue.set(task, 'workingOn', false);
-        }
-      });
-    }
   },
   /**
    * Unset selected deadline as completed and unmark all its tasks as Working On
@@ -447,6 +438,17 @@ export const actions = {
     commit('completeProject', { projectId });
     commit('completeProjectDeadlines', { projectId });
     commit('completeProjectTasks', { projectId });
+  },
+  /**
+   * Set selected project as completed and all its deadlines and tasks
+   * are marked as completed
+   *
+   * @param {commit} object the vuex state object.
+   * @param {projectId} number represents the project's id.
+   */
+  completeDeadline({ commit }, projectId, deadlineId) {
+    commit('completeDeadline', { projectId, deadlineId });
+    commit('unworkingOnDeadlineTasks', { projectId, deadlineId });
   },
 };
 
