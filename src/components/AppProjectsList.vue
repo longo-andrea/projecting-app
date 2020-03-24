@@ -12,18 +12,30 @@
           class="project-item" />
       </el-card>
     </div>
-    <div class="projects-list">
-      <el-card
-        v-for="project in completedProjects"
-        v-bind:key="project.name"
-        class="project-item">
-        <app-project-info
-          v-bind:id="project.id"
-          v-bind:name="project.name"
-          v-bind:infos="project.infos"
-          class="project-item" />
-      </el-card>
-    </div>
+      <el-button
+        type="text"
+        class="button-completed-projects"
+        @click="toggleCompletedProjects"
+        :disabled="completedProjects.length === 0">
+        See all completed projects
+      </el-button>
+    <el-collapse-transition>
+      <div
+        v-show="isCompletedProjectsOpen"
+        class="projects-list">
+        <el-card
+          v-for="project in completedProjects"
+          v-bind:key="project.name"
+          class="project-item">
+          <app-project-info
+            v-bind:id="project.id"
+            v-bind:name="project.name"
+            v-bind:infos="project.infos"
+            v-bind:disabled=true
+            class="project-item" />
+        </el-card>
+      </div>
+    </el-collapse-transition>
   </div>
 </template>
 
@@ -35,6 +47,11 @@ export default {
   components: {
     AppProjectInfo,
   },
+  data() {
+    return {
+      isCompletedProjectsOpen: false,
+    };
+  },
   computed: {
     activeProjects() {
       return this.$store.getters.getActiveProjects;
@@ -43,12 +60,26 @@ export default {
       return this.$store.getters.getCompletedProjects;
     },
   },
+  methods: {
+    toggleCompletedProjects() {
+      this.isCompletedProjectsOpen = !this.isCompletedProjectsOpen;
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
 .project-item {
   margin-bottom: 1.2rem;
+
+  &.completed-project-item {
+    background: $--disabled;
+  }
+}
+
+.button-completed-projects {
+  display: block;
+  margin: 2rem auto;
 }
 
 @media screen and (min-width: $--md-screen) {
