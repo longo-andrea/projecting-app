@@ -466,7 +466,7 @@ export const actions = {
    * @param {commit} object the vuex state object.
    * @param {projectId} number represents the project's id.
    */
-  completeDeadline({ commit }, projectId, deadlineId) {
+  completeDeadline({ commit }, { projectId, deadlineId }) {
     commit('completeDeadline', { projectId, deadlineId });
     commit('unworkingOnDeadlineTasks', { projectId, deadlineId });
   },
