@@ -19,7 +19,7 @@ export const getters = {
    * Get projects list
    *
    * @param {state} object the vuex state object.
-   * @return {Array} array of objects that represents the projects
+   * @return {Array} array of objects that contains all projects
    */
   getProjects: (state) => {
     const projects = [];
@@ -33,7 +33,7 @@ export const getters = {
    * Get active projects
    *
    * @param {state} object the vuex state object.
-   * @return {Array} array of objects that contains working on tasks' information.
+   * @return {Array} array of objects that contains working on projects
    */
   getActiveProjects: (state) => {
     const activeProjects = [];
@@ -50,6 +50,28 @@ export const getters = {
     }
 
     return activeProjects;
+  },
+  /**
+   * Get completed projects
+   *
+   * @param {state} object the vuex state object.
+   * @return {Array} array of objects that contains completed projects
+   */
+  getCompletedProjects: (state) => {
+    const completedProjects = [];
+    if (state.projects) {
+      state.projects.forEach((project) => {
+        if (project.completed) {
+          completedProjects.push({
+            id: project.id,
+            name: project.name,
+            infos: project.infos,
+          });
+        }
+      });
+    }
+
+    return completedProjects;
   },
   /**
    * Get the working on tasks
@@ -136,22 +158,6 @@ export const mutations = {
     }
   },
   /**
-   * Set all selected project's tasks as completed and unWorkingOn
-   *
-   * @param {state} object the vuex state object.
-   * @param {projectId} number represents the project's id.
-   */
-  completeProjectTasks: (state, {
-    projectId,
-  }) => {
-    if (state.projects[projectId]) {
-      state.projects[projectId].tasks.forEach((task) => {
-        task.completed = true;
-        task.workingOn = false;
-      });
-    }
-  },
-  /**
    * Set all selected project's deadlines as completed
    *
    * @param {state} object the vuex state object.
@@ -160,9 +166,25 @@ export const mutations = {
   completeProjectDeadlines: (state, {
     projectId,
   }) => {
-    if (state.projects[projectId]) {
+    if (state.projects[projectId].deadlines) {
       state.projects[projectId].deadlines.forEach((deadline) => {
         deadline.completed = true;
+      });
+    }
+  },
+  /**
+   * Set all selected project's tasks as completed and unWorkingOn
+   *
+   * @param {state} object the vuex state object.
+   * @param {projectId} number represents the project's id.
+   */
+  completeProjectTasks: (state, {
+    projectId,
+  }) => {
+    if (state.projects[projectId].tasks) {
+      state.projects[projectId].tasks.forEach((task) => {
+        task.completed = true;
+        task.workingOn = false;
       });
     }
   },

@@ -1,15 +1,29 @@
 <template>
-  <div class="projects-list">
-    <el-card
-      v-for="project in activeProjects"
-      v-bind:key="project.name"
-      class="project-item">
-      <app-project-info
-        v-bind:id="project.id"
-        v-bind:name="project.name"
-        v-bind:infos="project.infos"
-        class="project-item" />
-    </el-card>
+  <div>
+    <div class="projects-list">
+      <el-card
+        v-for="project in activeProjects"
+        v-bind:key="project.name"
+        class="project-item">
+        <app-project-info
+          v-bind:id="project.id"
+          v-bind:name="project.name"
+          v-bind:infos="project.infos"
+          class="project-item" />
+      </el-card>
+    </div>
+    <div class="projects-list">
+      <el-card
+        v-for="project in completedProjects"
+        v-bind:key="project.name"
+        class="project-item">
+        <app-project-info
+          v-bind:id="project.id"
+          v-bind:name="project.name"
+          v-bind:infos="project.infos"
+          class="project-item" />
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -24,6 +38,9 @@ export default {
   computed: {
     activeProjects() {
       return this.$store.getters.getActiveProjects;
+    },
+    completedProjects() {
+      return this.$store.getters.getCompletedProjects;
     },
   },
 };
