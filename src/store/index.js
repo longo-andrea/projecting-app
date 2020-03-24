@@ -135,6 +135,16 @@ export const mutations = {
       state.projects[projectId].completed = true;
     }
   },
+  completeProjectTasks: (state, {
+    projectId,
+  }) => {
+    if (state.projects[projectId]) {
+      state.projects[projectId].tasks.forEach((task) => {
+        task.completed = true;
+        task.workingOn = false;
+      });
+    }
+  },
   /**
    * Set selected deadline as completed and unmark all its tasks as Working On
    *
@@ -368,10 +378,18 @@ export const mutations = {
   },
 };
 
+export const actions = {
+  completeProject({ commit }, projectId) {
+    commit('completeProject', { projectId });
+    commit('completeProjectTasks', { projectId });
+  },
+};
+
 const store = new Vuex.Store({
   state,
   getters,
   mutations,
+  actions,
 });
 
 store.subscribe((mutation, state) => {

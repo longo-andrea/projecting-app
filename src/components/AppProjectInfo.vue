@@ -4,6 +4,7 @@
       <h1 class="title">{{ name }}</h1>
     </router-link>
     <el-divider />
+    <p @click="completeProject(id)">Hello</p>
     <p
       v-for="(info, index) in infos"
       v-bind:key="index"
@@ -28,6 +29,11 @@ export default {
     infos: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    completeProject(projectId) {
+      this.$store.dispatch('completeProject', projectId);
     },
   },
 };
