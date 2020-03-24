@@ -135,6 +135,12 @@ export const mutations = {
       state.projects[projectId].completed = true;
     }
   },
+  /**
+   * Set all selected project's tasks as completed and unWorkingOn
+   *
+   * @param {state} object the vuex state object.
+   * @param {projectId} number represents the project's id.
+   */
   completeProjectTasks: (state, {
     projectId,
   }) => {
@@ -145,6 +151,12 @@ export const mutations = {
       });
     }
   },
+  /**
+   * Set all selected project's deadlines as completed
+   *
+   * @param {state} object the vuex state object.
+   * @param {projectId} number represents the project's id.
+   */
   completeProjectDeadlines: (state, {
     projectId,
   }) => {
@@ -388,10 +400,17 @@ export const mutations = {
 };
 
 export const actions = {
+  /**
+   * Set selected project as completed and all its deadlines and tasks
+   * are marked as completed
+   *
+   * @param {commit} object the vuex state object.
+   * @param {projectId} number represents the project's id.
+   */
   completeProject({ commit }, projectId) {
     commit('completeProject', { projectId });
-    commit('completeProjectTasks', { projectId });
     commit('completeProjectDeadlines', { projectId });
+    commit('completeProjectTasks', { projectId });
   },
 };
 

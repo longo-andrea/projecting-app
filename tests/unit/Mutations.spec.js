@@ -2,6 +2,89 @@ import { expect } from 'chai';
 import { mutations } from '../../src/store/index';
 
 describe('mutations', () => {
+  it('is project completed', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: false,
+        },
+      ],
+    };
+    expect(state.projects[0].completed).to.be.false;
+    mutations.completeProject(state, { projectId: 0 });
+    expect(state.projects[0].completed).to.be.true;
+  });
+  it('is all project\'s deadlines completed ', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: false,
+          deadlines: [
+            {
+              id: 0,
+              date: '2020-03-05',
+              completed: false,
+            },
+            {
+              id: 1,
+              date: '2020-03-05',
+              completed: false,
+            },
+          ],
+        },
+      ],
+    };
+    expect(state.projects[0].deadlines[0].completed).to.be.false;
+    expect(state.projects[0].deadlines[1].completed).to.be.false;
+    mutations.completeProjectDeadlines(state, { projectId: 0 });
+    expect(state.projects[0].deadlines[0].completed).to.be.true;
+    expect(state.projects[0].deadlines[1].completed).to.be.true;
+  });
+  it('is all project\'s tasks completed ', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: false,
+          tasks: [
+            {
+              id: 1,
+              name: 'Task 1',
+              description: 'I have to finish this tasks!',
+              deadlineIndex: 0,
+              completed: false,
+              workingOn: true,
+            },
+            {
+              id: 2,
+              name: 'Task 1',
+              description: 'I have to finish this tasks!',
+              deadlineIndex: 0,
+              completed: false,
+              workingOn: true,
+            },
+          ],
+        },
+      ],
+    };
+    expect(state.projects[0].tasks[0].completed).to.be.false;
+    expect(state.projects[0].tasks[0].workingOn).to.be.true;
+    expect(state.projects[0].tasks[1].completed).to.be.false;
+    expect(state.projects[0].tasks[1].workingOn).to.be.true;
+    mutations.completeProjectTasks(state, { projectId: 0 });
+    expect(state.projects[0].tasks[0].completed).to.be.true;
+    expect(state.projects[0].tasks[0].workingOn).to.be.false;
+    expect(state.projects[0].tasks[1].completed).to.be.true;
+    expect(state.projects[0].tasks[1].workingOn).to.be.false;
+  });
   it('is deadline completed', () => {
     const state = {
       projects: [
