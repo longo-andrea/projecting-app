@@ -122,7 +122,51 @@ describe('mutations', () => {
     mutations.completeDeadline(state, { projectId: 0, deadlineId: 0 });
     expect(state.projects[0].deadlines[0].completed).to.be.true;
   });
-  it('is deadline completed and tasks unworking on', () => {
+  it('is deadline completed', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: false,
+          deadlines: [
+            {
+              id: 0,
+              date: '2020-03-05',
+              completed: false,
+            },
+          ],
+        },
+      ],
+    };
+    expect(state.projects[0].deadlines[0].completed).to.be.false;
+    mutations.completeDeadline(state, { projectId: 0, deadlineId: 0 });
+    expect(state.projects[0].deadlines[0].completed).to.be.true;
+  });
+  it('is deadline completed unset', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: false,
+          deadlines: [
+            {
+              id: 0,
+              date: '2020-03-05',
+              completed: true,
+            },
+          ],
+        },
+      ],
+    };
+    expect(state.projects[0].deadlines[0].completed).to.be.true;
+    mutations.uncompleteDeadline(state, { projectId: 0, deadlineId: 0 });
+    expect(state.projects[0].deadlines[0].completed).to.be.false;
+  });
+  it('is deadline\'s task unworking on when deadline is completed', () => {
     const state = {
       projects: [
         {
@@ -148,45 +192,21 @@ describe('mutations', () => {
             },
             {
               id: 1,
-              name: 'Task 2',
+              name: 'Task 1',
               description: 'I have to finish this tasks!',
               deadlineIndex: 0,
               completed: false,
-              workingOn: false,
+              workingOn: true,
             },
           ],
         },
       ],
     };
-    expect(state.projects[0].deadlines[0].completed).to.be.false;
     expect(state.projects[0].tasks[0].workingOn).to.be.true;
-    expect(state.projects[0].tasks[1].workingOn).to.be.false;
-    mutations.completeDeadline(state, { projectId: 0, deadlineId: 0 });
-    expect(state.projects[0].deadlines[0].completed).to.be.true;
+    expect(state.projects[0].tasks[1].workingOn).to.be.true;
+    mutations.unworkingOnDeadlineTasks(state, { projectId: 0, deadlineId: 0 });
     expect(state.projects[0].tasks[0].workingOn).to.be.false;
     expect(state.projects[0].tasks[1].workingOn).to.be.false;
-  });
-  it('is deadline completed unset', () => {
-    const state = {
-      projects: [
-        {
-          id: 0,
-          name: 'Project Test',
-          infos: ['project infos will be here'],
-          completed: false,
-          deadlines: [
-            {
-              id: 0,
-              date: '2020-03-05',
-              completed: true,
-            },
-          ],
-        },
-      ],
-    };
-    expect(state.projects[0].deadlines[0].completed).to.be.true;
-    mutations.uncompleteDeadline(state, { projectId: 0, deadlineId: 0 });
-    expect(state.projects[0].deadlines[0].completed).to.be.false;
   });
   it('is task completed', () => {
     const state = {
