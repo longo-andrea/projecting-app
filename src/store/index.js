@@ -145,6 +145,15 @@ export const mutations = {
       });
     }
   },
+  completeProjectDeadlines: (state, {
+    projectId,
+  }) => {
+    if (state.projects[projectId]) {
+      state.projects[projectId].deadlines.forEach((deadline) => {
+        deadline.completed = true;
+      });
+    }
+  },
   /**
    * Set selected deadline as completed and unmark all its tasks as Working On
    *
@@ -382,6 +391,7 @@ export const actions = {
   completeProject({ commit }, projectId) {
     commit('completeProject', { projectId });
     commit('completeProjectTasks', { projectId });
+    commit('completeProjectDeadlines', { projectId });
   },
 };
 
