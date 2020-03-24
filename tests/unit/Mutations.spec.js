@@ -17,6 +17,21 @@ describe('mutations', () => {
     mutations.completeProject(state, { projectId: 0 });
     expect(state.projects[0].completed).to.be.true;
   });
+  it('is project uncompleted', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: true,
+        },
+      ],
+    };
+    expect(state.projects[0].completed).to.be.true;
+    mutations.uncompleteProject(state, { projectId: 0 });
+    expect(state.projects[0].completed).to.be.false;
+  });
   it('is all project\'s deadlines completed ', () => {
     const state = {
       projects: [
