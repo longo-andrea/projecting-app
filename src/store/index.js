@@ -328,7 +328,11 @@ export const mutations = {
         project.tasks.forEach((task) => {
           if (task.id === taskId) {
             if (!state.projects[projectId].deadlines[task.deadlineIndex].completed) {
-              Vue.set(task, 'workingOn', true);
+              if (!task.completed) {
+                Vue.set(task, 'workingOn', true);
+              } else {
+                throw new Error('You can\'t set a task as working on if it is already completed!');
+              }
             } else {
               throw new Error('You can\'t set a task as working on if dealines is completed!');
             }
