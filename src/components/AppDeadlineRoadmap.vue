@@ -128,7 +128,7 @@ export default {
     },
     toggleDeadline(event, projectId, deadlineId) {
       if (event) {
-        this.$store.commit('completeDeadline', { projectId, deadlineId });
+        this.$store.dispatch('completeDeadline', projectId, deadlineId);
         this.rerenderTasks();
       } else {
         this.$store.commit('uncompleteDeadline', { projectId, deadlineId });

@@ -47,6 +47,7 @@ export default {
     toggleProjectCompleted(event, projectId) {
       if (event) {
         this.$store.dispatch('completeProject', projectId);
+        this.$emit('project-completed', projectId);
       } else {
         this.$store.commit('uncompleteProject', { projectId });
       }

@@ -4,6 +4,7 @@
       v-bind:projectId="currentProjectId"
       v-bind:projectName="projectName"
       v-bind:projectInfo="projectInfo"
+      @project-completed="projectCompleted"
       class="section section-first" />
     <app-project-stats
       v-bind:totalTasks="projectTasksCount"
@@ -15,6 +16,7 @@
       v-bind:projectId="currentProjectId"
       v-bind:deadlines="projectDeadlines"
       v-bind:tasks="projectTasks"
+      :key="deadlinesRoadmapKey"
       class="section section-last" />
   </div>
 </template>
@@ -34,6 +36,7 @@ export default {
   data() {
     return {
       currentProjectId: parseInt(this.$route.params.id, 10),
+      deadlinesRoadmapKey: 0,
     };
   },
   computed: {
@@ -72,6 +75,11 @@ export default {
       const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
       const projectCompletedDeadlinesCount = currentProject.deadlines.filter((deadline) => deadline.completed).length;
       return projectCompletedDeadlinesCount;
+    },
+  },
+  methods: {
+    projectCompleted() {
+      this.deadlinesRoadmapKey += 1;
     },
   },
 };
