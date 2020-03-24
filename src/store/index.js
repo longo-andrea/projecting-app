@@ -203,7 +203,7 @@ export const mutations = {
     }
   },
   /**
-   * Set selected deadline as completed and unmark all its tasks as Working On
+   * Set selected deadline as completed
    *
    * @param {state} object the vuex state object.
    * @param {projectId} number represents the project's id.
@@ -219,6 +219,26 @@ export const mutations = {
         if (deadline.id === deadlineId) {
           /* eslint-disable no-param-reassign */
           deadline.completed = true;
+        }
+      });
+    }
+  },
+  /**
+   * Unset selected deadline's tasks as wnorking On
+   *
+   * @param {state} object the vuex state object.
+   * @param {projectId} number represents the project's id.
+   * @param {deadlineId} number represents deadline's id
+   */
+  unworkingOnDeadlineTasks: (state, {
+    projectId,
+    deadlineId,
+  }) => {
+    if (state.projects[projectId].tasks) {
+      state.projects[projectId].tasks.forEach((task) => {
+        if (task.deadlineIndex === deadlineId) {
+          /* eslint-disable no-param-reassign */
+          task.workingOn = false;
         }
       });
     }
