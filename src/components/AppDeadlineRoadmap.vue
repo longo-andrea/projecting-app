@@ -5,23 +5,13 @@
         v-for="deadline in deadlines"
         v-bind:key="deadline.id"
         :name="deadline.id">
-        <template slot="title">
-          <el-row
-            type="flex"
-            justify="middle">
-            <el-col :span=2>
-              <el-checkbox
-                :checked="deadline.completed"
-                @change="toggleDeadline($event, projectId, deadline.id)"/>
-            </el-col>
-            <el-col :span=22>
-              <span class="title title-deadline">
-                Deadline {{ deadline.id + 1 }}
-              </span>
+          <template slot="title">
+            <el-checkbox
+              :checked="deadline.completed"
+              @change="toggleDeadline($event, projectId, deadline.id)"/>
+              <p class="title title-deadline">Deadline {{ deadline.id + 1 }}</p>
               - {{ getStringfiyDate(deadline.date) }}
-            </el-col>
-          </el-row>
-        </template>
+          </template>
         <div class="tasks-list" :key="deadlineKey">
           <app-deadline-task
             v-for="task in getDeadlineTasks(tasks, deadline.id)"
@@ -147,7 +137,8 @@ export default {
 
 <style lang="scss" scoped>
 .title-deadline {
-  margin: .3rem;
+  margin: 0;
+  margin-left: .3rem;
   font-weight: $--font-bold;
   font-size: $--font-size-base;
 }
