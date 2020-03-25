@@ -452,6 +452,34 @@ export const mutations = {
     }
   },
   /**
+   * Edit specified task
+   *
+   * @param {state} object the vuex state object.
+   * @param {projectId} number that represents the task's project id
+   * @param {taskId} number that represent the task's id
+   * @param {taskName} String that represent new task's name
+   * @param {taskDescription} String that represent new task's description
+   */
+  editTask: (state, {
+    projectId,
+    taskId,
+    taskName,
+    taskDescription,
+  }) => {
+    if (projectId !== undefined
+        && taskId !== undefined
+        && taskName !== ''
+        && taskDescription !== '') {
+      const taskIndex = state.projects[projectId].tasks
+        .findIndex((task) => task.id === taskId);
+
+      if (taskIndex > -1) {
+        state.projects[projectId].tasks[taskIndex].name = taskName;
+        state.projects[projectId].tasks[taskIndex].description = taskDescription;
+      }
+    }
+  },
+  /**
    * Set max deadline for project
    *
    * @param {state} object the vuex state object.

@@ -483,6 +483,54 @@ describe('mutations', () => {
     });
     expect(state.projects[0].tasks).to.deep.equal([]);
   });
+  it('task\'s name and description were updated', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: false,
+          tasks: [
+            {
+              id: 0,
+              name: 'Task 1',
+              description: 'I have to finish this tasks!',
+              deadlineIndex: 0,
+              completed: false,
+              workingOn: true,
+            },
+          ],
+        },
+      ],
+    };
+    expect(state.projects[0].tasks).to.deep.equal([
+      {
+        id: 0,
+        name: 'Task 1',
+        description: 'I have to finish this tasks!',
+        deadlineIndex: 0,
+        completed: false,
+        workingOn: true,
+      },
+    ]);
+    mutations.editTask(state, {
+      projectId: 0,
+      taskId: 0,
+      taskName: 'Task Edited',
+      taskDescription: 'Description Edited',
+    });
+    expect(state.projects[0].tasks).to.deep.equal([
+      {
+        id: 0,
+        name: 'Task Edited',
+        description: 'Description Edited',
+        deadlineIndex: 0,
+        completed: false,
+        workingOn: true,
+      },
+    ]);
+  });
   it('max deadline is not update if new value is lower then 0', () => {
     const state = {
       settings: {
