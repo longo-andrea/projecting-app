@@ -1,9 +1,6 @@
 <template>
-  <div class="tasks-list">
-    <div
-      v-for="task in tasks"
-      v-bind:key="task.id"
-      class="task-item">
+  <div>
+    <div class="item">
       <p class="title">{{ task.name }}</p>
       <p class="description">{{ task.description }}</p>
       <el-row class="checkbox">
@@ -22,9 +19,34 @@
         </el-col>
       </el-row>
       <div class="buttons-edit">
-        <i class="el-icon-edit button-edit" />
+        <i class="el-icon-edit button-edit" @click="isEditTaskDialogVisible = true" />
         <i class="el-icon-delete button-delete" @click="deleteTask(projectId, task.id)" />
       </div>
+      <el-dialog
+        title="Edit Task"
+        :visible.sync="isEditTaskDialogVisible"
+        width="80%">
+        <el-form
+          :model="editTaskForm"
+          :rules="rules"
+          :hide-required-asterisk="true"
+          ref="editTaskForm">
+          <el-form-item label="Task name" prop="taskName">
+            <el-input v-model="editTaskForm.taskName" placeholder="Type task name" />
+          </el-form-item>
+          <el-form-item label="Task description" prop="taskDescription">
+            <el-input type="textarea" v-model="editTaskForm.taskDescription" placeholder="Type task description" />
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="isEditTaskDialogVisible = false">Cancel</el-button>
+          <el-button
+            type="primary"
+            @click="submitEditTask('editTaskForm')">
+            Edit Task
+          </el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -37,14 +59,27 @@ export default {
       type: Number,
       required: true,
     },
-    tasks: {
-      type: Array,
+    task: {
+      type: Object,
       required: true,
     },
   },
   data() {
     return {
       workingOnCheckboxKey: 0,
+      isEditTaskDialogVisible: false,
+      editTaskForm: {
+        taskName: this.task.name,
+        taskDescription: this.task.description,
+      },
+      rules: {
+        taskName: [
+          { required: true, message: 'Please insert task\'s name', trigger: 'blur' },
+        ],
+        taskDescription: [
+          { required: true, message: 'Please insert task\'s description', trigger: 'blur' },
+        ],
+      },
     };
   },
   methods: {
@@ -73,12 +108,27 @@ export default {
     deleteTask(projectId, taskId) {
       this.$store.commit('deleteTask', { projectId, taskId });
     },
+    submitEditTask(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // store the results of form
+          this.$store.commit('editTask', {
+            projectId: this.projectId,
+            taskId: this.task.id,
+            taskName: this.editTaskForm.taskName,
+            taskDescription: this.editTaskForm.taskDescription,
+          });
+          // reset the form
+          this.isEditTaskDialogVisible = false;
+        }
+      });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.task-item {
+.item {
   position: relative;
   margin-bottom: .5rem;
   padding: 1rem;
@@ -110,48 +160,9 @@ export default {
   right: 1rem;
 
   .button-edit {
-    margin-right: .5rem;
+    margin-right: 1rem;
   }
 }
 
-@media screen and (min-width: $--md-screen) {
-  .tasks-list {
-    display: flex;
-    flex-wrap: wrap;
 
-    .task-item {
-      flex-basis: 48%;
-
-      &:not(:nth-child(2n)) {
-        margin-right: 4%;
-      }
-    }
-  }
-
-  .buttons-edit {
-
-    .button-edit {
-      margin-right: 1rem;
-    }
-  }
-}
-
-@media screen and (min-width: $--bg-screen) {
-  .tasks-list {
-    display: flex;
-    flex-wrap: wrap;
-
-    .task-item {
-      flex-basis: 30%;
-
-      &:not(:nth-child(2n)) {
-        margin-right: 0;
-      }
-
-      &:not(:nth-child(3n)) {
-        margin-right: 5%;
-      }
-    }
-  }
-}
 </style>

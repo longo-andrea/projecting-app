@@ -22,11 +22,14 @@
             </el-col>
           </el-row>
         </template>
-        <app-deadline-task
-          v-bind:projectId="projectId"
-          v-bind:tasks="getDeadlineTasks(tasks, deadline.id)"
-          :key="deadlineKey"
-          class="task-item" />
+        <div class="tasks-list" :key="deadlineKey">
+          <app-deadline-task
+            v-for="task in getDeadlineTasks(tasks, deadline.id)"
+            v-bind:key="task.id"
+            v-bind:projectId="projectId"
+            v-bind:task="task"
+            class="task-item" />
+        </div>
         <el-button
           type="plain"
           @click="isAddTaskDialogVisible = true">
@@ -147,5 +150,39 @@ export default {
   margin: .3rem;
   font-weight: $--font-bold;
   font-size: $--font-size-base;
+}
+
+@media screen and (min-width: $--md-screen) {
+  .tasks-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    .task-item {
+      flex-basis: 48%;
+
+      &:not(:nth-child(2n)) {
+        margin-right: 4%;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: $--bg-screen) {
+  .tasks-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    .task-item {
+      flex-basis: 30%;
+
+      &:not(:nth-child(2n)) {
+        margin-right: 0;
+      }
+
+      &:not(:nth-child(3n)) {
+        margin-right: 5%;
+      }
+    }
+  }
 }
 </style>
