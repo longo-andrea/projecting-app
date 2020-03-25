@@ -31,7 +31,7 @@
   height: 100%;
 
   .navbar-logo {
-    height: 24px;
+    height: 28px;
   }
 
   .settings-icon {
