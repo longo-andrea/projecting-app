@@ -446,6 +446,43 @@ describe('mutations', () => {
       },
     ]);
   });
+  it('task was deleted', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: false,
+          tasks: [
+            {
+              id: 0,
+              name: 'Task 1',
+              description: 'I have to finish this tasks!',
+              deadlineIndex: 0,
+              completed: false,
+              workingOn: true,
+            },
+          ],
+        },
+      ],
+    };
+    expect(state.projects[0].tasks).to.deep.equal([
+      {
+        id: 0,
+        name: 'Task 1',
+        description: 'I have to finish this tasks!',
+        deadlineIndex: 0,
+        completed: false,
+        workingOn: true,
+      },
+    ]);
+    mutations.deleteTask(state, {
+      projectId: 0,
+      taskId: 0,
+    });
+    expect(state.projects[0].tasks).to.deep.equal([]);
+  });
   it('max deadline is not update if new value is lower then 0', () => {
     const state = {
       settings: {
