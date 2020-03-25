@@ -431,6 +431,27 @@ export const mutations = {
     }
   },
   /**
+   * Delete specified task
+   *
+   * @param {state} object the vuex state object.
+   * @param {projectId} number that represents the task's project id
+   * @param {taskId} number that represent the task's id
+   */
+  deleteTask: (state, {
+    projectId,
+    taskId,
+  }) => {
+    if (taskId !== undefined
+      && projectId !== undefined) {
+      const taskIndex = state.projects[projectId].tasks
+        .findIndex((task) => task.id === taskId);
+
+      if (taskIndex > -1) {
+        state.projects[projectId].tasks.splice(taskIndex, 1);
+      }
+    }
+  },
+  /**
    * Set max deadline for project
    *
    * @param {state} object the vuex state object.
