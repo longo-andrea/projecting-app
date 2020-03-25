@@ -21,6 +21,10 @@
           label="Completed" />
         </el-col>
       </el-row>
+      <div class="buttons-edit">
+        <i class="el-icon-edit button-edit" />
+        <i class="el-icon-delete button-delete" @click="deleteTask(projectId, task.id)" />
+      </div>
     </div>
   </div>
 </template>
@@ -66,12 +70,16 @@ export default {
         this.$store.commit('unworkingOnTask', { projectId, taskId });
       }
     },
+    deleteTask(projectId, taskId) {
+      this.$store.commit('deleteTask', { projectId, taskId });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .task-item {
+  position: relative;
   margin-bottom: .5rem;
   padding: 1rem;
   border: 1px solid $--lighter-border;
@@ -96,6 +104,16 @@ export default {
   }
 }
 
+.buttons-edit {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  .button-edit {
+    margin-right: .5rem;
+  }
+}
+
 @media screen and (min-width: $--md-screen) {
   .tasks-list {
     display: flex;
@@ -107,6 +125,13 @@ export default {
       &:not(:nth-child(2n)) {
         margin-right: 4%;
       }
+    }
+  }
+
+  .buttons-edit {
+
+    .button-edit {
+      margin-right: 1rem;
     }
   }
 }
