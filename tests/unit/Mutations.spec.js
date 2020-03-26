@@ -395,13 +395,7 @@ describe('mutations', () => {
           name: 'Project Test',
           infos: ['project infos will be here'],
           completed: false,
-          deadlines: [
-            {
-              id: 0,
-              date: '2020-03-05',
-              completed: false,
-            },
-          ],
+          deadlines: [],
           tasks: [],
         },
       ],
@@ -410,6 +404,33 @@ describe('mutations', () => {
       projectId: 0,
     });
     expect(state.projects).to.deep.equal([]);
+  });
+  it('project was edited', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: false,
+          deadlines: [],
+          tasks: [],
+        },
+      ],
+    };
+    mutations.editProject(state, {
+      projectId: 0,
+      projectName: 'Edited Project Name',
+      projectDescription: 'Edited Project Description',
+    });
+    expect(state.projects).to.deep.equal([{
+      id: 0,
+      name: 'Edited Project Name',
+      infos: ['Edited Project Description'],
+      completed: false,
+      deadlines: [],
+      tasks: [],
+    }]);
   });
   it('no task was added after submittion of empty parameters', () => {
     const state = {

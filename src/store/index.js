@@ -426,7 +426,7 @@ export const mutations = {
 
       if (projectIndex > -1) {
         state.projects[projectIndex].name = projectName;
-        state.projects[projectIndex].infos.push(projectDescription);
+        state.projects[projectIndex].infos[0] = projectDescription;
       }
     }
   },
