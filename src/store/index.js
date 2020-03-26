@@ -400,6 +400,25 @@ export const mutations = {
     }
   },
   /**
+   * Delete given project
+   *
+   * @param {state} object the vuex state object.
+   * @param {projectId} string that represents the project's id.
+   */
+
+  deleteProject: (state, {
+    projectId,
+  }) => {
+    if (projectId) {
+      const projectIndex = state.projects
+        .findIndex((project) => project.id === projectId);
+
+      if (projectIndex > -1) {
+        state.projects.splice(projectIndex, 1);
+      }
+    }
+  },
+  /**
    * Add a new task with given parameters
    *
    * @param {state} object the vuex state object.
