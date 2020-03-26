@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="project">
     <el-row
       type="flex"
       align="middle">
@@ -124,11 +124,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.project {
+  position: relative;
+}
+
 .title {
   margin: 0;
 }
 
 .subtitle {
   margin: 0;
+}
+
+.buttons-edit {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  .button-edit {
+    margin-right: 1rem;
+  }
 }
 </style>
