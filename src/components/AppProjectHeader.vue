@@ -17,6 +17,10 @@
         <h2 class="subtitle">{{ projectInfo }}</h2>
       </el-col>
     </el-row>
+    <div class="buttons-edit">
+      <i class="el-icon-edit button-edit" />
+      <i class="el-icon-delete button-delete" @click="deleteProject()" />
+    </div>
   </div>
 </template>
 
@@ -51,6 +55,10 @@ export default {
       } else {
         this.$store.commit('uncompleteProject', { projectId });
       }
+    },
+    deleteProject() {
+      this.$router.replace('/');
+      this.$store.commit('deleteProject', { projectId: this.projectId });
     },
   },
 };
