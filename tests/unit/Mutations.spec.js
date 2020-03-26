@@ -387,6 +387,30 @@ describe('mutations', () => {
       ],
     );
   });
+  it('project was deleted', () => {
+    const state = {
+      projects: [
+        {
+          id: 0,
+          name: 'Project Test',
+          infos: ['project infos will be here'],
+          completed: false,
+          deadlines: [
+            {
+              id: 0,
+              date: '2020-03-05',
+              completed: false,
+            },
+          ],
+          tasks: [],
+        },
+      ],
+    };
+    mutations.deleteProject(state, {
+      projectId: 0,
+    });
+    expect(state.projects).to.deep.equal([]);
+  });
   it('no task was added after submittion of empty parameters', () => {
     const state = {
       projects: [

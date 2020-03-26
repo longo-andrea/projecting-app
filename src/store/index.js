@@ -409,13 +409,8 @@ export const mutations = {
   deleteProject: (state, {
     projectId,
   }) => {
-    if (projectId) {
-      const projectIndex = state.projects
-        .findIndex((project) => project.id === projectId);
-
-      if (projectIndex > -1) {
-        state.projects.splice(projectIndex, 1);
-      }
+    if (projectId !== undefined) {
+      state.projects = state.projects.filter((project) => project.id !== projectId);
     }
   },
   /**
