@@ -44,7 +44,16 @@ const COMPLETE_DEADLINE = (state, projectId, deadlineId, completed) => {
   }
 };
 
+const INITIALIZE_STORE = function (state) {
+  if (localStorage.getItem('deadlines_store')) {
+    this.replaceState(
+      Object.assign(state, JSON.parse(localStorage.getItem('deadlines_store'))),
+    );
+  }
+};
+
 export {
   ADD_DEADLINE,
   COMPLETE_DEADLINE,
+  INITIALIZE_STORE,
 };
