@@ -21,6 +21,9 @@ store.subscribe((mutation, state) => {
   if (mutation.type.startsWith('mutations')) {
     localStorage.setItem('deadlines_store', JSON.stringify(state));
   }
+  if (mutation.type.startsWith('projects')) {
+    localStorage.setItem('projects_store', JSON.stringify(state));
+  }
 });
 
 export default store;

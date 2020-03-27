@@ -19,7 +19,7 @@ const addDeadline = ({ commit, getters }, { projectId, deadlineDate }) => {
  * @param {completed} boolean represents completed state.
  */
 const setCompletedDeadline = ({ commit }, { projectId, deadlineId, completed }) => {
-  commit('COMPLETE_DEADLINE', projectId, deadlineId, completed);
+  commit('SET_DEADLINE_COMPLETED', projectId, deadlineId, completed);
 };
 
 export {

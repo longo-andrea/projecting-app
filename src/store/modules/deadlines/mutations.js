@@ -30,7 +30,7 @@ const ADD_DEADLINE = (state, projectId, deadlineId, deadlineDate) => {
  * @param {deadlineId} number that represent the deadline's id
  * @param {completed} boolenad that represets deadline's completed state
  */
-const COMPLETE_DEADLINE = (state, projectId, deadlineId, completed) => {
+const SET_DEADLINE_COMPLETED = (state, projectId, deadlineId, completed) => {
   if (projectId !== undefined
     && deadlineId !== undefined
     && completed !== undefined) {

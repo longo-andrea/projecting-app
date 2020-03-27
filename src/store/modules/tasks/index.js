@@ -3,7 +3,8 @@ import * as getters from './getters';
 import * as mutations from './mutations';
 
 const state = {
-  deadlines: [],
+  tasks: [],
+  lastTaskIndex: 0,
 };
 
 export default {
