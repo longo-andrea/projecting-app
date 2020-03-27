@@ -124,6 +124,14 @@ const SET_TASK_DESCRIPTION = (state, projectId, taskId, taskDescription) => {
   }
 };
 
+const INITIALIZE_STORE = function (state) {
+  if (localStorage.getItem('task_store')) {
+    this.replaceState(
+      Object.assign(state, JSON.parse(localStorage.getItem('task_store'))),
+    );
+  }
+};
+
 export {
   ADD_TASK,
   DELETE_TASK,
@@ -131,4 +139,5 @@ export {
   SET_TASK_COMPLETED,
   SET_TASK_NAME,
   SET_TASK_DESCRIPTION,
+  INITIALIZE_STORE,
 };
