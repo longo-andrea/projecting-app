@@ -23,6 +23,9 @@ const ADD_TASK = (state, projectId, deadlineId, taskId, taskName, taskDescriptio
       completed: false,
       workingOn: false,
     });
+
+    /* eslint-disable no-param-reassign */
+    state.lastTaskIndex += 1;
   }
 };
 

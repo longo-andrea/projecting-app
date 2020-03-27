@@ -1,4 +1,12 @@
 /**
+ * Get lastTaskIndex
+ *
+ * @param {state} object the vuex state object.
+ * @return {Number} number which represents the last task's index.
+ */
+const getTaskIndex = (state) => state.lastTaskIndex;
+
+/**
  * Get tasks's list
  *
  * @param {state} object the vuex state object.
@@ -18,4 +26,5 @@ const getWorkingOnTasks = (state) => state.tasks
 export {
   getTasks,
   getWorkingOnTasks,
+  getTaskIndex,
 };
