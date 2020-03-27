@@ -32,7 +32,7 @@ const ADD_PROJECT = (state, projectId, projectName, projectDescription) => {
  * @param {projectId} number which represents task's project id
  * @param {completed} boolean which represents completed state
  */
-const SET_PROJECT_COMPLETED = (state, projectId, completed) => {
+const SET_PROJECT_COMPLETED = (state, { projectId, completed }) => {
   if (projectId !== undefined
     && completed !== undefined) {
     const projectIndex = state.projects.findIndex((project) => project.id === projectId);

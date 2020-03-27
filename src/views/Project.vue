@@ -4,7 +4,6 @@
       v-bind:projectId="currentProjectId"
       v-bind:projectName="projectName"
       v-bind:projectInfo="projectInfo"
-      @project-completed="projectCompleted"
       class="section section-first" />
     <app-project-stats
       v-bind:totalTasks="projectTasksCount"
@@ -41,45 +40,42 @@ export default {
   },
   computed: {
     projectName() {
-      const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
-      return currentProject.name;
+      return this.$store.getters['projects/getProjects']
+        .find((project) => project.id === this.currentProjectId).name;
     },
     projectInfo() {
-      const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
-      return currentProject.infos[0];
-    },
-    projectTasks() {
-      const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
-      return currentProject.tasks;
+      return this.$store.getters['projects/getProjects']
+        .find((project) => project.id === this.currentProjectId).infos;
     },
     projectTasksCount() {
-      const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
-      const projectTasksCount = currentProject.tasks.length;
-      return projectTasksCount;
+      return (this.$store.getters['tasks/getTasks']
+        .filter((task) => task.projectId === this.currentProjectId)
+        || []).length;
     },
     projectCompletedTasks() {
-      const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
-      const projectCompletedTasksCount = currentProject.tasks.filter((task) => task.completed).length;
-      return projectCompletedTasksCount;
-    },
-    projectDeadlines() {
-      const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
-      return currentProject.deadlines;
+      return (this.$store.getters['tasks/getCompletedTasks']
+        .filter((task) => task.projectId === this.currentProjectId)
+        || []).length;
     },
     projectDeadlinesCount() {
-      const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
-      const projectDeadlinesCount = currentProject.deadlines.length;
-      return projectDeadlinesCount;
+      return (this.$store.getters['deadlines/getDeadlines']
+        .filter((deadline) => deadline.projectId === this.currentProjectId)
+        || []).length;
     },
     projectCompletedDeadlines() {
-      const currentProject = this.$store.getters.getProjects.find((project) => project.id === this.currentProjectId);
-      const projectCompletedDeadlinesCount = currentProject.deadlines.filter((deadline) => deadline.completed).length;
-      return projectCompletedDeadlinesCount;
+      return (this.$store.getters['deadlines/getCompletedDeadlines']
+        .filter((deadline) => deadline.projectId === this.currentProjectId)
+        || []).length;
     },
-  },
-  methods: {
-    projectCompleted() {
-      this.deadlinesRoadmapKey += 1;
+    projectDeadlines() {
+      return this.$store.getters['deadlines/getDeadlines']
+        .filter((deadline) => deadline.projectId === this.currentProjectId)
+        || [];
+    },
+    projectTasks() {
+      return this.$store.getters['tasks/getTasks']
+        .filter((task) => task.projectId === this.currentProjectId)
+        || [];
     },
   },
 };

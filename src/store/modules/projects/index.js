@@ -3,8 +3,19 @@ import * as getters from './getters';
 import * as mutations from './mutations';
 
 const state = {
-  projects: [],
-  lastProjectIndex: 0,
+  projects: [
+    {
+      id: 0,
+      name: 'Project Test',
+      infos: [
+        {
+          description: 'Test description',
+        },
+      ],
+      completed: false,
+    },
+  ],
+  lastProjectIndex: 1,
 };
 
 export default {

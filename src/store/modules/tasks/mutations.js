@@ -125,9 +125,9 @@ const SET_TASK_DESCRIPTION = (state, projectId, taskId, taskDescription) => {
 };
 
 const INITIALIZE_STORE = function (state) {
-  if (localStorage.getItem('task_store')) {
+  if (localStorage.getItem('tasks_store')) {
     this.replaceState(
-      Object.assign(state, JSON.parse(localStorage.getItem('task_store'))),
+      Object.assign(state, JSON.parse(localStorage.getItem('tasks_store'))),
     );
   }
 };

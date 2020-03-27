@@ -20,7 +20,10 @@ new Vue({
   router,
   store,
   beforeCreate() {
-    this.$store.commit('tasks/INITIALIZE_STORE');
+    // this.$store.commit('tasks/INITIALIZE_STORE');
+    // this.$store.commit('deadlines/INITIALIZE_STORE');
+    // this.$store.commit('projects/INITIALIZE_STORE');
+    // this.$store.commit('settings/INITIALIZE_STORE');
   },
   render: (h) => h(App),
 }).$mount('#app');

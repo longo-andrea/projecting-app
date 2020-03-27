@@ -2,7 +2,7 @@
   <div>
     <div class="projects-list">
       <el-card
-        v-for="project in activeProjects"
+        v-for="project in uncompletedProjects"
         v-bind:key="project.name"
         class="project-item">
         <app-project-info
@@ -15,8 +15,7 @@
       <el-button
         type="text"
         class="button-completed-projects"
-        @click="toggleCompletedProjects"
-        :disabled="completedProjects.length === 0">
+        @click="toggleCompletedProjects">
         See all completed projects
       </el-button>
     <el-collapse-transition>
@@ -53,8 +52,8 @@ export default {
     };
   },
   computed: {
-    activeProjects() {
-      return this.$store.getters.getActiveProjects;
+    uncompletedProjects() {
+      return this.$store.getters['projects/getUnCompletedProjects'];
     },
     completedProjects() {
       return this.$store.getters.getCompletedProjects;

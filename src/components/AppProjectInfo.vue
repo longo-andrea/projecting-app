@@ -9,7 +9,7 @@
       v-bind:key="index"
       class="description"
       :class="{ 'disabled-infos': disabled }">
-      {{ info }}
+      {{ info.description }}
     </p>
   </div>
 </template>

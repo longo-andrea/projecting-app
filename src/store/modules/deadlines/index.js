@@ -3,7 +3,14 @@ import * as getters from './getters';
 import * as mutations from './mutations';
 
 const state = {
-  deadlines: [],
+  deadlines: [
+    {
+      projectId: 0,
+      id: 0,
+      date: new Date(Date.now()),
+      completed: false,
+    },
+  ],
   lastDeadlineIndex: 0,
 };
 

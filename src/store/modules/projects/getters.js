@@ -12,7 +12,12 @@ const getProjectIndex = (state) => state.lastProjectIndex;
  * @param {state} object the vuex state object.
  * @return {Array} array of objects that contains all projects.
  */
-const getProjects = (state) => state.projects;
+const getProjects = (state) => {
+  if (state.projects) {
+    return state.projects;
+  }
+  return [];
+};
 
 /**
  * Get completed projects
@@ -20,8 +25,13 @@ const getProjects = (state) => state.projects;
  * @param {state} object the vuex state object.
  * @return {Array} array of objects that contains completed projects.
  */
-const getCompletedProjects = (state) => state.projects
-  .filter((project) => project.completed);
+const getCompletedProjects = (state) => {
+  if (state.projects) {
+    return state.projects
+      .filter((project) => project.completed);
+  }
+  return [];
+};
 
 /**
  * Get uncompleted projects
@@ -29,8 +39,13 @@ const getCompletedProjects = (state) => state.projects
  * @param {state} object the vuex state object.
  * @return {Array} array of objects that contains uncompleted projects.
  */
-const getUnCompletedProjects = (state) => state.projects
-  .filter((project) => !project.completed);
+const getUnCompletedProjects = (state) => {
+  if (state.projects) {
+    return state.projects
+      .filter((project) => !project.completed);
+  }
+  return [];
+};
 
 export {
   getProjectIndex,

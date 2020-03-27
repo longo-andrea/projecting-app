@@ -1,15 +1,13 @@
 <template>
   <div class="deadlines-list">
     <el-card
-      v-for="deadline in incomingDeadlines"
+      v-for="deadline in uncompletedDeadlines"
       v-bind:key="deadline.id"
       class="deadline-item"
       shadow="hover">
       <app-deadline
         v-bind:projectId="deadline.projectId"
-        v-bind:projectName="deadline.projectName"
-        v-bind:deadlineId="deadline.deadlineId"
-        v-bind:deadlineDate="deadline.deadlineDate" />
+        v-bind:deadlineId="deadline.id" />
     </el-card>
   </div>
 </template>
@@ -23,8 +21,8 @@ export default {
     AppDeadline,
   },
   computed: {
-    incomingDeadlines() {
-      return this.$store.getters.getIncomingDeadlines;
+    uncompletedDeadlines() {
+      return this.$store.getters['deadlines/getUncompletedDeadlines'];
     },
   },
 };

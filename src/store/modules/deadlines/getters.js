@@ -12,7 +12,26 @@ const getDeadlineIndex = (state) => state.lastDeadlineIndex;
  * @param {state} object the vuex state object.
  * @return {Array} array of objects that contains all deadlines.
  */
-const getDeadlines = (state) => state.deadlines;
+const getDeadlines = (state) => {
+  if (state.deadlines) {
+    return state.deadlines;
+  }
+  return [];
+};
+
+/**
+ * Get completed deadlines
+ *
+ * @param {state} object the vuex state object.
+ * @return {Array} array of objects that contains completed deadlines.
+ */
+const getCompletedDeadlines = (state) => {
+  if (state.deadlines) {
+    return state.deadlines
+      .filter((deadline) => deadline.completed);
+  }
+  return [];
+};
 
 /**
  * Get uncompleted deadlines
@@ -20,11 +39,17 @@ const getDeadlines = (state) => state.deadlines;
  * @param {state} object the vuex state object.
  * @return {Array} array of objects that contains uncompleted deadlines.
  */
-const getUncompletedDeadline = (state) => state.deadlines
-  .filter((deadline) => !deadline.completed);
+const getUncompletedDeadlines = (state) => {
+  if (state.deadlines) {
+    return state.deadlines
+      .filter((deadline) => !deadline.completed);
+  }
+  return [];
+};
 
 export {
   getDeadlineIndex,
   getDeadlines,
-  getUncompletedDeadline,
+  getCompletedDeadlines,
+  getUncompletedDeadlines,
 };

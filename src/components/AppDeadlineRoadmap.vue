@@ -12,7 +12,7 @@
               <p class="title title-deadline">Deadline {{ deadline.id + 1 }}</p>
               - {{ getStringfiyDate(deadline.date) }}
           </template>
-        <div class="tasks-list" :key="deadlineKey">
+        <div class="tasks-list">
           <app-deadline-task
             v-for="task in getDeadlineTasks(tasks, deadline.id)"
             v-bind:key="task.id"
@@ -75,7 +75,6 @@ export default {
   },
   data() {
     return {
-      deadlineKey: 0,
       activeDeadline: [0],
       isAddTaskDialogVisible: false,
       addTaskForm: {
@@ -93,8 +92,9 @@ export default {
     };
   },
   methods: {
-    getDeadlineTasks(tasks, index) {
-      return tasks.filter((task) => task.deadlineIndex === index);
+    getDeadlineTasks(tasks, deadlineId) {
+      return tasks.filter((task) => task.deadlineId === deadlineId)
+        || [];
     },
     submitAddTask(formName, deadlineId) {
       this.$refs[formName][deadlineId].validate((valid) => {
@@ -122,14 +122,9 @@ export default {
     toggleDeadline(event, projectId, deadlineId) {
       if (event) {
         this.$store.dispatch('completeDeadline', { projectId, deadlineId });
-        this.rerenderTasks();
       } else {
         this.$store.commit('uncompleteDeadline', { projectId, deadlineId });
-        this.rerenderTasks();
       }
-    },
-    rerenderTasks() {
-      this.deadlineKey += 1;
     },
   },
 };

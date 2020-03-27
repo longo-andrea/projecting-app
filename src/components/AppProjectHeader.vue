@@ -14,7 +14,7 @@
     </el-row>
     <el-row>
       <el-col :span=24>
-        <h2 class="subtitle">{{ projectInfo }}</h2>
+        <h2 class="subtitle">{{ projectDescription }}</h2>
       </el-col>
     </el-row>
     <div class="buttons-edit">
@@ -65,7 +65,7 @@ export default {
       required: true,
     },
     projectInfo: {
-      type: String,
+      type: Array,
       required: true,
     },
   },
@@ -74,7 +74,7 @@ export default {
       isEditProjectDialogVisible: false,
       editProjectForm: {
         projectName: this.projectName,
-        projectDescription: this.projectInfo,
+        projectDescription: this.projectInfo[0].description,
       },
       rules: {
         projectName: [
@@ -87,18 +87,20 @@ export default {
     };
   },
   computed: {
+    projectDescription() {
+      return this.projectInfo[0].description;
+    },
     isProjectCompleted() {
-      return this.$store.getters.getProjects
+      return this.$store.getters['projects/getProjects']
         .find((project) => project.id === this.projectId).completed;
     },
   },
   methods: {
     toggleProjectCompleted(event, projectId) {
       if (event) {
-        this.$store.dispatch('completeProject', projectId);
-        this.$emit('project-completed', projectId);
+        this.$store.dispatch('projects/setCompletedProject', { projectId, completed: true });
       } else {
-        this.$store.commit('uncompleteProject', { projectId });
+        this.$store.dispatch('projects/setCompletedProject', { projectId, completed: false });
       }
     },
     deleteProject() {

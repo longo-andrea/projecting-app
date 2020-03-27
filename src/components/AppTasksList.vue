@@ -5,12 +5,11 @@
       :key="task.name"
       shadow="hover">
       <app-task
-        v-bind:taskId="task.taskId"
-        v-bind:name="task.taskName"
-        v-bind:description="task.taskDescription"
+        v-bind:taskId="task.id"
+        v-bind:name="task.name"
+        v-bind:description="task.description"
         v-bind:projectId="task.projectId"
-        v-bind:project="task.projectName"
-        v-bind:deadline="task.taskDeadline"/>
+        v-bind:deadlineId="task.deadlineId" />
     </el-card>
   </div>
 </template>
@@ -25,8 +24,7 @@ export default {
   },
   computed: {
     workingTasks() {
-      const workingTasks = this.$store.getters.getWorkingOnTasks;
-      return workingTasks;
+      return this.$store.getters['tasks/getWorkingOnTasks'];
     },
   },
 };

@@ -29,22 +29,20 @@ export default {
       type: Number,
       required: true,
     },
-    projectName: {
-      type: String,
-      required: true,
-    },
     deadlineId: {
       type: Number,
       required: true,
     },
-    deadlineDate: {
-      type: String,
-      required: true,
-    },
   },
   computed: {
+    projectName() {
+      return this.$store.getters['projects/getProjects']
+        .find((project) => project.id === this.projectId).name;
+    },
     deadlineDateString() {
-      const date = new Date(this.deadlineDate);
+      const deadlineDate = this.$store.getters['deadlines/getDeadlines']
+        .find((deadline) => deadline.projectId === this.projectId && deadline.id === this.deadlineId).date;
+      const date = new Date(deadlineDate);
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -52,7 +50,8 @@ export default {
       return `${year}/${month + 1}/${day}`;
     },
     daysToDeadline() {
-      const deadlineDate = new Date(this.deadlineDate);
+      const deadlineDate = this.$store.getters['deadlines/getDeadlines']
+        .find((deadline) => deadline.projectId === this.projectId && deadline.id === this.deadlineId).date;
       const currentDate = new Date(Date.now());
       let timeLeft = deadlineDate - currentDate;
 

@@ -17,7 +17,7 @@
       <el-divider />
         <p class="description">{{ description }}</p>
         <div class="task-infos">
-          <p>{{ project }}</p>
+          <p>{{ projectName }}</p>
           <p>{{ deadlineDate }}</p>
         </div>
       </div>
@@ -45,12 +45,8 @@ export default {
       type: Number,
       required: true,
     },
-    project: {
-      type: String,
-      required: true,
-    },
-    deadline: {
-      type: String,
+    deadlineId: {
+      type: Number,
       required: true,
     },
   },
@@ -61,11 +57,17 @@ export default {
     };
   },
   computed: {
+    projectName() {
+      return this.$store.getters['projects/getProjects']
+        .find((project) => project.id === this.projectId).name;
+    },
     deadlineDate() {
-      const date = new Date(this.deadline);
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      const day = date.getDate();
+      const taskDeadline = this.$store.getters['deadlines/getDeadlines']
+        .find((deadline) => deadline.projectId === this.projectId && deadline.id === this.deadlineId);
+      const deadlineDate = new Date(taskDeadline.date);
+      const year = deadlineDate.getFullYear();
+      const month = deadlineDate.getMonth();
+      const day = deadlineDate.getDate();
       return `${year}/${month + 1}/${day}`;
     },
   },

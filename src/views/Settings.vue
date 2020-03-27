@@ -22,7 +22,7 @@ export default {
   name: 'Settings',
   data() {
     return {
-      maxDeadlines: this.$store.state.settings.project.maxDeadlines,
+      maxDeadlines: this.$store.getters['settings/getMaxDeadlinesForProject'],
     };
   },
   methods: {
