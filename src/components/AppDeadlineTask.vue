@@ -8,7 +8,6 @@
         <el-checkbox
           :checked="task.workingOn"
           @change="toggleTaskWorkingOn($event, projectId, task.id)"
-          :key="workingOnCheckboxKey"
           label="Working On" />
         </el-col>
         <el-col :span=12 class="checkbox-item">
@@ -66,7 +65,6 @@ export default {
   },
   data() {
     return {
-      workingOnCheckboxKey: 0,
       isEditTaskDialogVisible: false,
       editTaskForm: {
         taskName: this.task.name,
@@ -84,35 +82,19 @@ export default {
   },
   methods: {
     toggleTaskCompleted(event, projectId, taskId) {
-      if (event) {
-        this.$store.commit('completeTask', { projectId, taskId });
-      } else {
-        this.$store.commit('uncompleteTask', { projectId, taskId });
-      }
+      this.$store.dispatch('tasks/setCompletedTask', { projectId, taskId, completed: event });
     },
     toggleTaskWorkingOn(event, projectId, taskId) {
-      if (event) {
-        try {
-          this.$store.commit('workingOnTask', { projectId, taskId });
-        } catch (error) {
-          this.$message({
-            message: error,
-            type: 'error',
-          });
-          this.workingOnCheckboxKey += 1;
-        }
-      } else {
-        this.$store.commit('unworkingOnTask', { projectId, taskId });
-      }
+      this.$store.dispatch('tasks/setWorkingOnTask', { projectId, taskId, workingOn: event });
     },
     deleteTask(projectId, taskId) {
-      this.$store.commit('deleteTask', { projectId, taskId });
+      this.$store.dispatch('tasks/deleteTask', { projectId, taskId });
     },
     submitEditTask(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // store the results of form
-          this.$store.commit('editTask', {
+          this.$store.dispatch('tasks/editTask', {
             projectId: this.projectId,
             taskId: this.task.id,
             taskName: this.editTaskForm.taskName,

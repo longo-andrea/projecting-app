@@ -56,7 +56,7 @@ export default {
       return this.$store.getters['projects/getUnCompletedProjects'];
     },
     completedProjects() {
-      return this.$store.getters.getCompletedProjects;
+      return this.$store.getters['projects/getCompletedProjects'];
     },
   },
   methods: {

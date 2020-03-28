@@ -6,7 +6,7 @@
  * @param {projectName} string that represents the project's name
  * @param {projectDescription} string that represents the project's description.
  */
-const ADD_PROJECT = (state, projectId, projectName, projectDescription) => {
+const ADD_PROJECT = (state, { projectId, projectName, projectDescription }) => {
   if (projectId !== undefined
     && projectDescription !== '') {
     state.projects.push({
@@ -44,16 +44,7 @@ const SET_PROJECT_COMPLETED = (state, { projectId, completed }) => {
   }
 };
 
-const INITIALIZE_STORE = function (state) {
-  if (localStorage.getItem('projects_store')) {
-    this.replaceState(
-      Object.assign(state, JSON.parse(localStorage.getItem('projects_store'))),
-    );
-  }
-};
-
 export {
   ADD_PROJECT,
   SET_PROJECT_COMPLETED,
-  INITIALIZE_STORE,
 };

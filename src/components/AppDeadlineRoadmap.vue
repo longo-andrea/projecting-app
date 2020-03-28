@@ -100,7 +100,7 @@ export default {
       this.$refs[formName][deadlineId].validate((valid) => {
         if (valid) {
           // store the results of form
-          this.$store.commit('addTask', {
+          this.$store.dispatch('tasks/addTask', {
             projectId: this.projectId,
             deadlineId,
             taskName: this.addTaskForm.taskName,
@@ -120,11 +120,7 @@ export default {
       return `${year}/${month + 1}/${day}`;
     },
     toggleDeadline(event, projectId, deadlineId) {
-      if (event) {
-        this.$store.dispatch('completeDeadline', { projectId, deadlineId });
-      } else {
-        this.$store.commit('uncompleteDeadline', { projectId, deadlineId });
-      }
+      this.$store.dispatch('deadlines/setCompletedDeadline', { projectId, deadlineId, completed: event });
     },
   },
 };

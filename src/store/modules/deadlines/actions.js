@@ -6,8 +6,8 @@
  * @param {deadlineDate} date which represents deadlines's date
  */
 const addDeadline = ({ commit, getters }, { projectId, deadlineDate }) => {
-  const deadlineId = getters.getDeadlineIndex();
-  commit('ADD_DEADLINE', projectId, deadlineId, deadlineDate);
+  const deadlineId = getters.getDeadlineIndex;
+  commit('ADD_DEADLINE', { projectId, deadlineId, deadlineDate });
 };
 
 /**
@@ -19,7 +19,7 @@ const addDeadline = ({ commit, getters }, { projectId, deadlineDate }) => {
  * @param {completed} boolean represents completed state.
  */
 const setCompletedDeadline = ({ commit }, { projectId, deadlineId, completed }) => {
-  commit('SET_DEADLINE_COMPLETED', projectId, deadlineId, completed);
+  commit('SET_DEADLINE_COMPLETED', { projectId, deadlineId, completed });
 };
 
 export {

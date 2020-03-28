@@ -99,7 +99,7 @@ export default {
   },
   computed: {
     maxDeadlines() {
-      return this.$store.state.settings.project.maxDeadlines;
+      return this.$store.getters['settings/getMaxDeadlinesForProject'];
     },
     isLastDeadlinesDateDefined() {
       // if there is at least one deadline
@@ -158,10 +158,10 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // store the results of form
-          this.$store.commit('addProject', {
+          this.$store.dispatch('projects/addProject', {
             projectName: this.addProjectForm.projectName,
-            projectInfos: this.addProjectForm.projectDescription,
-            projectDeadlines: this.addProjectForm.deadlinesDate,
+            projectDescription: this.addProjectForm.projectDescription,
+            deadlinesDate: this.addProjectForm.deadlinesDate,
           });
           // reset the form
           this.$refs[formName].resetFields();

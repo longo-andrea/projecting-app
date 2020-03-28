@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     completeDeadline(projectId, deadlineId) {
-      this.$store.commit('completeDeadline', { projectId, deadlineId });
+      this.$store.dispatch('deadlines/setCompletedDeadline', { projectId, deadlineId, completed: true });
     },
   },
 };

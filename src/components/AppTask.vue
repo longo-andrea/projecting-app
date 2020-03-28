@@ -76,7 +76,7 @@ export default {
       this.isTaskOpen = !this.isTaskOpen;
     },
     completeTask(projectId, taskId) {
-      this.$store.commit('completeTask', { projectId, taskId });
+      this.$store.dispatch('setCompletedTask', { projectId, taskId, completed: true });
     },
   },
   mounted() {

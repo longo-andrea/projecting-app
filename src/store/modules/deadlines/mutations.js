@@ -6,7 +6,7 @@
  * @param {deadlineId} number that represent the deadline's id
  * @param {deadlineDate} date that represets deadline's date
  */
-const ADD_DEADLINE = (state, projectId, deadlineId, deadlineDate) => {
+const ADD_DEADLINE = (state, { projectId, deadlineId, deadlineDate }) => {
   if (projectId !== undefined
     && deadlineId !== undefined
     && deadlineDate !== undefined) {
@@ -30,7 +30,7 @@ const ADD_DEADLINE = (state, projectId, deadlineId, deadlineDate) => {
  * @param {deadlineId} number that represent the deadline's id
  * @param {completed} boolenad that represets deadline's completed state
  */
-const SET_DEADLINE_COMPLETED = (state, projectId, deadlineId, completed) => {
+const SET_DEADLINE_COMPLETED = (state, { projectId, deadlineId, completed }) => {
   if (projectId !== undefined
     && deadlineId !== undefined
     && completed !== undefined) {
@@ -44,16 +44,7 @@ const SET_DEADLINE_COMPLETED = (state, projectId, deadlineId, completed) => {
   }
 };
 
-const INITIALIZE_STORE = function (state) {
-  if (localStorage.getItem('deadlines_store')) {
-    this.replaceState(
-      Object.assign(state, JSON.parse(localStorage.getItem('deadlines_store'))),
-    );
-  }
-};
-
 export {
   ADD_DEADLINE,
   SET_DEADLINE_COMPLETED,
-  INITIALIZE_STORE,
 };

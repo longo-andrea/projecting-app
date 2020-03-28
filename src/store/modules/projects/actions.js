@@ -4,10 +4,19 @@
  * @param {commit} object the vuex state object.
  * @param {projectName} String which represents project's name
  * @param {projectDescription} String which represents project's description
+ * @param {deadlinesDate} Array which represents project's deadlines
  */
-const addProject = ({ commit, getters }, { projectName, projectDescription }) => {
-  const projectId = getters.getProjectIndex();
-  commit('ADD_PROJECT', projectId, projectName, projectDescription);
+const addProject = ({ dispatch, commit, getters }, { projectName, projectDescription, deadlinesDate }) => {
+  const projectId = getters.getProjectIndex;
+  commit('ADD_PROJECT', { projectId, projectName, projectDescription });
+
+  deadlinesDate.forEach((deadline) => {
+    dispatch('deadlines/addDeadline', {
+      projectId,
+      deadlineDate: deadline.date,
+    },
+    { root: true });
+  });
 };
 
 /**

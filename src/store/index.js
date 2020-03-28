@@ -14,23 +14,19 @@ const store = new Vuex.Store({
     tasks: tasksModule,
     settings: settingsModule,
   },
+  mutations: {
+    INITIALIZE_STORE(state) {
+      if (localStorage.getItem('store')) {
+        this.replaceState(
+          Object.assign(state, JSON.parse(localStorage.getItem('store'))),
+        );
+      }
+    },
+  },
 });
 
 store.subscribe((mutation, state) => {
-  if (!mutation.type.includes('/INITIALIZE_STORE')) {
-    if (mutation.type.startsWith('tasks')) {
-      localStorage.setItem('tasks_store', JSON.stringify(state.tasks));
-    }
-    if (mutation.type.startsWith('deadlines')) {
-      localStorage.setItem('deadlines_store', JSON.stringify(state.deadlines));
-    }
-    if (mutation.type.startsWith('projects')) {
-      localStorage.setItem('projects_store', JSON.stringify(state.projects));
-    }
-    if (mutation.type.startsWith('settings')) {
-      localStorage.setItem('settings_store', JSON.stringify(state.settings));
-    }
-  }
+  localStorage.setItem('store', JSON.stringify(state));
 });
 
 export default store;

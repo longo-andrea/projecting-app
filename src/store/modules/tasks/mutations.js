@@ -8,7 +8,9 @@
  * @param {taskName} string that represents the task's name.
  * @param {taskDescription} string that represents the tasks's description.
  */
-const ADD_TASK = (state, projectId, deadlineId, taskId, taskName, taskDescription) => {
+const ADD_TASK = (state, {
+  projectId, deadlineId, taskId, taskName, taskDescription,
+}) => {
   if (projectId !== undefined
       && deadlineId !== undefined
       && taskId !== undefined
@@ -36,7 +38,7 @@ const ADD_TASK = (state, projectId, deadlineId, taskId, taskName, taskDescriptio
  * @param {projectId} number that represents the task's project id
  * @param {taskId} number that represets task's id
  */
-const DELETE_TASK = (state, projectId, taskId) => {
+const DELETE_TASK = (state, { projectId, taskId }) => {
   if (projectId !== undefined
     && taskId !== undefined) {
     /* eslint-disable no-param-reassign */
@@ -52,7 +54,7 @@ const DELETE_TASK = (state, projectId, taskId) => {
  * @param {taskId} number which represents task's id
  * @param {workingOn} boolean which represents working on state
  */
-const SET_TASK_WORKING_ON = (state, projectId, taskId, workingOn) => {
+const SET_TASK_WORKING_ON = (state, { projectId, taskId, workingOn }) => {
   if (taskId !== undefined
       && workingOn !== undefined) {
     const taskIndex = state.tasks.findIndex((task) => task.id === taskId && task.projectId === projectId);
@@ -72,7 +74,7 @@ const SET_TASK_WORKING_ON = (state, projectId, taskId, workingOn) => {
  * @param {taskId} number which represents task's id
  * @param {completed} boolean which represents completed state
  */
-const SET_TASK_COMPLETED = (state, projectId, taskId, completed) => {
+const SET_TASK_COMPLETED = (state, { projectId, taskId, completed }) => {
   if (taskId !== undefined
     && completed !== undefined) {
     const taskIndex = state.tasks.findIndex((task) => task.id === taskId && task.projectId === projectId);
@@ -92,7 +94,7 @@ const SET_TASK_COMPLETED = (state, projectId, taskId, completed) => {
  * @param {taskId} number which represents task's id
  * @param {taskName} String which represents new project's name
  */
-const SET_TASK_NAME = (state, projectId, taskId, taskName) => {
+const SET_TASK_NAME = (state, { projectId, taskId, taskName }) => {
   if (taskId !== undefined
     && taskName !== '') {
     const taskIndex = state.tasks.findIndex((task) => task.id === taskId && task.projectId === projectId);
@@ -112,7 +114,7 @@ const SET_TASK_NAME = (state, projectId, taskId, taskName) => {
  * @param {taskId} number which represents task's id
  * @param {taskDescription} String which represents new project's description
  */
-const SET_TASK_DESCRIPTION = (state, projectId, taskId, taskDescription) => {
+const SET_TASK_DESCRIPTION = (state, { projectId, taskId, taskDescription }) => {
   if (taskId !== undefined
     && taskDescription !== '') {
     const taskIndex = state.tasks.findIndex((task) => task.id === taskId && task.projectId === projectId);
@@ -124,14 +126,6 @@ const SET_TASK_DESCRIPTION = (state, projectId, taskId, taskDescription) => {
   }
 };
 
-const INITIALIZE_STORE = function (state) {
-  if (localStorage.getItem('tasks_store')) {
-    this.replaceState(
-      Object.assign(state, JSON.parse(localStorage.getItem('tasks_store'))),
-    );
-  }
-};
-
 export {
   ADD_TASK,
   DELETE_TASK,
@@ -139,5 +133,4 @@ export {
   SET_TASK_COMPLETED,
   SET_TASK_NAME,
   SET_TASK_DESCRIPTION,
-  INITIALIZE_STORE,
 };

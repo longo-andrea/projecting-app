@@ -10,8 +10,29 @@
 const addTask = ({ commit, getters }, {
   projectId, deadlineId, taskName, taskDescription,
 }) => {
-  const taskId = getters.getTaskIndex();
-  commit('ADD_TASK', projectId, deadlineId, taskId, taskName, taskDescription);
+  const taskId = getters.getTaskIndex;
+  commit('ADD_TASK', {
+    projectId, deadlineId, taskId, taskName, taskDescription,
+  });
+};
+
+/**
+ * Edit selected task's information
+ *
+ * @param {commit} object the vuex state object.
+ * @param {projectId} number represents the project's id.
+ * @param {taskId} number represents task's id.
+ * @param {taskName} String contains task's name
+ * @param {taskDescription} String contains task's description
+ */
+const editTask = ({ commit }, {
+  projectId,
+  taskId,
+  taskName,
+  taskDescription,
+}) => {
+  commit('SET_TASK_NAME', { projectId, taskId, taskName });
+  commit('SET_TASK_DESCRIPTION', { projectId, taskId, taskDescription });
 };
 
 /**
@@ -22,7 +43,7 @@ const addTask = ({ commit, getters }, {
  * @param {taskId} number represents the task's id.
  */
 const deleteTask = ({ commit }, { projectId, taskId }) => {
-  commit('DELETE_TASK', projectId, taskId);
+  commit('DELETE_TASK', { projectId, taskId });
 };
 
 /**
@@ -34,7 +55,7 @@ const deleteTask = ({ commit }, { projectId, taskId }) => {
  * @param {workingOn} boolean represents working on state.
  */
 const setWorkingOnTask = ({ commit }, { projectId, taskId, workingOn }) => {
-  commit('SET_TASK_WORKING_ON', projectId, taskId, workingOn);
+  commit('SET_TASK_WORKING_ON', { projectId, taskId, workingOn });
 };
 
 /**
@@ -46,12 +67,13 @@ const setWorkingOnTask = ({ commit }, { projectId, taskId, workingOn }) => {
  * @param {completed} boolean represents completed state.
  */
 const setCompletedTask = ({ commit }, { projectId, taskId, completed }) => {
-  commit('SET_TASK_COMPLETED', projectId, taskId, completed);
-  commit('SET_TASK_WORKING_ON', projectId, taskId, false);
+  commit('SET_TASK_COMPLETED', { projectId, taskId, completed });
+  commit('SET_TASK_WORKING_ON', { projectId, taskId, workingOn: false });
 };
 
 export {
   addTask,
+  editTask,
   deleteTask,
   setWorkingOnTask,
   setCompletedTask,
