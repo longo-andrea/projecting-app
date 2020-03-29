@@ -50,8 +50,8 @@ export default {
       return `${year}/${month + 1}/${day}`;
     },
     daysToDeadline() {
-      const deadlineDate = this.$store.getters['deadlines/getDeadlines']
-        .find((deadline) => deadline.projectId === this.projectId && deadline.id === this.deadlineId).date;
+      const deadlineDate = new Date(this.$store.getters['deadlines/getDeadlines']
+        .find((deadline) => deadline.projectId === this.projectId && deadline.id === this.deadlineId).date);
       const currentDate = new Date(Date.now());
       let timeLeft = deadlineDate - currentDate;
 

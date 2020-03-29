@@ -10,7 +10,22 @@
 const addTask = ({ commit, getters }, {
   projectId, deadlineId, taskName, taskDescription,
 }) => {
-  const taskId = getters.getTaskIndex;
+  const tasks = getters.getTasks
+    .filter((task) => task.projectId === projectId);
+  let taskId = 0;
+
+  if (tasks.length !== 0) {
+    let maxId = 0;
+
+    tasks.forEach((task) => {
+      if (task.id > taskId) {
+        maxId = task.id;
+      }
+    });
+
+    taskId = maxId + 1;
+  }
+
   commit('ADD_TASK', {
     projectId, deadlineId, taskId, taskName, taskDescription,
   });
@@ -43,6 +58,7 @@ const editTask = ({ commit }, {
  * @param {taskId} number represents the task's id.
  */
 const deleteTask = ({ commit }, { projectId, taskId }) => {
+  console.log(projectId, taskId);
   commit('DELETE_TASK', { projectId, taskId });
 };
 
@@ -71,10 +87,47 @@ const setCompletedTask = ({ commit }, { projectId, taskId, completed }) => {
   commit('SET_TASK_WORKING_ON', { projectId, taskId, workingOn: false });
 };
 
+/**
+ * Set deadline's tasks as completed and not workingOn
+ *
+ * @param {commit} object the vuex state object.
+ * @param {projectId} number represents the project's id.
+ * @param {deadlineId} number represents the deadline's id.
+ */
+const setCompletedDeadlineTasks = ({ dispatch, getters }, { projectId, deadlineId }) => {
+  const deadlineTasks = getters.getTasks;
+
+  deadlineTasks.forEach((task) => {
+    if (task.projectId === projectId && task.deadlineId === deadlineId) {
+      dispatch('setCompletedTask', { projectId, taskId: task.id, completed: true });
+    }
+  });
+};
+
+/**
+ * Delete deadline's tasks
+ *
+ * @param {commit} object the vuex state object.
+ * @param {projectId} number represents the project's id.
+ * @param {deadlineId} number represents the deadline's id.
+ */
+const deleteDeadlineTasks = ({ dispatch, getters }, { projectId, deadlineId }) => {
+  const deadlineTasks = getters.getTasks;
+
+  deadlineTasks.forEach((task) => {
+    if (task.projectId === projectId && task.deadlineId === deadlineId) {
+      dispatch('deleteTask', { projectId, taskId: task.id });
+    }
+  });
+};
+
+
 export {
   addTask,
   editTask,
   deleteTask,
   setWorkingOnTask,
   setCompletedTask,
+  setCompletedDeadlineTasks,
+  deleteDeadlineTasks,
 };

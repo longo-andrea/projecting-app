@@ -12,7 +12,7 @@
               <p class="title title-deadline">Deadline {{ deadline.id + 1 }}</p>
               - {{ getStringfiyDate(deadline.date) }}
           </template>
-        <div class="tasks-list">
+        <div class="tasks-list" :key="deadlineKey">
           <app-deadline-task
             v-for="task in getDeadlineTasks(tasks, deadline.id)"
             v-bind:key="task.id"
@@ -77,6 +77,7 @@ export default {
     return {
       activeDeadline: [0],
       isAddTaskDialogVisible: false,
+      deadlineKey: 0,
       addTaskForm: {
         taskName: '',
         taskDescription: '',
@@ -121,6 +122,9 @@ export default {
     },
     toggleDeadline(event, projectId, deadlineId) {
       this.$store.dispatch('deadlines/setCompletedDeadline', { projectId, deadlineId, completed: event });
+
+      // update deadline's key to rerender tasks
+      this.deadlineKey += 1;
     },
   },
 };

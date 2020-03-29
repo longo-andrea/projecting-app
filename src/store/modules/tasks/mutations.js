@@ -42,7 +42,9 @@ const DELETE_TASK = (state, { projectId, taskId }) => {
   if (projectId !== undefined
     && taskId !== undefined) {
     /* eslint-disable no-param-reassign */
-    state.tasks = state.tasks.filter((task) => task.id !== taskId && task.projectId !== projectId);
+    state.tasks = state.tasks
+      .filter((task) => task.id !== taskId
+        || (task.id === taskId && task.projectId !== projectId));
   }
 };
 
@@ -62,6 +64,11 @@ const SET_TASK_WORKING_ON = (state, { projectId, taskId, workingOn }) => {
     if (taskIndex > -1) {
       /* eslint-disable no-param-reassign */
       state.tasks[taskIndex].workingOn = workingOn;
+    }
+
+    // if task is already completed, throw new error
+    if (workingOn && state.tasks[taskIndex].completed) {
+      throw new Error('You can\'t set this task as working on, is already completed!');
     }
   }
 };

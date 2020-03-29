@@ -1,12 +1,4 @@
 /**
- * Get lastDeadlineIndex
- *
- * @param {state} object the vuex state object.
- * @return {Number} number which represents the last deadline's index.
- */
-const getDeadlineIndex = (state) => state.lastDeadlineIndex;
-
-/**
  * Get deadlines's list
  *
  * @param {state} object the vuex state object.
@@ -48,7 +40,6 @@ const getUncompletedDeadlines = (state) => {
 };
 
 export {
-  getDeadlineIndex,
   getDeadlines,
   getCompletedDeadlines,
   getUncompletedDeadlines,

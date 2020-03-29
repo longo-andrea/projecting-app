@@ -1,8 +1,8 @@
 <template>
   <div class="deadlines-list">
     <el-card
-      v-for="deadline in uncompletedDeadlines"
-      v-bind:key="deadline.id"
+      v-for="deadline in incomingDeadlines"
+      v-bind:key="deadline.projectId"
       class="deadline-item"
       shadow="hover">
       <app-deadline
@@ -21,8 +21,16 @@ export default {
     AppDeadline,
   },
   computed: {
-    uncompletedDeadlines() {
-      return this.$store.getters['deadlines/getUncompletedDeadlines'];
+    incomingDeadlines() {
+      const projects = this.$store.getters['projects/getUnCompletedProjects'];
+      const deadlines = this.$store.getters['deadlines/getUncompletedDeadlines'];
+      const incomingDeadlines = [];
+
+      projects.forEach((project) => {
+        incomingDeadlines.push(deadlines.find((deadline) => !deadline.completed && deadline.projectId === project.id));
+      });
+
+      return incomingDeadlines;
     },
   },
 };

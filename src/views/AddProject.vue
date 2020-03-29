@@ -165,6 +165,7 @@ export default {
           });
           // reset the form
           this.$refs[formName].resetFields();
+          this.$router.replace('/');
         }
       });
     },

@@ -4,7 +4,6 @@ import * as mutations from './mutations';
 
 const state = {
   tasks: [],
-  lastTaskIndex: 1,
 };
 
 export default {

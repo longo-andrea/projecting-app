@@ -16,9 +16,22 @@ const ADD_DEADLINE = (state, { projectId, deadlineId, deadlineDate }) => {
       date: deadlineDate,
       completed: false,
     });
+  }
+};
 
+/**
+ * Delete given deadline
+ *
+ * @param {state} object the vuex state object.
+ * @param {projectId} number that represents the deadline's project id
+ * @param {deadlineId} number that represent the deadline's id
+ */
+const DELETE_DEADLINE = (state, { projectId, deadlineId }) => {
+  if (projectId !== undefined
+    && deadlineId !== undefined) {
     /* eslint-disable no-param-reassign */
-    state.lastDeadlineIndex += 1;
+    state.deadlines = state.deadlines.filter((deadline) => deadline.id !== deadlineId
+      && deadline.projectId !== projectId);
   }
 };
 
@@ -46,5 +59,6 @@ const SET_DEADLINE_COMPLETED = (state, { projectId, deadlineId, completed }) => 
 
 export {
   ADD_DEADLINE,
+  DELETE_DEADLINE,
   SET_DEADLINE_COMPLETED,
 };

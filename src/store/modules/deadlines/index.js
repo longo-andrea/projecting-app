@@ -4,7 +4,6 @@ import * as mutations from './mutations';
 
 const state = {
   deadlines: [],
-  lastDeadlineIndex: 0,
 };
 
 export default {

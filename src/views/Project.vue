@@ -4,6 +4,7 @@
       v-bind:projectId="currentProjectId"
       v-bind:projectName="projectName"
       v-bind:projectInfo="projectInfo"
+      @project-completed="projectUpdated"
       class="section section-first" />
     <app-project-stats
       v-bind:totalTasks="projectTasksCount"
@@ -76,6 +77,11 @@ export default {
       return this.$store.getters['tasks/getTasks']
         .filter((task) => task.projectId === this.currentProjectId)
         || [];
+    },
+  },
+  methods: {
+    projectUpdated() {
+      this.deadlinesRoadmapKey += 1;
     },
   },
 };

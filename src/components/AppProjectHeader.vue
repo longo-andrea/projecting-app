@@ -102,16 +102,18 @@ export default {
       } else {
         this.$store.dispatch('projects/setCompletedProject', { projectId, completed: false });
       }
+
+      this.$emit('project-completed', projectId);
     },
     deleteProject() {
       this.$router.replace('/');
-      this.$store.commit('deleteProject', { projectId: this.projectId });
+      this.$store.dispatch('projects/deleteProject', { projectId: this.projectId });
     },
     submitEditProject(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // store the results of form
-          this.$store.commit('editProject', {
+          this.$store.dispatch('projects/editProject', {
             projectId: this.projectId,
             projectName: this.editProjectForm.projectName,
             projectDescription: this.editProjectForm.projectDescription,

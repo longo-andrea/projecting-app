@@ -85,7 +85,14 @@ export default {
       this.$store.dispatch('tasks/setCompletedTask', { projectId, taskId, completed: event });
     },
     toggleTaskWorkingOn(event, projectId, taskId) {
-      this.$store.dispatch('tasks/setWorkingOnTask', { projectId, taskId, workingOn: event });
+      try {
+        this.$store.dispatch('tasks/setWorkingOnTask', { projectId, taskId, workingOn: event });
+      } catch (error) {
+        this.$message({
+          message: error,
+          type: 'error',
+        });
+      }
     },
     deleteTask(projectId, taskId) {
       this.$store.dispatch('tasks/deleteTask', { projectId, taskId });
