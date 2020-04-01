@@ -1,19 +1,4 @@
 /**
- * Get lastTaskIndex
- *
- * @param {state} object the vuex state object.
- * @return {Number} number which represents the last task's index.
- */
-const getTaskIndex = (state) => {
-  if (state.tasks.length !== 0) {
-    // id of last task plus one
-    state.tasks[state.tasks.length - 1].id + 1;
-  }
-
-  return 0;
-};
-
-/**
  * Get tasks's list
  *
  * @param {state} object the vuex state object.
@@ -55,7 +40,6 @@ const getCompletedTasks = (state) => {
 };
 
 export {
-  getTaskIndex,
   getTasks,
   getWorkingOnTasks,
   getCompletedTasks,

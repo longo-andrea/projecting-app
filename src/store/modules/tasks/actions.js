@@ -58,7 +58,6 @@ const editTask = ({ commit }, {
  * @param {taskId} number represents the task's id.
  */
 const deleteTask = ({ commit }, { projectId, taskId }) => {
-  console.log(projectId, taskId);
   commit('DELETE_TASK', { projectId, taskId });
 };
 
