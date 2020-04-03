@@ -21,9 +21,9 @@ From this page you can also edit project information, and manage deadline's task
 
 - The **`add task`** form allows you to add a new task by define its name and description.
  
-<img style="float: left;" src="./readme_assets/homepage.png"  width="150">
-<img style="float: left;" src="./readme_assets/add-project.png" width="150">
-<img style="float: left;" src="./readme_assets/edit-project.png" width="150">
+<img align="left" src="./readme_assets/homepage.png"  width="150">
+<img align="left" src="./readme_assets/add-project.png" width="150">
+<img align="left" src="./readme_assets/edit-project.png" width="150">
 <img src="./readme_assets/add-task.png" width="150">
 
 ---
