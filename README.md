@@ -1,3 +1,5 @@
+[![longo-andrea](https://circleci.com/gh/longo-andrea/projecting-app.svg?style=svg)](https://app.circleci.com/pipelines/github/longo-andrea/projecting-app?branch=develop)
+
 # ![Logo](/readme_assets/logo.png) Projecting
 
 ## 📝 Description
