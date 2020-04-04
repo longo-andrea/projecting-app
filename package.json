@@ -58,8 +58,7 @@
         }
       ],
       "linebreak-style": [
-        "error",
-        "windows"
+        "error"
       ],
       "no-unused-expressions": "off"
     },
