@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: 'AppDeadline',
+  name: 'AppQuickDeadline',
   props: {
     projectId: {
       type: Number,

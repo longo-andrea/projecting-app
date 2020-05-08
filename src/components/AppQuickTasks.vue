@@ -4,7 +4,7 @@
       v-for="task in workingTasks"
       :key="task.name"
       shadow="hover">
-      <app-task
+      <app-quick-task
         v-bind:taskId="task.id"
         v-bind:name="task.name"
         v-bind:description="task.description"
@@ -15,12 +15,12 @@
 </template>
 
 <script>
-import AppTask from './AppTask.vue';
+import AppQuickTask from './AppQuickTask.vue';
 
 export default {
-  name: 'AppTasksList',
+  name: 'AppQuickTasks',
   components: {
-    AppTask,
+    AppQuickTask,
   },
   computed: {
     workingTasks() {

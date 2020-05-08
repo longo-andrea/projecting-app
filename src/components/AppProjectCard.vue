@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'AppProjectInfo',
+  name: 'AppProjectCard',
   props: {
     id: {
       type: Number,

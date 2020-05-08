@@ -1,7 +1,7 @@
 <template>
   <div>
     <app-quick-info class="section section-first" />
-    <app-projects-list class="section section-last" />
+    <app-projects class="section section-last" />
     <router-link to="/add-project">
       <el-button
         type="primary"
@@ -14,13 +14,13 @@
 
 <script>
 import AppQuickInfo from '../components/AppQuickInfo.vue';
-import AppProjectsList from '../components/AppProjectsList.vue';
+import AppProjects from '../components/AppProjects.vue';
 
 export default {
   name: 'Home',
   components: {
     AppQuickInfo,
-    AppProjectsList,
+    AppProjects,
   },
 };
 </script>

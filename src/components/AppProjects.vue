@@ -5,7 +5,7 @@
         v-for="project in uncompletedProjects"
         v-bind:key="project.name"
         class="project-item">
-        <app-project-info
+        <app-project-card
           v-bind:id="project.id"
           v-bind:name="project.name"
           v-bind:infos="project.infos"
@@ -26,7 +26,7 @@
           v-for="project in completedProjects"
           v-bind:key="project.name"
           class="project-item">
-          <app-project-info
+          <app-project-card
             v-bind:id="project.id"
             v-bind:name="project.name"
             v-bind:infos="project.infos"
@@ -39,12 +39,13 @@
 </template>
 
 <script>
-import AppProjectInfo from './AppProjectInfo.vue';
+
+import AppProjectCard from './AppProjectCard.vue';
 
 export default {
-  name: 'AppProjectsList',
+  name: 'AppProjects',
   components: {
-    AppProjectInfo,
+    AppProjectCard,
   },
   data() {
     return {

@@ -51,7 +51,6 @@ const SET_DEADLINE_COMPLETED = (state, { projectId, deadlineId, completed }) => 
       && deadline.projectId === projectId);
 
     if (deadlineIndex > -1) {
-      /* eslint-disable no-param-reassign */
       state.deadlines[deadlineIndex].completed = completed;
     }
   }

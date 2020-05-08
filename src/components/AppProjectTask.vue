@@ -6,13 +6,15 @@
       <el-row class="checkbox">
         <el-col :span=12 class="checkbox-item">
         <el-checkbox
-          :checked="task.workingOn"
+          :disabled="task.completed"
+          v-model="task.workingOn"
           @change="toggleTaskWorkingOn($event, projectId, task.id)"
-          label="Working On" />
+          label="Working On"
+          ref="workingOn" />
         </el-col>
         <el-col :span=12 class="checkbox-item">
         <el-checkbox
-          :checked="task.completed"
+          v-model="task.completed"
           @change="toggleTaskCompleted($event, projectId, task.id)"
           label="Completed" />
         </el-col>
@@ -52,7 +54,7 @@
 
 <script>
 export default {
-  name: 'AppDeadlineTask',
+  name: 'AppProjectTask',
   props: {
     projectId: {
       type: Number,

@@ -5,7 +5,7 @@
       v-bind:key="deadline.projectId"
       class="deadline-item"
       shadow="hover">
-      <app-deadline
+      <app-quick-deadline
         v-bind:projectId="deadline.projectId"
         v-bind:deadlineId="deadline.id" />
     </el-card>
@@ -13,12 +13,12 @@
 </template>
 
 <script>
-import AppDeadline from './AppDeadline.vue';
+import AppQuickDeadline from './AppQuickDeadline.vue';
 
 export default {
-  name: 'AppDeadlinesList',
+  name: 'AppQuickDeadlines',
   components: {
-    AppDeadline,
+    AppQuickDeadline,
   },
   computed: {
     incomingDeadlines() {
@@ -26,9 +26,13 @@ export default {
       const deadlines = this.$store.getters['deadlines/getUncompletedDeadlines'];
       const incomingDeadlines = [];
 
-      projects.forEach((project) => {
-        incomingDeadlines.push(deadlines.find((deadline) => !deadline.completed && deadline.projectId === project.id));
-      });
+      if (projects.length && deadlines.length) {
+        projects.forEach((project) => {
+          incomingDeadlines.push(
+            deadlines.find((deadline) => !deadline.completed && deadline.projectId === project.id),
+          );
+        });
+      }
 
       return incomingDeadlines;
     },

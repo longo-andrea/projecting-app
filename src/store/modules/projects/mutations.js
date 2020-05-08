@@ -51,7 +51,6 @@ const SET_PROJECT_COMPLETED = (state, { projectId, completed }) => {
     const projectIndex = state.projects.findIndex((project) => project.id === projectId);
 
     if (projectIndex > -1) {
-      /* eslint-disable no-param-reassign */
       state.projects[projectIndex].completed = completed;
     }
   }

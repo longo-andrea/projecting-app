@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'AppTask',
+  name: 'AppQuickTask',
   props: {
     taskId: {
       type: Number,
@@ -76,7 +76,7 @@ export default {
       this.isTaskOpen = !this.isTaskOpen;
     },
     completeTask(projectId, taskId) {
-      this.$store.dispatch('setCompletedTask', { projectId, taskId, completed: true });
+      this.$store.dispatch('tasks/setCompletedTask', { projectId, taskId, completed: true });
     },
   },
   mounted() {

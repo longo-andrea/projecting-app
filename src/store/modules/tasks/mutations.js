@@ -62,7 +62,6 @@ const SET_TASK_WORKING_ON = (state, { projectId, taskId, workingOn }) => {
     const taskIndex = state.tasks.findIndex((task) => task.id === taskId && task.projectId === projectId);
 
     if (taskIndex > -1) {
-      /* eslint-disable no-param-reassign */
       state.tasks[taskIndex].workingOn = workingOn;
     }
 
@@ -87,7 +86,6 @@ const SET_TASK_COMPLETED = (state, { projectId, taskId, completed }) => {
     const taskIndex = state.tasks.findIndex((task) => task.id === taskId && task.projectId === projectId);
 
     if (taskIndex > -1) {
-      /* eslint-disable no-param-reassign */
       state.tasks[taskIndex].completed = completed;
     }
   }
