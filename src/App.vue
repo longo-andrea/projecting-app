@@ -2,7 +2,8 @@
   <el-container>
     <el-header
       class="header"
-      height="50px">
+      height="50px"
+      v-show="isLoggedIn">
       <app-header />
     </el-header>
     <el-main>
@@ -17,6 +18,11 @@ import AppHeader from './components/AppHeader.vue';
 export default {
   components: {
     AppHeader,
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters['settings/isUserLoggedIn'];
+    },
   },
 };
 </script>
