@@ -1,6 +1,9 @@
 <template>
   <div>
     <div>
+      <el-button @click="signOut()">
+        Sign out
+      </el-button>
       <h2 class="subtitle subtitle-settings">Project</h2>
       <p class="description descriptioon-settings">Max deadlines for a project</p>
       <el-input-number
@@ -18,6 +21,8 @@
 </template>
 
 <script>
+import firebase from 'firebase';
+
 export default {
   name: 'Settings',
   data() {
@@ -27,7 +32,19 @@ export default {
   },
   methods: {
     updateMaxDeadlines(maxDeadlinesCount) {
-      this.$store.commit('updateMaxDeadlinesSetting', { maxDeadlinesCount });
+      this.$store.dispatch('settings/setMaxDeadlines', { maxDeadlinesCount });
+    },
+    signOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          document.cookie = 'idToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+          this.$store.dispatch('settings/setUserLoggedIn', { isLoggedIn: false });
+          this.$router.push('/login');
+        }).catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

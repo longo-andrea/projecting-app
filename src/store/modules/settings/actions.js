@@ -1,20 +1,17 @@
 /**
- * Set selected deadline's completed state, and whether is true complete project's deadlines
- *
+ * Set max deadines count per project
  * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {completed} boolean represents completed state.
+ * @param {maxDeadlines} number represents max deadlines count.
  */
-const setMaxDeadlines = ({ commit }, { maxDeadlones }) => {
-  commit('SET_MAX_DEADLINES', { maxDeadlones });
+const setMaxDeadlines = ({ commit }, { maxDeadlines }) => {
+  commit('SET_MAX_DEADLINES', { maxDeadlines });
 };
 
 /**
- * Set selected deadline's completed state, and whether is true complete project's deadlines
+ * Set selected user auth state.
  *
  * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {completed} boolean represents completed state.
+ * @param {isLoggedIn} boolean wheter the user is logged in or not.
  */
 const setUserLoggedIn = ({ commit }, { isLoggedIn }) => {
   commit('SET_LOGGEDIN', { isLoggedIn });
