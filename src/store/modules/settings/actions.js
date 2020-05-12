@@ -13,9 +13,9 @@ const setMaxDeadlines = ({ commit }, { maxDeadlines }) => {
  * @param {commit} object the vuex state object.
  * @param {isLoggedIn} boolean wheter the user is logged in or not.
  */
-const setUserLoggedIn = ({ commit }, { isLoggedIn }) => {
-  commit('SET_LOGGEDIN', { isLoggedIn });
-};
+const setUserLoggedIn = ({ commit }, { isLoggedIn }) => Promise.all([
+  commit('SET_LOGGEDIN', { isLoggedIn }),
+]);
 
 export {
   setMaxDeadlines,

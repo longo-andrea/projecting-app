@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 export default {
   name: 'Settings',
@@ -37,14 +38,9 @@ export default {
     signOut() {
       firebase
         .auth()
-        .signOut()
-        .then(() => {
-          document.cookie = 'idToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-          this.$store.dispatch('settings/setUserLoggedIn', { isLoggedIn: false });
-          this.$router.push('/login');
-        }).catch((error) => {
-          console.log(error);
-        });
+        .signOut();
+      this.$store.dispatch('settings/setUserLoggedIn', { isLoggedIn: false });
+      this.$router.push('/login');
     },
   },
 };

@@ -10,6 +10,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
 import router from './router';
+/* eslint-disable */
 import store from './store/index';
 
 import App from './App.vue';
@@ -28,14 +29,16 @@ const firebaseConfig = {
   measurementId: 'G-M1P2RQPD3F',
 };
 firebase.initializeApp(firebaseConfig);
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    store.commit('INITIALIZE_STORE');
+  }
+});
 
 Vue.use(ElementUI, { locale });
 
 new Vue({
   router,
   store,
-  beforeCreate() {
-    this.$store.commit('INITIALIZE_STORE');
-  },
   render: (h) => h(App),
 }).$mount('#app');

@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 export default {
   name: 'Login',
@@ -30,52 +31,13 @@ export default {
       firebase
         .auth()
         .signInWithPopup(provider)
-        .then((result) => {
-          if (this.getCookie('idToken')) {
-            this.$store.dispatch('settings/setUserLoggedIn', { isLoggedIn: true });
-            this.$router.push('/');
-          } else {
-            this.setCookie(result.credential.idToken, 60);
-            this.$store.dispatch('settings/setUserLoggedIn', { isLoggedIn: true });
-            this.$router.push('/');
-          }
+        .then(() => {
+          this.$router.replace({ name: 'Home' });
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getCookie(cookieName) {
-      let cookieValue = document.cookie;
-      let cookieStart = cookieValue.indexOf(` ${cookieName} `);
-
-      if (cookieStart === -1) {
-        cookieStart = cookieValue.indexOf(`${cookieName}=`);
-      }
-
-      if (cookieStart === -1) {
-        cookieValue = null;
-      } else {
-        cookieStart = cookieValue.indexOf('=', cookieStart) + 1;
-        let cookieEnd = cookieValue.indexOf(';', cookieStart);
-
-        if (cookieEnd === -1) {
-          cookieEnd = cookieValue.length;
-        }
-        cookieValue = unescape(cookieValue.substring(cookieStart, cookieEnd));
-      }
-      return cookieValue;
-    },
-    setCookie(value, days) {
-      const cookieExpires = new Date();
-      cookieExpires.setTime(cookieExpires.getTime() + days * 24 * 60 * 60 * 1000);
-      document.cookie = `idToken=${value}; expires=${cookieExpires.toUTCString()}`;
-    },
-  },
-  created() {
-    if (this.getCookie('idToken')) {
-      this.$store.dispatch('settings/setUserLoggedIn', { isLoggedIn: true });
-      this.$router.push('/');
-    }
   },
 };
 </script>
