@@ -4,7 +4,7 @@
   "homepage": "https://github.com/longo-andrea/projecting-app",
   "author": "longoandrea.dev@gmail.com",
   "engines": {
-    "node": "13.9.x"
+    "node": "10.20.1"
   },
   "repository": {
     "type": "git",
