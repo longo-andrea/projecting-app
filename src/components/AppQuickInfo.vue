@@ -7,26 +7,26 @@
       <el-tab-pane
         label="Working on"
         name="working-on">
-        <app-tasks-list />
+        <app-quick-tasks />
         </el-tab-pane>
       <el-tab-pane
         label="Deadlines"
         name="deadlines">
-        <app-deadlines-list />
+        <app-quick-deadlines />
       </el-tab-pane>
   </el-tabs>
   </div>
 </template>
 
 <script>
-import AppTasksList from './AppTasksList.vue';
-import AppDeadlinesList from './AppDeadlinesList.vue';
+import AppQuickDeadlines from './AppQuickDeadlines.vue';
+import AppQuickTasks from './AppQuickTasks.vue';
 
 export default {
   name: 'AppQuickInfo',
   components: {
-    AppTasksList,
-    AppDeadlinesList,
+    AppQuickTasks,
+    AppQuickDeadlines,
   },
   data() {
     return {

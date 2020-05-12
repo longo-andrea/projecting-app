@@ -2,9 +2,9 @@
   <div>
     <app-project-header
       v-bind:projectId="currentProjectId"
-      v-bind:projectName="projectName"
-      v-bind:projectInfo="projectInfo"
-      @project-completed="projectUpdated"
+      v-bind:projectCompleted="project.completed"
+      v-bind:projectName="project.name"
+      v-bind:projectInfo="project.infos"
       class="section section-first" />
     <app-project-stats
       v-bind:totalTasks="projectTasksCount"
@@ -12,41 +12,35 @@
       v-bind:totalDeadlines="projectDeadlinesCount"
       v-bind:completedDeadlines="projectCompletedDeadlines"
       class="section" />
-    <app-deadline-roadmap
+    <app-project-roadmap
       v-bind:projectId="currentProjectId"
       v-bind:deadlines="projectDeadlines"
       v-bind:tasks="projectTasks"
-      :key="deadlinesRoadmapKey"
       class="section section-last" />
   </div>
 </template>
 
 <script>
 import AppProjectHeader from '../components/AppProjectHeader.vue';
+import AppProjectRoadmap from '../components/AppProjectRoadmap.vue';
 import AppProjectStats from '../components/AppProjectStats.vue';
-import AppDeadlineRoadmap from '../components/AppDeadlineRoadmap.vue';
 
 export default {
   name: 'Project',
   components: {
     AppProjectHeader,
     AppProjectStats,
-    AppDeadlineRoadmap,
+    AppProjectRoadmap,
   },
   data() {
     return {
       currentProjectId: parseInt(this.$route.params.id, 10),
-      deadlinesRoadmapKey: 0,
     };
   },
   computed: {
-    projectName() {
+    project() {
       return this.$store.getters['projects/getProjects']
-        .find((project) => project.id === this.currentProjectId).name;
-    },
-    projectInfo() {
-      return this.$store.getters['projects/getProjects']
-        .find((project) => project.id === this.currentProjectId).infos;
+        .find((project) => project.id === this.currentProjectId);
     },
     projectTasksCount() {
       return (this.$store.getters['tasks/getTasks']
@@ -77,11 +71,6 @@ export default {
       return this.$store.getters['tasks/getTasks']
         .filter((task) => task.projectId === this.currentProjectId)
         || [];
-    },
-  },
-  methods: {
-    projectUpdated() {
-      this.deadlinesRoadmapKey += 1;
     },
   },
 };

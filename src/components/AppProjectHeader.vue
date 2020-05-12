@@ -5,7 +5,7 @@
       align="middle">
       <el-col :span=1>
         <el-checkbox
-        :checked="isProjectCompleted"
+        :checked="projectCompleted"
           @change="toggleProjectCompleted($event, projectId)" />
       </el-col>
       <el-col :span=23>
@@ -60,6 +60,10 @@ export default {
       type: Number,
       required: true,
     },
+    projectCompleted: {
+      type: Boolean,
+      required: true,
+    },
     projectName: {
       type: String,
       required: true,
@@ -90,10 +94,6 @@ export default {
     projectDescription() {
       return this.projectInfo[0].description;
     },
-    isProjectCompleted() {
-      return this.$store.getters['projects/getProjects']
-        .find((project) => project.id === this.projectId).completed;
-    },
   },
   methods: {
     toggleProjectCompleted(event, projectId) {
@@ -103,7 +103,7 @@ export default {
         this.$store.dispatch('projects/setCompletedProject', { projectId, completed: false });
       }
 
-      this.$emit('project-completed', projectId);
+      // this.$emit('project-completed', projectId);
     },
     deleteProject() {
       this.$router.replace('/');

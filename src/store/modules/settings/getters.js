@@ -6,8 +6,15 @@
  */
 const getMaxDeadlinesForProject = (state) => state.settings.project.maxDeadlines;
 
+/**
+ * Get the user auth state
+ *
+ * @param {state} object the vuex state object.
+ * @return {Boolean} whetere the user is logged in or not.
+ */
+const isUserLoggedIn = (state) => state.user.isLoggedIn;
 
 export {
-  /* eslint-disable import/prefer-default-export */
   getMaxDeadlinesForProject,
+  isUserLoggedIn,
 };
