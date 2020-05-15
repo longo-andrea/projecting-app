@@ -7,7 +7,7 @@
 const SET_MAX_DEADLINES = (state, { maxDeadlines }) => {
   if (maxDeadlines > 0 && maxDeadlines < 7) {
     /* eslint-disable no-param-reassign */
-    state.settings.maxDeadlines = maxDeadlines;
+    state.settings.project.maxDeadlines = maxDeadlines;
   }
 };
 

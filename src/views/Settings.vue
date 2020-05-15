@@ -1,9 +1,17 @@
 <template>
   <div>
-    <div>
-      <el-button @click="signOut()">
+    <div class="settings-header">
+      <h2 class="subtitle subtitle-settings subtitle-username">Hi {{ username }}</h2>
+      <el-button
+        @click="signOut()"
+        class="button-signout">
         Sign out
       </el-button>
+    </div>
+
+    <el-divider />
+
+    <div>
       <h2 class="subtitle subtitle-settings">Project</h2>
       <p class="description descriptioon-settings">Max deadlines for a project</p>
       <el-input-number
@@ -13,7 +21,9 @@
         :min="1"
         :max="6" />
     </div>
+
     <el-divider />
+
     <router-link to="/about" id="link-about">
       <h2 class="subtitle subtitle-settings">About</h2>
     </router-link>
@@ -29,11 +39,12 @@ export default {
   data() {
     return {
       maxDeadlines: this.$store.getters['settings/getMaxDeadlinesForProject'],
+      username: firebase.auth().currentUser.displayName,
     };
   },
   methods: {
     updateMaxDeadlines(maxDeadlinesCount) {
-      this.$store.dispatch('settings/setMaxDeadlines', { maxDeadlinesCount });
+      this.$store.dispatch('settings/setMaxDeadlines', { maxDeadlines: maxDeadlinesCount });
     },
     signOut() {
       firebase
@@ -47,9 +58,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .subtitle-settings {
   margin: 0;
   font-weight: $--font-bold;
+
+  &.subtitle-username {
+    font-size: 1.6rem;
+  }
 }
 
 #link-about {

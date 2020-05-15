@@ -3,9 +3,6 @@
   "version": "0.3.0",
   "homepage": "https://github.com/longo-andrea/projecting-app",
   "author": "longoandrea.dev@gmail.com",
-  "engines": {
-    "node": "10.20.1"
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:longo-andrea/projecting-app.git"
