@@ -1,29 +1,28 @@
 <template>
-  <el-container>
-    <el-header
-      class="header"
-      height="50px">
-      <app-header />
-    </el-header>
-    <el-main>
-      <router-view />
-    </el-main>
-  </el-container>
+  <div id="app">
+    <router-view/>
+  </div>
 </template>
 
-<script>
-import AppHeader from './components/AppHeader.vue';
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-export default {
-  components: {
-    AppHeader,
-  },
-};
-</script>
+#nav {
+  padding: 30px;
 
-<style lang='scss'>
-.header {
-  background: $--base-background;
-  box-shadow: 0 0 8px $--light-border;
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
 }
 </style>

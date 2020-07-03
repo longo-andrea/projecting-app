@@ -1,23 +1,80 @@
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
 /**
- * Set max deadines count per project
- * @param {commit} object the vuex state object.
- * @param {maxDeadlines} number represents max deadlines count.
+ * Set current user session
+ *
+ * @param {commit} object the vuex state object
+ * @param {session} object that represent current user session
  */
-const setMaxDeadlines = ({ commit }, { maxDeadlines }) => {
-  commit('SET_MAX_DEADLINES', { maxDeadlines });
+const setUserSession = ({ commit }, session) => {
+  commit('SET_USER_SESSION', session);
 };
 
 /**
- * Set selected user auth state.
+ * Trying to restore current user session
  *
- * @param {commit} object the vuex state object.
- * @param {isLoggedIn} boolean wheter the user is logged in or not.
+ * @param {commit} object the vuex state object
+ * @return {promise}  that represent restoring action result
  */
-const setUserLoggedIn = ({ commit }, { isLoggedIn }) => Promise.all([
-  commit('SET_LOGGEDIN', { isLoggedIn }),
-]);
+
+const restoreUserSession = ({ commit }) => new Promise((resolve, reject) => {
+  firebase.auth().onAuthStateChanged((session) => {
+    if (session) {
+      // store session
+      commit('SET_USER_SESSION', session);
+
+      resolve(session);
+    } else {
+      // set session to null
+      commit('SET_USER_SESSION', null);
+
+      reject(new Error('You must be logged in'));
+    }
+  });
+});
+
+/**
+ * User is logged out
+ *
+ * @param {commit} object the vuex state object
+ */
+
+const loginWithGoogle = ({ commit }) => new Promise((resolve, reject) => {
+  const provider = new firebase.auth.GoogleAuthProvider(); // init GoogleAuthProvider
+
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then((session) => {
+      // user session is stored
+      commit('SET_USER_SESSION', session);
+
+      resolve();
+    })
+    .catch((error) => {
+      reject(new Error(error));
+    });
+});
+
+/**
+ * User is logged out
+ *
+ * @param {commit} object the vuex state object
+ */
+
+const logout = ({ commit }) => {
+  firebase
+    .auth()
+    .signOut();
+
+  // set session to null
+  commit('SET_USER_SESSION', null);
+};
 
 export {
-  setMaxDeadlines,
-  setUserLoggedIn,
+  setUserSession,
+  restoreUserSession,
+  loginWithGoogle,
+  logout,
 };
