@@ -13,6 +13,9 @@ export default {
   components: {
     PNavbar,
   },
+  mounted() {
+    this.$store.dispatch('deadlines/initState');
+  },
 };
 </script>
 
