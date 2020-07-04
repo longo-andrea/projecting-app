@@ -6,13 +6,29 @@
  */
 const INIT_STATE = (state, data) => {
   if (data.val().deadlines) {
-    Object.assign(state, data.val().deadlines);
+    state.deadlines = Object.values(data.val().deadlines);
   } else {
-    Object.assign(state, {});
+    state.deadlines = [];
   }
 };
 
+/**
+ * Add a deadline
+ *
+ * @param {state} object the vuex state object.
+ * @param {deadlineId} string which represents deadline's name
+ * @param {deadlineName} string which represents deadline's name
+ * @param {deadlineDescription} string which represents deadline's description
+ */
+const ADD_DEADLINE = (state, { deadlineId, deadlineName, deadlineDescription }) => {
+  state.deadlines.push({
+    id: deadlineId,
+    name: deadlineName,
+    description: deadlineDescription,
+  });
+};
+
 export {
-  /* eslint-disable */
   INIT_STATE,
+  ADD_DEADLINE,
 };

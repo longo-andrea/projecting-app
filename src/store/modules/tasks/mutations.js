@@ -6,13 +6,29 @@
  */
 const INIT_STATE = (state, data) => {
   if (data.val().deadlines) {
-    Object.assign(state, data.val().tasks);
+    state.tasks = Object.values(data.val().projects);
   } else {
-    Object.assign(state, {});
+    state.tasks = [];
   }
 };
 
+/**
+ * Add a task
+ *
+ * @param {state} object the vuex state object.
+ * @param {taskId} string which represents task's id
+ * @param {taskName} string which represents task's name
+ * @param {taskDescription} string which represents task's description
+ */
+const ADD_TASK = (state, { taskId, taskName, taskDescription }) => {
+  state.tasks.push({
+    id: taskId,
+    name: taskName,
+    description: taskDescription,
+  });
+};
+
 export {
-  /* eslint-disable */
   INIT_STATE,
+  ADD_TASK,
 };

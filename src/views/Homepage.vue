@@ -1,7 +1,30 @@
 <template>
   <div>
     <p-navbar />
-    <h1>Hoempage</h1>
+    <h1>Hompage</h1>
+
+    <ul>
+      <h1>Projects</h1>
+      <li v-for="project in projects" :key="project.id">
+        {{ project.name }}
+      </li>
+    </ul>
+
+    <ul>
+      <h1>Deadlines</h1>
+      <li v-for="deadline in deadlines" :key="deadline.name">
+        {{ deadline.name }}
+      </li>
+    </ul>
+
+    <ul>
+      <h1>Tasks</h1>
+      <li v-for="task in tasks" :key="task.name">
+        {{ task.name }}
+      </li>
+    </ul>
+
+    <router-link to="/addproject">Add a project</router-link>
   </div>
 </template>
 
@@ -13,8 +36,17 @@ export default {
   components: {
     PNavbar,
   },
+  data() {
+    return {
+      projects: null,
+      deadlines: null,
+      tasks: null,
+    };
+  },
   mounted() {
-    this.$store.dispatch('deadlines/initState');
+    this.projects = this.$store.getters['projects/getProjects'];
+    this.deadlines = this.$store.getters['deadlines/getDeadlines'];
+    this.tasks = this.$store.getters['tasks/getTasks'];
   },
 };
 </script>

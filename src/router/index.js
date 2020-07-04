@@ -31,6 +31,20 @@ const routes = [
           }
         },
       },
+      {
+        path: '/addproject',
+        name: 'addproject',
+        component: () => import(/* webpackChunkName: "addproject" */ '../views/AddProject.vue'),
+        beforeEnter: (to, from, next) => {
+          if (store.getters['settings/getUserSession'] !== null) {
+            // if the user is logged in, then he can going on
+            next();
+          } else {
+            // otherwise it will be redirected to login page
+            next('/login');
+          }
+        },
+      },
     ],
   },
 ];
