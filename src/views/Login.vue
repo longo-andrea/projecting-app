@@ -1,7 +1,19 @@
 <template>
-  <div>
-    <h1>Login</h1>
-    <input type="submit" value="Login with Google" @click="loginWithGoogle">
+  <div class="login">
+    <img
+      class="login__logo"
+      :src="require('@/assets/img/logo.svg')"
+      alt="Projecting logo">
+
+    <h1 class="login__title">Projecting</h1>
+
+    <div class="login__button">
+      <input
+        class="login__button"
+        type="submit"
+        value="Login with Google"
+        @click="loginWithGoogle">
+    </div>
   </div>
 </template>
 
@@ -38,4 +50,49 @@ export default {
 </script>
 
 <style lang="scss">
+.login {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: $primary-color;
+
+  .login__logo {
+    flex-basis: 40%;
+    margin-top: 20%;
+  }
+
+  .login__title {
+    flex-basis: 20%;
+    margin-bottom: auto;
+
+    font-size: 2rem;
+    font-style: italic;
+  }
+
+  .login__button {
+    flex-basis: 20%;
+
+    input {
+      padding: 1rem;
+      padding-left: 3rem;
+
+      background:  url('../assets/img/google_logo.svg');
+      background-repeat: no-repeat;
+      background-size: 2.5rem auto;
+      background-position: .5rem center;
+      background-color: #ffffff;
+      border: 1px solid #ededed;
+      border-radius: 2rem;
+
+      font-weight: $font-semi-bold;
+      font-size: 1.1rem;
+      color: #808080;
+    }
+  }
+}
 </style>
