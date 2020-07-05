@@ -87,7 +87,7 @@ export default {
       background-position: .5rem center;
       background-color: #ffffff;
       border: 1px solid #ededed;
-      border-radius: 2rem;
+      border-radius: 1.5rem;
 
       font-weight: $font-semi-bold;
       font-size: 1.1rem;

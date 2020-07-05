@@ -78,7 +78,7 @@ export default {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 100%;
   grid-template-rows: 4rem auto;
 
   .homepage__content {
