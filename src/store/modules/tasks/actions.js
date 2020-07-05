@@ -24,12 +24,14 @@ const initState = ({ commit }) => {
  * @param {commit} object the vuex state object
  * @param {projectId} string which represents project's id
  * @param {deadlineId} string which represents deadline's id
+ * @param {taskId} string which represents task's id
  * @param {taskName} string which represents task's name
  * @param {taskDescription} string which represents task's description
  */
 const addTask = ({ commit }, {
   projectId,
   deadlineId,
+  taskId,
   taskName,
   taskDescription,
 }) => {
@@ -37,6 +39,7 @@ const addTask = ({ commit }, {
   commit('ADD_TASK', {
     projectId,
     deadlineId,
+    taskId,
     taskName,
     taskDescription,
   });
@@ -52,8 +55,11 @@ const addTask = ({ commit }, {
     .update({
       projectId,
       deadlineId,
+      id: taskId,
       name: taskName,
       description: taskDescription,
+      completed: false,
+      workingOn: false,
     });
 };
 

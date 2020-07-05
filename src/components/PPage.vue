@@ -10,7 +10,7 @@
     <button  @click="addTask">Add task</button>
     <ul>
       <li v-for="task in projectTasks" :key="task.name">
-        {{ task.name }}
+        Hey
       </li>
     </ul>
   </div>
@@ -35,15 +35,19 @@ export default {
     const projectTasks = this.$store.getters['tasks/getProjectTasks'](this.projectId);
 
     this.project = project;
-    this.projectDeadlines = projectDeadlines.projectDeadlines;
+    this.projectDeadlines = projectDeadlines;
     this.projectTasks = projectTasks;
-    this.isReady = true;
+    this.isReady = true; // set project as ready to render its information
   },
   methods: {
-    addTask() {
+    async addTask() {
+      // generate a uniqe task id
+      const taskId = await this.$store.dispatch('settings/generateUniqeId');
+
       this.$store.dispatch('tasks/addTask', {
         projectId: this.projectId,
         deadlineId: this.projectDeadlines[0].id,
+        taskId,
         taskName: this.toAddTask,
         taskDescription: 'Description of the task',
       });

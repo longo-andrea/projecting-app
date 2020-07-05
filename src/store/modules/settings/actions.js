@@ -78,7 +78,7 @@ const logout = ({ commit }) => {
  * @return {string} which contains a uniqe id
  */
 
-const generateUniqeId = () => `${new Date().getTime()}-a`;
+const generateUniqeId = () => `pj-${new Date().getTime() * Math.random().toString().substr(2, 7)}`;
 
 export {
   setUserSession,

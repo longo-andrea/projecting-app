@@ -46,14 +46,24 @@ export default {
     };
   },
   methods: {
-    addProject() {
+    async addProject() {
       // generate an id used as project's id
-      const uniqeId = this.$store.dispatch('settings/generateUniqeId');
+      const uniqeId = await this.$store.dispatch('settings/generateUniqeId');
 
       this.$store.dispatch('projects/addProject', {
         projectId: uniqeId,
         projectName: this.projectName,
         projectDescription: this.projectDescription,
+      });
+
+      this.projectDeadlines.forEach(async (deadline) => {
+        const deadlineId = await this.$store.dispatch('settings/generateUniqeId');
+
+        this.$store.dispatch('deadlines/addDeadline', {
+          projectId: uniqeId,
+          deadlineId,
+          deadlineDate: deadline.date,
+        });
       });
     },
     addProjectDeadline() {

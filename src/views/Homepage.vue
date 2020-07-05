@@ -13,7 +13,7 @@
     <ul>
       <h1>Deadlines</h1>
       <li v-for="deadline in deadlines" :key="deadline.id">
-        {{ deadline.projectDeadlines }}
+        {{ deadline.date }}
       </li>
     </ul>
 

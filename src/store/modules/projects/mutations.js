@@ -25,6 +25,7 @@ const ADD_PROJECT = (state, { projectId, projectName, projectDescription }) => {
     id: projectId,
     name: projectName,
     description: projectDescription,
+    completed: false,
   });
 };
 

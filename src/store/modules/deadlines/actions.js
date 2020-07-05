@@ -25,9 +25,9 @@ const initState = ({ commit }) => {
  * @param {projectId} string which represents project's id
  * @param {deadlines} array which contains deadline information
  */
-const addDeadline = ({ commit }, { projectId, deadlines }) => {
+const addDeadline = ({ commit }, { projectId, deadlineId, deadlineDate }) => {
   // deadline is stored locally
-  commit('ADD_DEADLINE', { projectId, deadlines });
+  commit('ADD_DEADLINE', { projectId, deadlineId, deadlineDate });
 
   // then deadline is stored on firebase
   const userId = firebase.auth().currentUser.uid;
@@ -39,7 +39,9 @@ const addDeadline = ({ commit }, { projectId, deadlines }) => {
     .push() // return a uniqe id to store array in firebase
     .update({
       projectId,
-      projectDeadlines: deadlines,
+      id: deadlineId,
+      date: deadlineDate,
+      completed: false,
     });
 };
 

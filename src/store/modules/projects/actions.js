@@ -41,6 +41,7 @@ const addProject = ({ commit }, { projectId, projectName, projectDescription }) 
       id: projectId,
       name: projectName,
       description: projectDescription,
+      completed: false,
     });
 };
 
