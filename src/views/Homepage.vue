@@ -12,14 +12,14 @@
 
     <ul>
       <h1>Deadlines</h1>
-      <li v-for="deadline in deadlines" :key="deadline.name">
+      <li v-for="deadline in deadlines" :key="deadline.id">
         {{ deadline.name }}
       </li>
     </ul>
 
     <ul>
       <h1>Tasks</h1>
-      <li v-for="task in tasks" :key="task.name">
+      <li v-for="task in tasks" :key="task.id">
         {{ task.name }}
       </li>
     </ul>

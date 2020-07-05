@@ -25,10 +25,7 @@ const initState = ({ commit }) => {
  * @param {projectName} string which represents project's name
  * @param {projectDescription} string which represents project's description
  */
-const addProject = ({ commit }, { projectName, projectDescription }) => {
-  // project id is calculated with current timestamp to assuring uniqe id
-  const projectId = new Date().getTime();
-
+const addProject = ({ commit }, { projectId, projectName, projectDescription }) => {
   // project is stored locally
   commit('ADD_PROJECT', { projectId, projectName, projectDescription });
 

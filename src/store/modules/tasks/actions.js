@@ -25,12 +25,9 @@ const initState = ({ commit }) => {
  * @param {taskName} string which represents task's name
  * @param {taskDescription} string which represents task's description
  */
-const addTask = ({ commit }, { taskName, taskDescription }) => {
-  // task id is calculated with current timestamp to assuring uniqe id
-  const taskId = new Date().getTime();
-
+const addTask = ({ commit }, { projectId, taskName, taskDescription }) => {
   // task is stored locally
-  commit('ADD_TASK', { taskId, taskName, taskDescription });
+  commit('ADD_TASK', { projectId, taskName, taskDescription });
 
   // then task is stored on firebase
   const userId = firebase.auth().currentUser.uid;
@@ -41,7 +38,7 @@ const addTask = ({ commit }, { taskName, taskDescription }) => {
     .child('tasks')
     .push() // return a uniqe id to store array in firebase
     .update({
-      id: taskId,
+      projectId,
       name: taskName,
       description: taskDescription,
     });

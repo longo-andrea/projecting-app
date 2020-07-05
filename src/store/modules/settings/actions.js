@@ -72,9 +72,18 @@ const logout = ({ commit }) => {
   commit('SET_USER_SESSION', null);
 };
 
+/**
+ * Return a uniqe id
+ *
+ * @return {string} which contains a uniqe id
+ */
+
+const generateUniqeId = () => new Date().getTime();
+
 export {
   setUserSession,
   restoreUserSession,
   loginWithGoogle,
   logout,
+  generateUniqeId,
 };

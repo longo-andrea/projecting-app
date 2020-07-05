@@ -5,7 +5,7 @@
  * @param {data} object that represent current user state
  */
 const INIT_STATE = (state, data) => {
-  if (data.val().projects) {
+  if (data.val() && data.val().projects) {
     state.projects = Object.values(data.val().projects);
   } else {
     state.projects = [];

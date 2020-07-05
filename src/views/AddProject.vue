@@ -4,7 +4,7 @@
   <form>
     <div>
       <label for="project-name">* Project name</label>
-      <input id="project-name" type="text" v-model="projectName">
+      <input id="project-name" type="text" v-model="projectName" />
     </div>
 
     <div>
@@ -14,9 +14,23 @@
     </div>
 
     <div>
+      <input type="date" v-model="selectedDate" />
+      <input type="submit" value="Add" @click="addProjectDeadline">
+    </div>
+
+    <div>
       <input type="submit" value="Add project" @click="addProject">
     </div>
   </form>
+
+  <div>
+    <h2>Deadlines list</h2>
+    <ul>
+      <li v-for="(deadline, index) in projectDeadlines" :key="index">
+        {{ deadline.date }}
+      </li>
+    </ul>
+  </div>
 </div>
 </template>
 
@@ -27,11 +41,28 @@ export default {
     return {
       projectName: null,
       projectDescription: null,
+      projectDeadlines: [],
+      selectedDate: null,
     };
   },
   methods: {
     addProject() {
-      this.$store.dispatch('deadlines/addDeadline', { deadlineName: 'Name', deadlineDescription: 'Description' });
+      // generate an id used as project's id
+      const uniqeId = this.$store.dispatch('settings/generateUniqeId');
+
+      this.$store.dispatch('projects/addProject', {
+        projectId: uniqeId,
+        projectName: this.projectName,
+        projectDescription: this.projectDescription,
+      });
+    },
+    addProjectDeadline() {
+      this.projectDeadlines.push({
+        date: new Date(this.selectedDate),
+      });
+
+      // sort project deadlines by date
+      this.projectDeadlines.sort((firstDeadline, secondDeadline) => firstDeadline.date - secondDeadline.date);
     },
   },
 };
