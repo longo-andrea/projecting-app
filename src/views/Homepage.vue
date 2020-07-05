@@ -6,14 +6,14 @@
     <ul>
       <h1>Projects</h1>
       <li v-for="project in projects" :key="project.id">
-        {{ project.name }}
+        <router-link :to="`project/${project.id}`">{{ project.name }}</router-link>
       </li>
     </ul>
 
     <ul>
       <h1>Deadlines</h1>
       <li v-for="deadline in deadlines" :key="deadline.id">
-        {{ deadline.name }}
+        {{ deadline.projectDeadlines }}
       </li>
     </ul>
 

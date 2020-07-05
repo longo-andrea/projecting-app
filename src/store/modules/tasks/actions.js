@@ -22,12 +22,24 @@ const initState = ({ commit }) => {
  * Add a new task
  *
  * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ * @param {deadlineId} string which represents deadline's id
  * @param {taskName} string which represents task's name
  * @param {taskDescription} string which represents task's description
  */
-const addTask = ({ commit }, { projectId, taskName, taskDescription }) => {
+const addTask = ({ commit }, {
+  projectId,
+  deadlineId,
+  taskName,
+  taskDescription,
+}) => {
   // task is stored locally
-  commit('ADD_TASK', { projectId, taskName, taskDescription });
+  commit('ADD_TASK', {
+    projectId,
+    deadlineId,
+    taskName,
+    taskDescription,
+  });
 
   // then task is stored on firebase
   const userId = firebase.auth().currentUser.uid;
@@ -39,6 +51,7 @@ const addTask = ({ commit }, { projectId, taskName, taskDescription }) => {
     .push() // return a uniqe id to store array in firebase
     .update({
       projectId,
+      deadlineId,
       name: taskName,
       description: taskDescription,
     });

@@ -17,14 +17,12 @@ const INIT_STATE = (state, data) => {
  *
  * @param {state} object the vuex state object.
  * @param {projectId} string which represents project's name
- * @param {deadlineName} string which represents deadline's name
- * @param {deadlineDescription} string which represents deadline's description
+ * @param {deadlines} array which contains deadline's information
  */
-const ADD_DEADLINE = (state, { projectId, deadlineName, deadlineDescription }) => {
+const ADD_DEADLINE = (state, { projectId, deadlines }) => {
   state.deadlines.push({
     projectId,
-    name: deadlineName,
-    description: deadlineDescription,
+    projectDeadlines: deadlines,
   });
 };
 

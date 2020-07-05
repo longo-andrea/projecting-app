@@ -45,6 +45,27 @@ const routes = [
           }
         },
       },
+      {
+        path: '/project',
+        name: 'project',
+        component: () => import(/* webpackChunkName: "project" */ '../views/Project.vue'),
+        children: [
+          {
+            path: '/project/:projectId',
+            name: 'singleProject',
+            component: () => import(/* webpackChunkName: "singleProject" */ '../components/PPage.vue'),
+          },
+        ],
+        beforeEnter: (to, from, next) => {
+          if (store.getters['settings/getUserSession'] !== null) {
+            // if the user is logged in, then he can going on
+            next();
+          } else {
+            // otherwise it will be redirected to login page
+            next('/login');
+          }
+        },
+      },
     ],
   },
 ];

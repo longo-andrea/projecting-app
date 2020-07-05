@@ -6,7 +6,15 @@
  */
 const getDeadlines = (state) => state.deadlines;
 
+/**
+ * Get all project deadlines
+ *
+ * @param {state} object the vuex state object
+ * @return {function} which requires project's id and return all project's deadlines
+ */
+const getProjectDeadlines = (state) => (projectId) => state.deadlines.find((deadline) => deadline.projectId === projectId);
+
 export {
-  /* eslint-disable */
   getDeadlines,
+  getProjectDeadlines,
 };

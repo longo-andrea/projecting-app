@@ -22,12 +22,12 @@ const initState = ({ commit }) => {
  * Add a new deadlines
  *
  * @param {commit} object the vuex state object
- * @param {deadlinesName} string which represents deadline's name
- * @param {deadlineDescription} string which represents deadline's description
+ * @param {projectId} string which represents project's id
+ * @param {deadlines} array which contains deadline information
  */
-const addDeadline = ({ commit }, { projectId, deadlineName, deadlineDescription }) => {
+const addDeadline = ({ commit }, { projectId, deadlines }) => {
   // deadline is stored locally
-  commit('ADD_DEADLINE', { projectId, deadlineName, deadlineDescription });
+  commit('ADD_DEADLINE', { projectId, deadlines });
 
   // then deadline is stored on firebase
   const userId = firebase.auth().currentUser.uid;
@@ -39,8 +39,7 @@ const addDeadline = ({ commit }, { projectId, deadlineName, deadlineDescription 
     .push() // return a uniqe id to store array in firebase
     .update({
       projectId,
-      name: deadlineName,
-      description: deadlineDescription,
+      projectDeadlines: deadlines,
     });
 };
 
