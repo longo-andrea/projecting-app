@@ -5,12 +5,17 @@ $font-regular: 400;
 $font-semi-bold: 600;
 $font-bold: 700;
 $base-font-size: 1rem;
+$big-font-size: 2rem;
 
 $base-color: #303030;
-$lighen-color: #e6e6e6;
-$base-border: 1px solid #ededed;
+$light-color: lighten($base-color, 30%);
+$lighter-color: #e6e6e6;
+$base-border-color: #ededed;
+$base-border: 1px solid $base-border-color;
+$dark-border: 1px solid darken($base-border-color, 20%);
 $base-border-radius: 4px;
 
 $darken-border: 1px solid #bfbfbf;
 
-$primary-color: #F9ED54;
+$primary-color: #ecd531;
+$danger: #e03319;

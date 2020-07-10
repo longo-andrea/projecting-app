@@ -20,6 +20,7 @@ const routes = [
       {
         path: '/homepage',
         name: 'homepage',
+        redirect: { path: 'homepage/summary' },
         component: () => import(/* webpackChunkName: "homepage" */ '../views/Homepage.vue'),
         beforeEnter: (to, from, next) => {
           if (store.getters['settings/getUserSession'] !== null) {
@@ -30,20 +31,18 @@ const routes = [
             next('/login');
           }
         },
-      },
-      {
-        path: '/addproject',
-        name: 'addproject',
-        component: () => import(/* webpackChunkName: "addproject" */ '../views/AddProject.vue'),
-        beforeEnter: (to, from, next) => {
-          if (store.getters['settings/getUserSession'] !== null) {
-            // if the user is logged in, then he can going on
-            next();
-          } else {
-            // otherwise it will be redirected to login page
-            next('/login');
-          }
-        },
+        children: [
+          {
+            path: 'summary',
+            name: 'summary',
+            component: () => import(/* webpackChunkName: "summary" */ '../views/Summary.vue'),
+          },
+          {
+            path: 'addproject',
+            name: 'addproject',
+            component: () => import(/* webpackChunkName: "addproject" */ '../views/AddProject.vue'),
+          },
+        ],
       },
       {
         path: '/project',

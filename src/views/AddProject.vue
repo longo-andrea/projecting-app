@@ -1,48 +1,57 @@
 <template>
-<div>
-  <h1>Add project</h1>
-  <form>
-    <div>
-      <label for="project-name">* Project name</label>
-      <input id="project-name" type="text" v-model="projectName" />
-    </div>
+  <div class="page add-projet">
+    <h1 class="page__title">Add project</h1>
+    <form class="add-project__form">
+      <div class="add-project__form__item">
+        <label for="project-name" class="add-project__form__item__label">
+          <span class="add-project__form__item__label__mandatory">*</span> Project name
+        </label>
+        <input id="project-name" type="text" v-model="projectName" class="add-project__form__item__input-text" />
+      </div>
 
-    <div>
-      <label for="project-description">* Project description</label>
-      <textarea id="project-description" cols="30" rows="10" v-model="projectDescription">
-      </textarea>
-    </div>
+      <div class="add-project__form__item">
+        <label for="project-description" class="add-project__form__item__label">
+          <span class="add-project__form__item__label__mandatory">*</span> Project description
+        </label>
+        <textarea id="project-description" cols="30" rows="10" v-model="projectDescription" class="add-project__form__item__input-textarea">
+        </textarea>
+      </div>
 
-    <div>
-      <input type="date" v-model="selectedDate" />
-      <input type="submit" value="Add" @click="addProjectDeadline">
-    </div>
+      <div class="add-project__form__item">
+        <label for="project-description" class="add-project__form__item__label">
+          <span class="add-project__form__item__label__mandatory">*</span> Deadlines
+        </label>
+        <input type="date" @change="addProjectDeadline"  class="add-project__form__item__input-date" />
+      </div>
 
-    <div>
-      <input type="submit" value="Add project" @click="addProject">
-    </div>
-  </form>
+      <div class="add-project__form__item">
+        <p-roadmap :itemsList="projectDeadlines">
+          <template v-slot="item">
+            {{ new Date(item.date).toISOString() }}
+          </template>
+        </p-roadmap>
+      </div>
 
-  <div>
-    <h2>Deadlines list</h2>
-    <ul>
-      <li v-for="(deadline, index) in projectDeadlines" :key="index">
-        {{ deadline.date }}
-      </li>
-    </ul>
+      <div class="add-project__form__item">
+        <input type="submit" value="Add project" @click="addProject" class="add-project__form__item__submit">
+      </div>
+    </form>
   </div>
-</div>
 </template>
 
 <script>
+import PRoadmap from '@/components/PRoadmap.vue';
+
 export default {
   name: 'AddProject',
+  components: {
+    PRoadmap,
+  },
   data() {
     return {
       projectName: null,
       projectDescription: null,
       projectDeadlines: [],
-      selectedDate: null,
     };
   },
   methods: {
@@ -66,10 +75,14 @@ export default {
         });
       });
     },
-    addProjectDeadline() {
+    addProjectDeadline(event) {
       this.projectDeadlines.push({
-        date: new Date(this.selectedDate),
+        date: new Date(event.target.value),
       });
+
+      // then date input is cleared
+      /* eslint-disable no-param-reassign */
+      event.target.value = '';
 
       // sort project deadlines by date
       this.projectDeadlines.sort((firstDeadline, secondDeadline) => firstDeadline.date - secondDeadline.date);
@@ -79,4 +92,56 @@ export default {
 </script>
 
 <style lang="scss">
+.add-projet {
+  height: 100%;
+
+  .add-project__form {
+    padding: 0 .5rem;
+
+    .add-project__form__item {
+      margin: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
+      .add-project__form__item__label {
+        margin-bottom: .5rem;
+
+        color: $light-color;
+
+        .add-project__form__item__label__mandatory {
+          color: $danger;
+        }
+      }
+
+      .add-project__form__item__input-text {
+        padding: .3rem;
+
+        border: $dark-border;
+        border-radius: $base-border-radius;
+      }
+
+      .add-project__form__item__input-textarea {
+        padding: .3rem;
+
+        border: $dark-border;
+        border-radius: $base-border-radius;
+
+        resize: none;
+      }
+
+      .add-project__form__item__input-date {
+        width: 100%;
+        padding: .3rem;
+
+        border: $dark-border;
+        border-radius: $base-border-radius;
+      }
+    }
+
+    .add-project__form__list {
+      padding-left: 2rem;
+    }
+  }
+}
 </style>
