@@ -61,7 +61,7 @@
           v-for="project in projects"
           :key="project.id">
           <template #header>
-            {{ project.name }}
+            <router-link :to="`project/${project.id}`">{{ project.name }}</router-link>
           </template>
           <template #content>
             {{ project.description }}

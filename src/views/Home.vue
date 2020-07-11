@@ -27,6 +27,10 @@ export default {
       font-size: $big-font-size;
       font-weight: $font-bold;
     }
+
+    .page__sub-title {
+      color: $light-color;
+    }
   }
 }
 </style>
