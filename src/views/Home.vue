@@ -19,6 +19,8 @@ export default {
     height: 100%;
     padding: .5rem;
 
+    overflow-y: scroll;
+
     .page__title {
       margin: 1.5rem .5rem;
 

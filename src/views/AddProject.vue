@@ -25,15 +25,26 @@
       </div>
 
       <div class="add-project__form__item">
-        <p-roadmap :itemsList="projectDeadlines">
+        <p-roadmap :itemsList="projectDeadlines" class="add-project__form__item__roadmap">
           <template v-slot="item">
-            {{ new Date(item.date).toISOString() }}
+            <div class="add-project__form__item__roadmap__item">
+              {{ dateToString(item.date) }}
+              <img
+                class="add-project__form__item__roadmap__item__icon"
+                src="@/assets/img/remove-icon.svg"
+                alt="remove deadline"
+                @click="removeDeadline(item.date)" />
+            </div>
           </template>
         </p-roadmap>
       </div>
 
-      <div class="add-project__form__item">
-        <input type="submit" value="Add project" @click="addProject" class="add-project__form__item__submit">
+      <div class="add-project__form__submit">
+        <p-button color="primary" @buttonClicked="addProject">
+          <template #content>
+            Create project
+          </template>
+        </p-button>
       </div>
     </form>
   </div>
@@ -41,11 +52,13 @@
 
 <script>
 import PRoadmap from '@/components/PRoadmap.vue';
+import PButton from '@/components/PButton.vue';
 
 export default {
   name: 'AddProject',
   components: {
     PRoadmap,
+    PButton,
   },
   data() {
     return {
@@ -74,6 +87,8 @@ export default {
           deadlineDate: deadline.date,
         });
       });
+
+      this.$router.push('/');
     },
     addProjectDeadline(event) {
       this.projectDeadlines.push({
@@ -86,6 +101,19 @@ export default {
 
       // sort project deadlines by date
       this.projectDeadlines.sort((firstDeadline, secondDeadline) => firstDeadline.date - secondDeadline.date);
+    },
+    removeDeadline(date) {
+      this.projectDeadlines = this.projectDeadlines.filter((deadlineDate) => deadlineDate.date !== date);
+    },
+    dateToString(date) {
+      const day = date.getDate();
+      const month = date.getMonth();
+      const year = date.getFullYear();
+
+      const months = ['January', 'February', 'March', 'April', 'May',
+        'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+      return `${months[month]} ${day}, ${year}`;
     },
   },
 };
@@ -110,7 +138,7 @@ export default {
         color: $light-color;
 
         .add-project__form__item__label__mandatory {
-          color: $danger;
+          color: $danger-color;
         }
       }
 
@@ -137,10 +165,25 @@ export default {
         border: $dark-border;
         border-radius: $base-border-radius;
       }
-    }
 
-    .add-project__form__list {
-      padding-left: 2rem;
+      .add-project__form__item__roadmap {
+        .add-project__form__item__roadmap__item {
+          width: 100%;
+
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .add-project__form__item__roadmap__item__icon {
+            width: 1rem;
+          }
+        }
+      }
+    }
+    .add-project__form__submit {
+      width: 70%;
+      margin-left: auto;
+      text-align: right;
     }
   }
 }
