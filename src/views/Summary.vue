@@ -133,6 +133,7 @@ export default {
 <style lang="scss">
 .summary {
   .summary__content {
+    height: 100%;
     padding: 2rem .5rem;
 
     overflow-y: scroll;

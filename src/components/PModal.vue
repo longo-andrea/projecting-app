@@ -29,7 +29,6 @@ export default {
 
   .modal__panel {
     width: 90%;
-    height: 60%;
     padding: 1rem;
     position: relative;
     top: 15%;
