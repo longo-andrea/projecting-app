@@ -5,50 +5,102 @@
       <h3 class="page__sub-title">{{ project.description }}</h3>
     </div>
 
-    <p-collapse>
-      <p-collapse-item title="Tab1" :isActive="'Tab1' === activeCollapseItem" @tabOpened="toggleCollapseItem">
-        <template #content>
-          Content 1
-        </template>
-      </p-collapse-item>
+    <div class="project-page__content">
+      <p-collapse>
+        <p-collapse-item
+          v-for="deadline in deadlinesDate"
+          :key="deadline.id"
+          :title="deadline.date"
+          :isActive="deadline.date === activeCollapseItem"
+          @tabOpened="toggleCollapseItem">
+          <template #content>
+          <div class="project-page__content__input-add-task">
+            <p-button color="simple" size="xs" @buttonClicked="toggleAddTask(deadline.id)">
+              <template #content>
+                + Add a task
+              </template>
+            </p-button>
+          </div>
 
-      <p-collapse-item title="Tab2" :isActive="'Tab2' === activeCollapseItem" @tabOpened="toggleCollapseItem">
-        <template #content>
-          Content 2
-        </template>
-      </p-collapse-item>
+            <p-box
+              v-for="task in getDeadlineTasks(deadline.id)"
+              :key="task.id">
+              <template #header>
+                {{ task.name }}
+              </template>
+              <template #content>
+                {{ task.description }}
+              </template>
+            </p-box>
+            <p v-if="getDeadlineTasks(deadline.id).length === 0">There are no tasks yet.</p>
+          </template>
+        </p-collapse-item>
+      </p-collapse>
+    </div>
 
-      <p-collapse-item title="Tab3" :isActive="'Tab3' === activeCollapseItem" @tabOpened="toggleCollapseItem">
-        <template #content>
-          Content 3
-        </template>
-      </p-collapse-item>
-    </p-collapse>
+    <p-modal v-if="tasks.addTaskIsOpen" class="project-page__add-task-panel">
+      <template #header>
+        <div class="project-page__add-task-panel__header">
+          <h4 class="project-page__add-task-panel__header__title">Add task</h4>
+          <img class="project-page__add-task-panel__header__icon" src="@/assets/img/close-icon.svg" alt="close" @click="toggleAddTask">
+        </div>
+      </template >
+      <template #content>
+        <form class="project-page__add-task-panel__form">
+          <div class="project-page__add-task-panel__form__item">
+            <label for="project-name" class="project-page__add-task-panel__form__item__label">
+              <span class="project-page__add-task-panel__form__item__label__mandatory">*</span> Task name
+            </label>
+            <input id="project-name" type="text" v-model="tasks.addTaskName" class="project-page__add-task-panel__form__item__input-text" />
+          </div>
 
-    <ul>
-      <li v-for="deadline in projectDeadlines" :key="deadline.id">
-        {{ deadline.date }}
-      </li>
-    </ul>
-    <input type="text" v-model="toAddTask">
-    <button  @click="addTask">Add task</button>
-    <ul>
-      <li v-for="task in projectTasks" :key="task.name">
-        Hey
-      </li>
-    </ul>
+          <div class="project-page__add-task-panel__form__item">
+            <label for="project-description" class="project-page__add-task-panel__form__item__label">
+              <span class="project-page__add-task-panel__form__item__label__mandatory">*</span> Task description
+            </label>
+            <textarea
+              id="project-description"
+              cols="30"
+              rows="10"
+              v-model="tasks.addTaskDescription"
+              class="project-page__add-task-panel__form__item__input-textarea">
+            </textarea>
+          </div>
+
+          <div class="project-page__add-task-panel__form__submit">
+            <p-button @buttonClicked="toggleAddTask">
+              <template #content>
+                Cancel
+              </template>
+            </p-button>
+
+            <p-button color="primary" @buttonClicked="addTask">
+              <template #content>
+                Add task
+              </template>
+            </p-button>
+          </div>
+        </form>
+      </template >
+    </p-modal>
   </div>
 </template>
 
 <script>
 import PCollapse from '@/components/PCollapse.vue';
 import PCollapseItem from '@/components/PCollapseItem.vue';
+import PBox from '@/components/PBox.vue';
+import PButton from '@/components/PButton.vue';
+import PModal from '@/components/PModal.vue';
 
 export default {
   name: 'Project',
   components: {
     PCollapse,
     PCollapseItem,
+    PBox,
+    PButton,
+    PModal,
   },
   data() {
     return {
@@ -57,9 +109,22 @@ export default {
       projectDeadlines: null,
       projectTasks: null,
       isReady: false,
-      toAddTask: null,
+      tasks: {
+        addTaskIsOpen: false,
+        addTaskToDeadline: null,
+        addTaskName: null,
+        addTaskDescription: null,
+      },
       activeCollapseItem: null,
     };
+  },
+  computed: {
+    deadlinesDate() {
+      return this.projectDeadlines.map((deadline) => ({
+        id: deadline.id,
+        date: this.dateToString(new Date(deadline.date)),
+      }));
+    },
   },
   mounted() {
     const project = this.$store.getters['projects/getProject'](this.projectId);
@@ -72,8 +137,23 @@ export default {
     this.isReady = true; // set project as ready to render its information
   },
   methods: {
+    updateProjectTasks() {
+      this.projectTasks = this.$store.getters['tasks/getProjectTasks'](this.projectId);
+    },
     toggleCollapseItem(collapseTitle) {
       this.activeCollapseItem = collapseTitle;
+    },
+    toggleAddTask(deadlineId) {
+      this.tasks.addTaskIsOpen = !this.tasks.addTaskIsOpen;
+
+      if (this.tasks.addTaskIsOpen) {
+        this.tasks.addTaskToDeadline = deadlineId;
+      } else {
+        this.tasks.addTaskToDeadline = null;
+      }
+    },
+    getDeadlineTasks(deadlineId) {
+      return this.projectTasks.filter((task) => task.deadlineId === deadlineId);
     },
     async addTask() {
       // generate a uniqe task id
@@ -81,11 +161,14 @@ export default {
 
       this.$store.dispatch('tasks/addTask', {
         projectId: this.projectId,
-        deadlineId: this.projectDeadlines[0].id,
+        deadlineId: this.tasks.addTaskToDeadline,
         taskId,
-        taskName: this.toAddTask,
-        taskDescription: 'Description of the task',
+        taskName: this.tasks.addTaskName,
+        taskDescription: this.tasks.addTaskDescription,
       });
+
+      this.updateProjectTasks(); // task list is updated
+      this.tasks.addTaskIsOpen = false; // add task panel is closed
     },
     dateToString(date) {
       const day = date.getDate();
@@ -110,7 +193,73 @@ export default {
         margin-left: 0;
         margin-bottom: 0;
     }
+  }
 
+  .project-page__add-task-panel {
+    .project-page__add-task-panel__header {
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .project-page__add-task-panel__header__title {
+        font-size: $medium-font-size;
+        font-weight: $font-bold;
+      }
+
+      .project-page__add-task-panel__header__icon {
+        width: 1rem;
+      }
+    }
+
+    .project-page__add-task-panel__form {
+      height: 100%;
+      padding: 0 .5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
+      .project-page__add-task-panel__form__item {
+        max-height: 45%;
+        margin: .5rem 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .project-page__add-task-panel__form__item__label {
+          margin-bottom: .5rem;
+
+          color: $light-color;
+
+          .project-page__add-task-panel__form__item__label__mandatory {
+            color: $danger-color;
+          }
+        }
+
+        .project-page__add-task-panel__form__item__input-text {
+          padding: .3rem;
+
+          border: $dark-border;
+          border-radius: $base-border-radius;
+        }
+
+        .project-page__add-task-panel__form__item__input-textarea {
+          padding: .3rem;
+
+          border: $dark-border;
+          border-radius: $base-border-radius;
+
+          resize: none;
+        }
+      }
+      .project-page__add-task-panel__form__submit {
+        width: 100%;
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
   }
 }
 </style>

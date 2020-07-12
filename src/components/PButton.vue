@@ -3,6 +3,7 @@
     class="button"
     :class="[
       color ? `button-${color}` : '',
+      size ? `button-${size}` : '',
       rounded ? 'button-rounded' : '',
     ]"
     @click="buttonClicked">
@@ -16,6 +17,10 @@ export default {
   name: 'PButton',
   props: {
     color: {
+      type: String,
+      required: false,
+    },
+    size: {
       type: String,
       required: false,
     },
@@ -42,7 +47,7 @@ export default {
   border-radius: $base-border-radius;
 
   font-size: 1.2rem;
-  font-weight: $font-bold;
+  font-weight: $font-semi-bold;
   text-transform: uppercase;
 
   &:hover {
@@ -53,6 +58,17 @@ export default {
     cursor: pointer;
   }
 
+  &.button-simple {
+    border: none;
+    background-color: none;
+    color: $light-color;
+
+    &:hover {
+      color: $base-color;
+      background-color: darken($primary-color, 7%);
+    }
+  }
+
   &.button-primary {
     border: 1px solid darken($primary-color, 10%);
     background-color: $primary-color;
@@ -61,6 +77,11 @@ export default {
     &:hover {
       background-color: darken($primary-color, 7%);
     }
+  }
+
+  &.button-xs {
+    padding: .2rem .5rem;
+    font-size: .7rem;
   }
 
   &.button-rounded {

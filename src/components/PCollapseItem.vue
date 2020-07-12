@@ -2,7 +2,11 @@
   <div class="collapse-item">
     <div class="collapse-item__header" @click="toggleOpen">
       <h2 class="collapse-item__header__title">{{ title }}</h2>
-      <img src="@/assets/img/arrow-down.svg" alt="open deadline" class="collapse-item__header__icon" />
+      <img
+        :class="{ 'collapse-item__header__icon--active': isOpen }"
+        class="collapse-item__header__icon"
+        src="@/assets/img/arrow-down.svg"
+        alt="open deadline" />
     </div>
     <div class="collapse-item__content" v-if="isOpen">
       <slot name="content" />
@@ -63,6 +67,10 @@ export default {
 
     .collapse-item__header__icon {
       width: .8rem;
+
+      &.collapse-item__header__icon--active {
+        transform: rotate(180deg);
+      }
     }
   }
 
