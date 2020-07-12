@@ -6,6 +6,21 @@
     </div>
 
     <div class="project-page__content">
+      <p-box>
+        <template #content>
+          <div class="project-page__content__stats">
+            <div class="project-page__content__stats__item">
+              <div class="project-page__content__stats__item__title">Tasks</div>
+              <div class="project-page__content__stats__item__value">{{ completedTasks.length }} / {{ projectTasks.length }}</div>
+            </div>
+            <div class="project-page__content__stats__item">
+              <div class="project-page__content__stats__item__title">Deadlines</div>
+              <div class="project-page__content__stats__item__value">{{ completedDeadlines.length }} / {{ projectDeadlines.length }}</div>
+            </div>
+          </div>
+        </template>
+      </p-box>
+
       <p-collapse>
         <p-collapse-item
           v-for="deadline in deadlinesDate"
@@ -124,6 +139,12 @@ export default {
         id: deadline.id,
         date: this.dateToString(new Date(deadline.date)),
       }));
+    },
+    completedTasks() {
+      return this.projectTasks.filter((task) => task.completed);
+    },
+    completedDeadlines() {
+      return this.projectDeadlines.filter((deadline) => deadline.completed);
     },
   },
   mounted() {
@@ -258,6 +279,31 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
+      }
+    }
+  }
+
+  .project-page__content {
+    padding: 1rem 0;
+
+    .project-page__content__stats {
+      padding: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+
+      .project-page__content__stats__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .project-page__content__stats__item__title {
+          font-weight: $font-semi-bold;
+        }
+
+        .project-page__content__stats__item__value {
+          color: $light-color;
+        }
       }
     }
   }

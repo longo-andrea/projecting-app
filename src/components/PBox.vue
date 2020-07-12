@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <div class="box__header">
+    <div :class="{ 'box__header': $slots.header }">
       <slot name="header" />
     </div>
     <div class="box__content">
