@@ -7,7 +7,7 @@
 
     <img
       class="navbar__settings-icon"
-      src="https://lh3.googleusercontent.com/a-/AOh14Ghx6in9mUEJ8SrEAKdwApdDCbv6emAeY8rgIgw0VA"
+      :src="userThumbnailUrl"
       alt="settings"
       @click="toggleSettingsPanel" />
 
@@ -28,7 +28,11 @@ export default {
   data() {
     return {
       isSettingsOpen: false,
+      userThumbnailUrl: null,
     };
+  },
+  mounted() {
+    this.userThumbnailUrl = this.$store.getters['settings/getUserSession'].photoURL;
   },
   methods: {
     toggleSettingsPanel() {

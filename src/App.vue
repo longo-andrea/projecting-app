@@ -12,7 +12,6 @@
 
   font-family: $font-family;
   font-weight: $font-regular;
-  color: $base-color;
 }
 
 html, body {
@@ -20,6 +19,7 @@ html, body {
   height: 100%;
 
   font-size: $base-font-size;
+  color: $base-color;
 
   overflow-x: hidden;
 }

@@ -35,8 +35,7 @@ const addDeadline = ({ commit }, { projectId, deadlineId, deadlineDate }) => {
   firebase
     .database()
     .ref(`users/${userId}`)
-    .child('deadlines')
-    .push() // return a uniqe id to store array in firebase
+    .child(`deadlines/${deadlineId}`)
     .update({
       projectId,
       id: deadlineId,

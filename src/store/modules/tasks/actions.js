@@ -50,8 +50,7 @@ const addTask = ({ commit }, {
   firebase
     .database()
     .ref(`users/${userId}`)
-    .child('tasks')
-    .push() // return a uniqe id to store array in firebase
+    .child(`tasks/${taskId}`)
     .update({
       projectId,
       deadlineId,
