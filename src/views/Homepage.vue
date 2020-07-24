@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import PNavbar from '@/components/PNavbar.vue';
+import PNavbar from '@/components/navbar/index';
 
 export default {
   name: 'Homepage',

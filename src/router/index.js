@@ -15,7 +15,7 @@ const routes = [
       {
         path: '/login',
         name: 'login',
-        component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
+        component: () => import(/* webpackChunkName: "login" */ '../views/login/index.js'),
       },
       {
         path: '/homepage',
@@ -35,17 +35,17 @@ const routes = [
           {
             path: 'summary',
             name: 'summary',
-            component: () => import(/* webpackChunkName: "summary" */ '../views/Summary.vue'),
+            component: () => import(/* webpackChunkName: "summary" */ '../views/summary/index.js'),
           },
           {
             path: 'addproject',
             name: 'addproject',
-            component: () => import(/* webpackChunkName: "addproject" */ '../views/AddProject.vue'),
+            component: () => import(/* webpackChunkName: "addproject" */ '../views/add-project/index.js'),
           },
           {
             path: 'project/:projectId',
             name: 'project',
-            component: () => import(/* webpackChunkName: "project" */ '../views/Project.vue'),
+            component: () => import(/* webpackChunkName: "project" */ '../views/project/index.js'),
             beforeEnter: (to, from, next) => {
               if (store.getters['settings/getUserSession'] !== null) {
                 // if the user is logged in, then he can going on

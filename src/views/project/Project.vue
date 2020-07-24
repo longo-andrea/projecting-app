@@ -257,11 +257,10 @@
 </template>
 
 <script>
-import PCollapse from '@/components/PCollapse.vue';
-import PCollapseItem from '@/components/PCollapseItem.vue';
-import PBox from '@/components/PBox.vue';
-import PButton from '@/components/PButton.vue';
-import PModal from '@/components/PModal.vue';
+import PBox from '@/components/box/index';
+import { PCollapse, PCollapseItem } from '@/components/collapse/index';
+import PButton from '@/components/button/index';
+import PModal from '@/components/modal/index';
 
 export default {
   name: 'Project',

@@ -94,9 +94,9 @@
 </template>
 
 <script>
-import PCard from '@/components/PCard.vue';
-import PBox from '@/components/PBox.vue';
-import PButton from '@/components/PButton.vue';
+import PCard from '@/components/card/index';
+import PBox from '@/components/box/index';
+import PButton from '@/components/button/index';
 
 export default {
   name: 'Summary',

@@ -51,8 +51,8 @@
 </template>
 
 <script>
-import PRoadmap from '@/components/PRoadmap.vue';
-import PButton from '@/components/PButton.vue';
+import PRoadmap from '@/components/roadmap/index';
+import PButton from '@/components/button/index';
 
 export default {
   name: 'AddProject',

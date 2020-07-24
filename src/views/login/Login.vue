@@ -81,7 +81,7 @@ export default {
       padding: 1rem;
       padding-left: 3rem;
 
-      background:  url('../assets/img/google_logo.svg');
+      background:  url('~@/assets/img/google_logo.svg');
       background-repeat: no-repeat;
       background-size: 2.5rem auto;
       background-position: .5rem center;
