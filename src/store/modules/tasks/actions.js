@@ -62,7 +62,123 @@ const addTask = ({ commit }, {
     });
 };
 
+/**
+ * Set task completion state
+ *
+ * @param {commit} object the vuex state object
+ * @param {taskId} string which represents task's id
+ * @param {completed} boolean which represents task completion state
+ */
+const setTaskCompleted = ({ commit }, { taskId, completed }) => {
+  commit('SET_TASK_COMPLETED', { taskId, completed });
+
+  // then task is updated
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`tasks/${taskId}`)
+    .update({
+      /* eslint-disable object-shorthand */
+      completed: completed,
+    });
+};
+
+/**
+ * Set task working on state
+ *
+ * @param {commit} object the vuex state object
+ * @param {taskId} string which represents task's id
+ * @param {workingOn} boolean which represents task working on state
+ */
+const setTaskWorkingOn = ({ commit }, { taskId, workingOn }) => {
+  commit('SET_TASK_WORKINGON', { taskId, workingOn });
+
+  // then task is updated
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`tasks/${taskId}`)
+    .update({
+      /* eslint-disable object-shorthand */
+      workingOn: workingOn,
+    });
+};
+
+/**
+ * Set task name
+ *
+ * @param {commit} object the vuex state object
+ * @param {taskId} string which represents task's id
+ * @param {taskName} boolean which represents task's name
+ */
+const setTaskName = ({ commit }, { taskId, taskName }) => {
+  commit('SET_TASK_NAME', { taskId, taskName });
+
+  // then the task is updated
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`tasks/${taskId}`)
+    .update({
+      /* eslint-disable object-shorthand */
+      name: taskName,
+    });
+};
+
+/**
+ * Set task description
+ *
+ * @param {commit} object the vuex state object
+ * @param {taskId} string which represents task's id
+ * @param {taskDescription} boolean which represents task's description
+ */
+const setTaskDescription = ({ commit }, { taskId, taskDescription }) => {
+  commit('SET_TASK_DESCRIPTION', { taskId, taskDescription });
+
+  // then the task is updated
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`tasks/${taskId}`)
+    .update({
+      /* eslint-disable object-shorthand */
+      description: taskDescription,
+    });
+};
+
+/**
+ * Delete given task
+ *
+ * @param {commit} object the vuex state object
+ * @param {taskId} string which represents task's id
+ */
+const deleteTask = ({ commit }, { taskId }) => {
+  commit('DELETE_TASK', { taskId });
+
+  // then the task is removed from database
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`tasks/${taskId}`)
+    .remove();
+};
+
 export {
   initState,
   addTask,
+  setTaskCompleted,
+  setTaskWorkingOn,
+  setTaskName,
+  setTaskDescription,
+  deleteTask,
 };
