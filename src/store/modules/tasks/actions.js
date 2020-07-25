@@ -69,7 +69,7 @@ const addTask = ({ commit }, {
  * @param {taskId} string which represents task's id
  * @param {completed} boolean which represents task completion state
  */
-const setTaskCompleted = ({ commit }, { taskId, completed }) => {
+const setTaskCompleted = ({ commit, dispatch }, { taskId, completed }) => {
   commit('SET_TASK_COMPLETED', { taskId, completed });
 
   // then task is updated
@@ -83,6 +83,9 @@ const setTaskCompleted = ({ commit }, { taskId, completed }) => {
       /* eslint-disable object-shorthand */
       completed: completed,
     });
+
+  // task is unset as Working On
+  dispatch('setTaskWorkingOn', { taskId, workingOn: false });
 };
 
 /**

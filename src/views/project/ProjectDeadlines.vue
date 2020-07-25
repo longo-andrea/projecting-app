@@ -16,7 +16,7 @@
           </p-button>
         </div>
 
-        <deadline-tasks
+        <tasks
           :tasks="getDeadlineTasks(deadline.id)"
           @edit-task="editTask"
           @delete-task="deleteTask" />
@@ -31,12 +31,12 @@ import { PCollapse, PCollapseItem } from '@/components/collapse/index';
 import PButton from '@/components/button/index';
 
 // Sections
-import DeadlineTasks from './DeadlineTasks.vue';
+import Tasks from './Tasks.vue';
 
 export default {
   name: 'ProjectDeadlines',
   components: {
-    DeadlineTasks,
+    Tasks,
     PCollapse,
     PCollapseItem,
     PButton,
