@@ -2,72 +2,13 @@
   <div class="page summary">
     <div class="summary__content">
 
-      <p-card class="summary__content__summary">
-          <template #header>
-              <ul class="summary__content__summary__tab-links">
-                <li
-                  class="summary__content__summary__tab-links__item"
-                  :class="{
-                    'summary__content__summary__tab-links__item--active': activeTab === 'WorkingOn'
-                  }"
-                  @click="toggleActiveTab('WorkingOn')">
-                  Working on
-                </li>
-                <li class="summary__content__summary__tab-links__item"
-                  :class="{
-                    'summary__content__summary__tab-links__item--active': activeTab === 'Deadlines'
-                  }"
-                  @click="toggleActiveTab('Deadlines')">
-                  Deadlines
-                </li>
-              </ul>
-          </template>
-          <template #content>
-            <div class="summary__content__summary__tabs">
-              <div v-show="activeTab === 'WorkingOn'" class="summary__content__summary__tabs__tab">
-                <p-box
-                  class="summary__content__summary__tabs__tab__item"
-                  v-for="task in tasks"
-                  :key="task.id">
-                  <template #header>
-                    {{ task.name }}
-                  </template>
-                  <template #content>
-                    {{ task.description }}
-                  </template>
-                </p-box>
-              </div>
+      <quick-info
+        :tasks="workingOnTasks"
+        :deadlines="incomingDeadlines" />
 
-              <div v-show="activeTab === 'Deadlines'" class="summary__content__summary__tabs__tab">
-                <p-box
-                  class="summary__content__summary__tabs__tab__item"
-                  v-for="deadline in deadlines"
-                  :key="deadline.id">
-                  <template #header>
-                    {{ deadline.date }}
-                  </template>
-                  <template #content>
-                    {{ deadline.id }}
-                  </template>
-                </p-box>
-              </div>
-            </div>
-          </template>
-      </p-card>
-
-      <div class="summary__content__projects-list">
-        <p-box
-          class="summary__content__projects-list__item"
-          v-for="project in projects"
-          :key="project.id">
-          <template #header>
-            <router-link :to="`project/${project.id}`">{{ project.name }}</router-link>
-          </template>
-          <template #content>
-            {{ project.description }}
-          </template>
-        </p-box>
-      </div>
+      <projects-list
+        :uncompletedProjects="uncompletedProjects"
+        :completedProjects="completedProjects" />
     </div>
 
     <p-button
@@ -94,25 +35,45 @@
 </template>
 
 <script>
-import PCard from '@/components/card/index';
-import PBox from '@/components/box/index';
+// Components
 import PButton from '@/components/button/index';
+
+// Sections
+import QuickInfo from './quick-info/QuickInfo.vue';
+import ProjectsList from './projects-list/ProjectsList.vue';
 
 export default {
   name: 'Summary',
   components: {
-    PCard,
-    PBox,
+    QuickInfo,
+    ProjectsList,
     PButton,
   },
   data() {
     return {
-      projects: null,
-      deadlines: null,
-      tasks: null,
-      activeTab: 'WorkingOn',
+      projects: [],
+      deadlines: [],
+      tasks: [],
       isAddMenuOpen: false,
     };
+  },
+  computed: {
+    uncompletedProjects() {
+      return this.projects
+        .filter((project) => !project.completed);
+    },
+    completedProjects() {
+      return this.projects
+        .filter((project) => project.completed);
+    },
+    workingOnTasks() {
+      return this.tasks
+        .filter((task) => task.workingOn);
+    },
+    incomingDeadlines() {
+      return this.deadlines
+        .filter((deadline) => !deadline.completed);
+    },
   },
   mounted() {
     this.projects = this.$store.getters['projects/getProjects'];
@@ -120,9 +81,6 @@ export default {
     this.tasks = this.$store.getters['tasks/getTasks'];
   },
   methods: {
-    toggleActiveTab(activeTab) {
-      this.activeTab = activeTab;
-    },
     toggleAddMenu() {
       this.isAddMenuOpen = !this.isAddMenuOpen;
     },
@@ -137,46 +95,6 @@ export default {
     padding: 2rem .5rem;
 
     overflow-y: scroll;
-
-    .summary__content__summary {
-      height: 70%;
-
-      overflow-y: hidden;
-
-      .summary__content__summary__tab-links {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-
-        .summary__content__summary__tab-links__item {
-          font-weight: $font-bold;
-          text-transform: uppercase;
-          color: $lighter-color;
-
-          list-style-type: none;
-
-          &.summary__content__summary__tab-links__item--active {
-            color: $base-color;
-          }
-        }
-      }
-
-      .summary__content__summary__tabs {
-        .summary__content__summary__tabs__tab {
-          .summary__content__summary__tabs__tab__item {
-            margin: 1rem 0;
-          }
-        }
-      }
-    }
-
-    .summary__content__projects-list {
-      margin: 1rem 0;
-
-      .summary__content__projects-list__item {
-        margin: 1rem 0;
-      }
-    }
   }
 
   .summary__button-add {

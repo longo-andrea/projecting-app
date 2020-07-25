@@ -88,7 +88,7 @@ export default {
         });
       });
 
-      this.$router.push('/');
+      this.$router.push('/homepage/summary');
     },
     addProjectDeadline(event) {
       this.projectDeadlines.push({

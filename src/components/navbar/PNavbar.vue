@@ -3,7 +3,8 @@
     <img
       class="navbar__logo"
       :src="require('@/assets/img/logo.svg')"
-      alt="Projecting logo" />
+      alt="Projecting logo"
+      @click="navigateHome" />
 
     <img
       class="navbar__settings-icon"
@@ -35,6 +36,9 @@ export default {
     this.userThumbnailUrl = this.$store.getters['settings/getUserSession'].photoURL;
   },
   methods: {
+    navigateHome() {
+      this.$router.push('/homepage/summary').catch(() => {});
+    },
     toggleSettingsPanel() {
       this.isSettingsOpen = !this.isSettingsOpen;
     },

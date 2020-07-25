@@ -18,7 +18,7 @@ export default {
 <style lang="scss">
 .box {
   width: 100%;
-  padding: 1rem .5rem;
+  padding: .4rem .5rem;
   margin: .5rem 0;
 
   border: $base-border;
