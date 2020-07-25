@@ -1,7 +1,6 @@
 <template>
   <div class="page summary">
     <div class="summary__content">
-
       <quick-info
         :tasks="workingOnTasks"
         :deadlines="incomingDeadlines" />
@@ -131,6 +130,7 @@ export default {
         list-style-type: none;
 
         a {
+          color: $base-color;
           text-decoration: none;
         }
 

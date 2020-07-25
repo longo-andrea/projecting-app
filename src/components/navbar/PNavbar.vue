@@ -76,6 +76,7 @@ export default {
 
   .navbar__settings {
     position: absolute;
+    z-index: 999;
     top: 4rem; // navabr height defined on grid template
     right: 1rem;
 

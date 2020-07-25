@@ -62,6 +62,12 @@ export default {
     align-items: center;
     justify-content: space-between;
 
+    span {
+      &:hover,
+      &:focus {
+        color: $success-color;
+      }
+    }
     .summary__content__summary__tabs__tab__item__header__icon {
       width: 1rem;
     }

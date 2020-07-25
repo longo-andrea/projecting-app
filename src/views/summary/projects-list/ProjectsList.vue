@@ -6,10 +6,12 @@
       v-for="project in uncompletedProjects"
       :key="project.id">
       <template #header>
-        <router-link :to="`project/${project.id}`">{{ project.name }}</router-link>
+        <h3 class="summary__content__projects-list__item__title" @click="navigateToProject(project.id)">{{ project.name }}</h3>
       </template>
       <template #content>
-        {{ project.description }}
+        <p class="summary__content__projects-list__item__description" @click="navigateToProject(project.id)">
+          {{ project.description }}
+        </p>
       </template>
     </p-box>
 
@@ -59,6 +61,9 @@ export default {
     toggleUncompletedProjects() {
       this.isUncompletedProjectsOpen = !this.isUncompletedProjectsOpen;
     },
+    navigateToProject(projectId) {
+      this.$router.push(`project/${projectId}`);
+    },
   },
 };
 </script>
@@ -69,6 +74,16 @@ export default {
 
   .summary__content__projects-list__item {
     margin: 1rem 0;
+
+    .summary__content__projects-list__item__title {
+      color: $base-color;
+      font-weight: $font-bold;
+      text-decoration: none;
+    }
+
+    .summary__content__projects-list__item__description {
+      color: $light-color;
+    }
   }
 
   .summary__content__projects-list__completed-projects {

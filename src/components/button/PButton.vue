@@ -2,9 +2,10 @@
   <div
     class="button"
     :class="[
-      color ? `button-${color}` : '',
-      size ? `button-${size}` : '',
-      rounded ? 'button-rounded' : '',
+      color ? `button--${color}` : '',
+      size ? `button--${size}` : '',
+      rounded ? 'button--rounded' : '',
+      disabled ? 'button--disabled' : '',
     ]"
     @click="buttonClicked">
     <slot name="content">
@@ -25,6 +26,11 @@ export default {
       required: false,
     },
     rounded: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    disabled: {
       type: Boolean,
       required: false,
       default: false,
@@ -58,7 +64,11 @@ export default {
     cursor: pointer;
   }
 
-  &.button-simple {
+  &.button--disabled {
+    color: rgba($base-color, .3);
+  }
+
+  &.button--simple {
     border: none;
     background-color: none;
     color: $light-color;
@@ -67,9 +77,13 @@ export default {
       color: $base-color;
       background-color: darken($primary-color, 7%);
     }
+
+    &.button--disabled {
+      color: rgba($base-color, .3);
+    }
   }
 
-  &.button-primary {
+  &.button--primary {
     border: 1px solid darken($primary-color, 10%);
     background-color: $primary-color;
     color: #ffffff;
@@ -77,14 +91,19 @@ export default {
     &:hover {
       background-color: darken($primary-color, 7%);
     }
+
+    &.button--disabled {
+      border: 1px solid rgba($primary-color, .4);
+      background-color: rgba($primary-color, .4);
+    }
   }
 
-  &.button-xs {
+  &.button--xs {
     padding: .2rem .5rem;
     font-size: .7rem;
   }
 
-  &.button-rounded {
+  &.button--rounded {
     width: 3rem;
     height: 3rem;
     display: flex;

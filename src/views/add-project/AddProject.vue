@@ -40,7 +40,10 @@
       </div>
 
       <div class="add-project__form__submit">
-        <p-button color="primary" @buttonClicked="addProject">
+        <p-button
+          color="primary"
+          :disabled="projectDeadlines.length === 0"
+          @buttonClicked="addProject">
           <template #content>
             Create project
           </template>
@@ -62,33 +65,36 @@ export default {
   },
   data() {
     return {
-      projectName: null,
-      projectDescription: null,
+      projectName: '',
+      projectDescription: '',
       projectDeadlines: [],
     };
   },
   methods: {
     async addProject() {
-      // generate an id used as project's id
-      const uniqeId = await this.$store.dispatch('settings/generateUniqeId');
+      if (this.projectName !== ''
+        && this.projectDescription !== '') {
+        // generate an id used as project's id
+        const uniqeId = await this.$store.dispatch('settings/generateUniqeId');
 
-      this.$store.dispatch('projects/addProject', {
-        projectId: uniqeId,
-        projectName: this.projectName,
-        projectDescription: this.projectDescription,
-      });
-
-      this.projectDeadlines.forEach(async (deadline) => {
-        const deadlineId = await this.$store.dispatch('settings/generateUniqeId');
-
-        this.$store.dispatch('deadlines/addDeadline', {
+        this.$store.dispatch('projects/addProject', {
           projectId: uniqeId,
-          deadlineId,
-          deadlineDate: deadline.date,
+          projectName: this.projectName,
+          projectDescription: this.projectDescription,
         });
-      });
 
-      this.$router.push('/homepage/summary');
+        this.projectDeadlines.forEach(async (deadline) => {
+          const deadlineId = await this.$store.dispatch('settings/generateUniqeId');
+
+          this.$store.dispatch('deadlines/addDeadline', {
+            projectId: uniqeId,
+            deadlineId,
+            deadlineDate: deadline.date,
+          });
+        });
+
+        this.$router.push('/homepage/summary');
+      }
     },
     addProjectDeadline(event) {
       this.projectDeadlines.push({
