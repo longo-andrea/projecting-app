@@ -148,13 +148,16 @@ export default {
       }
     },
     editTaskInfo() {
-      this.$store.dispatch('tasks/setTaskName', { taskId: this.editTask.taskId, taskName: this.editTask.taskName });
-      this.$store.dispatch('tasks/setTaskDescription', {
-        taskId: this.editTask.taskId,
-        taskDescription: this.editTask.taskDescription,
-      });
+      if (this.editTask.taskName !== ''
+        && this.editTask.taskDescription !== '') {
+        this.$store.dispatch('tasks/setTaskName', { taskId: this.editTask.taskId, taskName: this.editTask.taskName });
+        this.$store.dispatch('tasks/setTaskDescription', {
+          taskId: this.editTask.taskId,
+          taskDescription: this.editTask.taskDescription,
+        });
 
-      this.editTask.isOpen = false;
+        this.editTask.isOpen = false;
+      }
     },
     deleteTask(taskId) {
       this.$store.dispatch('tasks/deleteTask', { taskId });

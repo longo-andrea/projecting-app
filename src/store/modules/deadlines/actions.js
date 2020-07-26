@@ -44,7 +44,42 @@ const addDeadline = ({ commit }, { projectId, deadlineId, deadlineDate }) => {
     });
 };
 
+/**
+ * Delete given deadline
+ *
+ * @param {commit} object the vuex state object
+ * @param {deadlineId} string which represents deadline's id
+ */
+const deleteDeadline = ({ commit }, { deadlineId }) => {
+  commit('DELETE_DEADLINE', { deadlineId });
+
+  // then the task is removed from database
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`deadlines/${deadlineId}`)
+    .remove();
+};
+
+/**
+ * Delete all deadlines of given project
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ */
+const deleteProjectDeadlines = ({ getters, dispatch }, { projectId }) => {
+  const projectDeadlines = getters.getProjectDeadlines(projectId);
+
+  projectDeadlines.forEach((deadline) => dispatch('deleteDeadline', {
+    deadlineId: deadline.id,
+  }));
+};
+
 export {
   initState,
   addDeadline,
+  deleteDeadline,
+  deleteProjectDeadlines,
 };

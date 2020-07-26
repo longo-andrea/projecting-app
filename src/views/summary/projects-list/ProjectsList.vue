@@ -24,10 +24,12 @@
         v-for="project in completedProjects"
         :key="project.id">
         <template #header>
-          <router-link :to="`project/${project.id}`">{{ project.name }}</router-link>
+          <h3 class="summary__content__projects-list__item__title" @click="navigateToProject(project.id)">{{ project.name }}</h3>
         </template>
         <template #content>
-          {{ project.description }}
+          <p class="summary__content__projects-list__item__description" @click="navigateToProject(project.id)">
+            {{ project.description }}
+          </p>
         </template>
       </p-box>
     </div>

@@ -28,7 +28,20 @@ const ADD_DEADLINE = (state, { projectId, deadlineId, deadlineDate }) => {
   });
 };
 
+/**
+ * Delete given deadline
+ *
+ * @param {state} object the vuex state object.
+ * @param {deadlineId} string which represents deadline's id
+ */
+const DELETE_DEADLINE = (state, { deadlineId }) => {
+  const deadlineIndex = state.deadlines.findIndex((deadline) => deadline.id === deadlineId);
+
+  state.deadlines.splice(deadlineIndex, 1);
+};
+
 export {
   INIT_STATE,
   ADD_DEADLINE,
+  DELETE_DEADLINE,
 };

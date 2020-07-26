@@ -65,6 +65,7 @@ export default {
   }
 
   &.button--disabled {
+    background-color: #ffffff;
     color: rgba($base-color, .3);
   }
 
@@ -79,6 +80,7 @@ export default {
     }
 
     &.button--disabled {
+      background-color: #ffffff;
       color: rgba($base-color, .3);
     }
   }

@@ -9,7 +9,11 @@
       <template #content>
         <!-- add task button -->
         <div class="project-page__content__input-add-task">
-          <p-button color="simple" size="xs" @buttonClicked="addTaskToDeadline(deadline.id)">
+          <p-button
+            :disabled="isProjectCompleted"
+            color="simple"
+            size="xs"
+            @buttonClicked="addTaskToDeadline(deadline.id)">
             <template #content>
               + Add a task
             </template>
@@ -50,6 +54,11 @@ export default {
       type: Array,
       required: true,
     },
+    isProjectCompleted: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
@@ -61,7 +70,9 @@ export default {
       this.activeDeadline = activeDeadline;
     },
     addTaskToDeadline(deadlineId) {
-      this.$emit('add-task-to-deadline', deadlineId);
+      if (!this.isProjectCompleted) {
+        this.$emit('add-task-to-deadline', deadlineId);
+      }
     },
     getDeadlineTasks(deadlineId) {
       return this.tasks.filter((task) => task.deadlineId === deadlineId);

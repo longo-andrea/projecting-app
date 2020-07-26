@@ -18,6 +18,7 @@
       <project-deadlines
         :deadlines="deadlinesDate"
         :tasks="projectTasks"
+        :isProjectCompleted="project.completed"
         @add-task-to-deadline='toggleAddTask' />
     </div>
 
@@ -241,16 +242,21 @@ export default {
       return `${months[month]} ${day}, ${year}`;
     },
     editProjectInfo() {
-      this.$store.dispatch('projects/setProjectName', { projectId: this.project.id, projectName: this.editProject.projectName });
-      this.$store.dispatch('projects/setProjectDescription', {
-        projectId: this.project.id,
-        projectDescription: this.editProject.projectDescription,
-      });
+      if (this.projectName !== ''
+        && this.projectDescription !== '') {
+        this.$store.dispatch('projects/setProjectName', { projectId: this.project.id, projectName: this.editProject.projectName });
+        this.$store.dispatch('projects/setProjectDescription', {
+          projectId: this.project.id,
+          projectDescription: this.editProject.projectDescription,
+        });
 
-      this.editProject.isOpen = false;
+        this.editProject.isOpen = false;
+      }
     },
     deleteProject() {
-      this.$store.dispatch('projects/deleteProject', { projectId: this.projectId });
+      this.$store.dispatch('deadlines/deleteProjectDeadlines', { projectId: this.projectId }); // all project's deadlines are deleted
+      this.$store.dispatch('tasks/deleteProjectTasks', { projectId: this.projectId }); // all project's tasks are deleted
+      this.$store.dispatch('projects/deleteProject', { projectId: this.projectId }); // then the project is deleted
 
       this.$router.push('/');
     },

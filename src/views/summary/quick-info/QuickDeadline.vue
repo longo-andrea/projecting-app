@@ -8,7 +8,7 @@
           class="summary__content__summary__tabs__tab__item__header__info"
           :class="[
             daysLeft < 5 && daysLeft >= 0 ? 'summary__content__summary__tabs__tab__item__header__info--warning' : '',
-            daysLeft < 0 ? 'summary__content__summary__tabs__tab__item__header__info--danger' : '',
+            daysLeft < 0 ? 'summary__content__summary__tabs__tab__item__header__info--danger  ' : '',
           ]">
           {{ getDaysLeftString() }}
         </p>

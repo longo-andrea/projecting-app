@@ -176,6 +176,20 @@ const deleteTask = ({ commit }, { taskId }) => {
     .remove();
 };
 
+/**
+ * Delete all tasks of given project
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ */
+const deleteProjectTasks = ({ getters, dispatch }, { projectId }) => {
+  const projectTasks = getters.getProjectTasks(projectId);
+
+  projectTasks.forEach((task) => dispatch('deleteTask', {
+    taskId: task.id,
+  }));
+};
+
 export {
   initState,
   addTask,
@@ -184,4 +198,5 @@ export {
   setTaskName,
   setTaskDescription,
   deleteTask,
+  deleteProjectTasks,
 };
