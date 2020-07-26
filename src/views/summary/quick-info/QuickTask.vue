@@ -11,7 +11,10 @@
     </template>
     <template #content>
       <div v-show="isOpen" class="summary__content__summary__tabs__tab__item__content">
-        {{ task.description }}
+        <p class="summary__content__summary__tabs__tab__item__content__description">{{ task.description }}</p>
+        <router-link :to="`project/${project.id}`" class="summary__content__summary__tabs__tab__item__content__info">
+          {{ project.name }}
+        </router-link>
       </div>
     </template>
   </p-box>
@@ -34,7 +37,12 @@ export default {
   data() {
     return {
       isOpen: false,
+      project: {},
     };
+  },
+  mounted() {
+    this.project = this.$store.getters['projects/getProjects']
+      .find((project) => project.id === this.task.projectId);
   },
   methods: {
     toggleTaskOpen() {
@@ -77,6 +85,18 @@ export default {
     padding-top: .5rem;
 
     border-top: $base-border;
+
+    .summary__content__summary__tabs__tab__item__content__description {
+      margin-bottom: .8rem;
+    }
+
+    .summary__content__summary__tabs__tab__item__content__info {
+      display: block-inline;
+
+      font-size: $small-font-size;
+      color: $light-color;
+      text-decoration: none;
+    }
   }
 }
 </style>
