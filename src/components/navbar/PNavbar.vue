@@ -16,7 +16,6 @@
       v-show="isSettingsOpen"
       class="navbar__settings">
       <ul class="navbar__settings__list">
-        <li class="navbar__settings__list__item">Settings</li>
         <li class="navbar__settings__list__item" @click="logout">Logout</li>
       </ul>
     </div>

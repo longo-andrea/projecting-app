@@ -27,7 +27,6 @@
         <li class="summary__add-menu__list__item">
           <router-link to="addproject">Add a project</router-link>
         </li>
-        <li class="summary__add-menu__list__item">Add task</li>
       </ul>
     </div>
   </div>
