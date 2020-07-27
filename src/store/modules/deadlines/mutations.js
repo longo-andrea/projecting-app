@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 /**
  * Init deadline state
  *
@@ -40,8 +42,22 @@ const DELETE_DEADLINE = (state, { deadlineId }) => {
   state.deadlines.splice(deadlineIndex, 1);
 };
 
+/**
+ * Set deadline state
+ *
+ * @param {state} object the vuex state object.
+ * @param {deadlineId} string which represents deadline's id
+ * @param {completed} boolean which represents deadline's completion state
+ */
+const SET_DEADLINE_COMPLETED = (state, { deadlineId, completed }) => {
+  const deadlineIndex = state.deadlines.findIndex((deadline) => deadline.id === deadlineId);
+
+  Vue.set(state.deadlines[deadlineIndex], 'completed', completed);
+};
+
 export {
   INIT_STATE,
   ADD_DEADLINE,
   DELETE_DEADLINE,
+  SET_DEADLINE_COMPLETED,
 };

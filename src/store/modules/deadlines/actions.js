@@ -77,9 +77,49 @@ const deleteProjectDeadlines = ({ getters, dispatch }, { projectId }) => {
   }));
 };
 
+/**
+ * Set deadline completion state
+ *
+ * @param {commit} object the vuex state object
+ * @param {deadlineId} string which represents deadline's id
+ * @param {completed} boolean which represents deadline completion state
+ */
+const setDeadlineCompleted = ({ commit }, { deadlineId, completed }) => {
+  commit('SET_DEADLINE_COMPLETED', { deadlineId, completed });
+
+  // then task is updated
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`deadlines/${deadlineId}`)
+    .update({
+      /* eslint-disable object-shorthand */
+      completed: completed,
+    });
+};
+
+/**
+ * Set all project's deadlines as completed
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ */
+const completeAllProjectDeadlines = ({ getters, dispatch }, { projectId }) => {
+  const projectDeadlines = getters.getProjectDeadlines(projectId);
+
+  projectDeadlines.forEach((deadline) => dispatch('setDeadlineCompleted', {
+    deadlineId: deadline.id,
+    completed: true,
+  }));
+};
+
 export {
   initState,
   addDeadline,
   deleteDeadline,
   deleteProjectDeadlines,
+  setDeadlineCompleted,
+  completeAllProjectDeadlines,
 };
