@@ -190,6 +190,21 @@ const deleteProjectTasks = ({ getters, dispatch }, { projectId }) => {
   }));
 };
 
+/**
+ * Set all project's tasks as completed
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ */
+const completeAllProjectTasks = ({ getters, dispatch }, { projectId }) => {
+  const projectTasks = getters.getProjectTasks(projectId);
+
+  projectTasks.forEach((task) => dispatch('setTaskCompleted', {
+    taskId: task.id,
+    completed: true,
+  }));
+};
+
 export {
   initState,
   addTask,
@@ -199,4 +214,5 @@ export {
   setTaskDescription,
   deleteTask,
   deleteProjectTasks,
+  completeAllProjectTasks,
 };

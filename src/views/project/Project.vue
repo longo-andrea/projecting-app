@@ -196,6 +196,9 @@ export default {
   },
   methods: {
     toggleProjectCompleteState() {
+      // all project's tasks are completed
+      this.$store.dispatch('tasks/completeAllProjectTasks', { projectId: this.projectId });
+      // then the project is completed
       this.$store.dispatch('projects/setCompletionState', { projectId: this.projectId, completed: !this.isProjectCompleted });
     },
     updateProjectTasks() {

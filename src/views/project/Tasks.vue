@@ -24,16 +24,26 @@
             {{ task.description }}
           </p>
           <div class="project-page__content__task-card__content__buttons">
-            <span class="project-page__content__task-card__content__buttons__button">
+            <span
+              class="project-page__content__task-card__content__buttons__button"
+              :class="{
+                'project-page__content__task-card__content__buttons__button--disabled': !isEditable
+              }">
               <input
+                :disabled="!isEditable"
                 type="checkbox"
                 :id="task.id + 'completed'"
                 :checked="task.completed"
                 @change="setTaskCompleted(task.id, $event)">
               <label :for="task.id + 'completed'">Completed</label>
             </span>
-            <span class="project-page__content__task-card__content__buttons__button">
+            <span
+              class="project-page__content__task-card__content__buttons__button"
+              :class="{
+                'project-page__content__task-card__content__buttons__button--disabled': task.completed || !isEditable
+              }">
               <input
+                :disabled="task.completed || !isEditable"
                 type="checkbox"
                 :id="task.id + 'working-on'"
                 :checked="task.workingOn"
@@ -117,6 +127,11 @@ export default {
       type: Array,
       required: true,
     },
+    isEditable: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {
@@ -149,7 +164,8 @@ export default {
     },
     editTaskInfo() {
       if (this.editTask.taskName !== ''
-        && this.editTask.taskDescription !== '') {
+        && this.editTask.taskDescription !== ''
+        && this.isEditable) {
         this.$store.dispatch('tasks/setTaskName', { taskId: this.editTask.taskId, taskName: this.editTask.taskName });
         this.$store.dispatch('tasks/setTaskDescription', {
           taskId: this.editTask.taskId,
@@ -160,10 +176,14 @@ export default {
       }
     },
     deleteTask(taskId) {
-      this.$store.dispatch('tasks/deleteTask', { taskId });
+      if (this.isEditable) {
+        this.$store.dispatch('tasks/deleteTask', { taskId });
+      }
     },
     setTaskCompleted(taskId, event) {
-      this.$store.dispatch('tasks/setTaskCompleted', { taskId, completed: event.target.checked });
+      if (this.isEditable) {
+        this.$store.dispatch('tasks/setTaskCompleted', { taskId, completed: event.target.checked });
+      }
     },
     setTaskWorkingOn(taskId, event) {
       this.$store.dispatch('tasks/setTaskWorkingOn', { taskId, workingOn: event.target.checked });
@@ -220,6 +240,12 @@ export default {
           font-weight: $font-semi-bold;
           color: $light-color;
           text-transform: uppercase;
+        }
+
+        &.project-page__content__task-card__content__buttons__button--disabled {
+          label {
+            color: $lighter-color;
+          }
         }
       }
     }

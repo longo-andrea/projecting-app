@@ -22,6 +22,7 @@
 
         <tasks
           :tasks="getDeadlineTasks(deadline.id)"
+          :isEditable="!isProjectCompleted"
           @edit-task="editTask"
           @delete-task="deleteTask" />
       </template>
