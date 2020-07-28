@@ -38,7 +38,7 @@ export default {
         .then(() => {
           // init current user state
           this.$store.dispatch('projects/initState'); // projects init
-          this.$store.dispatch('deaedlines/initState'); // deadlines init
+          this.$store.dispatch('deadlines/initState'); // deadlines init
           this.$store.dispatch('tasks/initState'); // tasks init
 
           // if login happens succesully, then user is redirected to homepage

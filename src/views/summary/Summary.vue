@@ -20,15 +20,17 @@
       </template>
     </p-button>
 
-    <div
-      v-show="isAddMenuOpen"
-      class="summary__add-menu">
-      <ul class="summary__add-menu__list">
-        <li class="summary__add-menu__list__item">
-          <router-link to="addproject">Add a project</router-link>
-        </li>
-      </ul>
-    </div>
+    <transition name="slide-from-right">
+      <div
+        v-show="isAddMenuOpen"
+        class="summary__add-menu">
+        <ul class="summary__add-menu__list">
+          <li class="summary__add-menu__list__item">
+            <router-link to="addproject">Add a project</router-link>
+          </li>
+        </ul>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -139,5 +141,16 @@ export default {
       }
     }
   }
+}
+
+/* TRANSITIONS */
+
+// Add menu
+.slide-from-right-enter-active, .slide-from-right-leave-active {
+  transition: all .4s;
+  transform: translateX(none);
+}
+.slide-from-right-enter, .slide-from-right-leave-to {
+  transform: translateX(150%);
 }
 </style>

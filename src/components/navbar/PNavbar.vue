@@ -12,13 +12,15 @@
       alt="settings"
       @click="toggleSettingsPanel" />
 
-    <div
-      v-show="isSettingsOpen"
-      class="navbar__settings">
-      <ul class="navbar__settings__list">
-        <li class="navbar__settings__list__item" @click="logout">Logout</li>
-      </ul>
-    </div>
+    <transition name="slide-from-right">
+      <div
+        v-show="isSettingsOpen"
+        class="navbar__settings">
+        <ul class="navbar__settings__list">
+          <li class="navbar__settings__list__item" @click="logout">Logout</li>
+        </ul>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -102,5 +104,16 @@ export default {
       }
     }
   }
+}
+
+/* TRANSITIONS */
+
+// Settings menu
+.slide-from-right-enter-active, .slide-from-right-leave-active {
+  transition: all .4s;
+  transform: translateX(none);
+}
+.slide-from-right-enter, .slide-from-right-leave-to {
+  transform: translateX(150%);
 }
 </style>

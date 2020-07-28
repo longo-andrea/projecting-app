@@ -10,12 +10,19 @@
       </div>
     </template>
     <template #content>
-      <div v-show="isOpen" class="summary__content__summary__tabs__tab__item__content">
-        <p class="summary__content__summary__tabs__tab__item__content__description">{{ task.description }}</p>
-        <router-link :to="`project/${project.id}`" class="summary__content__summary__tabs__tab__item__content__info">
-          {{ project.name }}
-        </router-link>
-      </div>
+      <transition name="collapse-task">
+        <div
+          v-show="isOpen"
+          class="summary__content__summary__tabs__tab__item__content"
+          :class="{
+            'summary__content__summary__tabs__tab__item__content--open': isOpen
+          }">
+          <p class="summary__content__summary__tabs__tab__item__content__description">{{ task.description }}</p>
+          <router-link :to="`project/${project.id}`" class="summary__content__summary__tabs__tab__item__content__info">
+            {{ project.name }}
+          </router-link>
+        </div>
+      </transition>
     </template>
   </p-box>
 </template>
@@ -81,10 +88,16 @@ export default {
     }
   }
 
-  .summary__content__summary__tabs__tab__item__content {
-    padding-top: .5rem;
+  .box__content {
+    margin: 0;
+  }
 
-    border-top: $base-border;
+  .summary__content__summary__tabs__tab__item__content {
+    &.summary__content__summary__tabs__tab__item__content--open {
+      padding-top: .5rem;
+
+      border-top: $base-border;
+    }
 
     .summary__content__summary__tabs__tab__item__content__description {
       margin-bottom: .8rem;
@@ -98,5 +111,21 @@ export default {
       text-decoration: none;
     }
   }
+}
+
+/* TRANSITIONS */
+
+// Add menu
+.collapse-task-enter-active, .collapse-task-leave-active {
+  transition: all .4s;
+  transform: scaleY(1);
+  max-height: 6rem;
+  opacity: 1;
+  transform-origin: top;
+}
+.collapse-task-enter, .collapse-task-leave-to {
+  transform: scaleY(0);
+  max-height: 0;
+  opacity: 0;
 }
 </style>
