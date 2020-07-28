@@ -29,11 +29,9 @@
           <template v-slot="item">
             <div class="add-project__form__item__roadmap__item">
               {{ dateToString(item.date) }}
-              <img
-                class="add-project__form__item__roadmap__item__icon"
-                src="@/assets/img/remove-icon.svg"
-                alt="remove deadline"
-                @click="removeDeadline(item.date)" />
+              <span @click="removeDeadline(item.date)">
+                <i class="fas fa-trash add-project__form__item__roadmap__item__icon"></i>
+              </span>
             </div>
           </template>
         </p-roadmap>
