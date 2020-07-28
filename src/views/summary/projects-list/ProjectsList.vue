@@ -18,20 +18,22 @@
     <!-- Complted projects list -->
     <div class="summary__content__projects-list__completed-projects">
       <p class="summary__content__projects-list__completed-projects__toggler" @click="toggleUncompletedProjects">See completed projects</p>
-      <p-box
-        v-show="isUncompletedProjectsOpen"
-        class="summary__content__projects-list__item"
-        v-for="project in completedProjects"
-        :key="project.id">
-        <template #header>
-          <h3 class="summary__content__projects-list__item__title" @click="navigateToProject(project.id)">{{ project.name }}</h3>
-        </template>
-        <template #content>
-          <p class="summary__content__projects-list__item__description" @click="navigateToProject(project.id)">
-            {{ project.description }}
-          </p>
-        </template>
-      </p-box>
+      <transition name="collapse-projects">
+        <p-box
+          v-show="isUncompletedProjectsOpen"
+          class="summary__content__projects-list__item"
+          v-for="project in completedProjects"
+          :key="project.id">
+          <template #header>
+            <h3 class="summary__content__projects-list__item__title" @click="navigateToProject(project.id)">{{ project.name }}</h3>
+          </template>
+          <template #content>
+            <p class="summary__content__projects-list__item__description" @click="navigateToProject(project.id)">
+              {{ project.description }}
+            </p>
+          </template>
+        </p-box>
+      </transition>
     </div>
   </div>
 </template>
@@ -97,5 +99,16 @@ export default {
       text-align: center;
     }
   }
+}
+
+/* TRANSITIONS */
+
+// Open completed projects
+.collapse-projects-enter-active, .collapse-projects-leave-active {
+  transition: all .4s;
+  opacity: 1;
+}
+.collapse-projects-enter, .collapse-projects-leave-to {
+  opacity: 0;
 }
 </style>
