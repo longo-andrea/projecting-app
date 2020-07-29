@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/longo-andrea/projecting-app/badge.svg)](https://coveralls.io/github/longo-andrea/projecting-app)
+
 # projecting-app
 
 ## Project setup
