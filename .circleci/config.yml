@@ -16,7 +16,4 @@ workflows:
     build-and-test:
       jobs:
         - build-and-test
-      steps:
-        - codecov/upload:
-          file: {{ './coverage.md' }}
         
