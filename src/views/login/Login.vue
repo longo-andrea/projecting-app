@@ -30,7 +30,7 @@ export default {
 
         // if restoring happens successfully, then user will be redirected to homepage
         this.$router.push('/homepage');
-      }).catch((error) => console.log(error));
+      }).catch(() => {});
   },
   methods: {
     loginWithGoogle() {
@@ -43,7 +43,7 @@ export default {
 
           // if login happens succesully, then user is redirected to homepage
           this.$router.push('/homepage');
-        }).catch((error) => console.log(error));
+        }).catch(() => {});
     },
   },
 };
