@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/longo-andrea/projecting-app/badge.svg)](https://coveralls.io/github/longo-andrea/projecting-app)
+[![codecov](https://codecov.io/gh/longo-andrea/projecting-app/branch/develop/graph/badge.svg)](https://codecov.io/gh/longo-andrea/projecting-app)
 
 # projecting-app
 
