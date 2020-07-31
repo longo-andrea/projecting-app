@@ -57,5 +57,15 @@ describe('Collapse item component', () => {
       expect(wrapper.find('.collapse-item__content').exists()).toBe(true);
       expect(wrapper.find('.collapse-item__content').text()).toBe('Hello, World! I\'m a content!');
     });
+
+    it('should close content when isActive props change', async () => {
+      expect(wrapper.find('.collapse-item__content').exists()).toBe(true);
+
+      wrapper.setProps({ isActive: false });
+
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find('.collapse-item__content').exists()).toBe(false);
+    });
   });
 });
