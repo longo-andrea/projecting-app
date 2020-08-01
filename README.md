@@ -1,5 +1,4 @@
 [![longo-andrea](https://circleci.com/gh/longo-andrea/projecting-app.svg?style=svg)](https://app.circleci.com/pipelines/github/longo-andrea/projecting-app?branch=develop)
-
 [![codecov](https://codecov.io/gh/longo-andrea/projecting-app/branch/develop/graph/badge.svg)](https://codecov.io/gh/longo-andrea/projecting-app)
 
 # projecting-app

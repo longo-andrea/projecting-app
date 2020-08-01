@@ -9,7 +9,6 @@
 
     <div class="login__button">
       <input
-        class="login__button"
         type="submit"
         value="Login with Google"
         @click="loginWithGoogle">
