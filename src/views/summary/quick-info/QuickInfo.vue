@@ -21,14 +21,14 @@
       </template>
       <template #content>
         <div class="summary__content__summary__tabs">
-          <div v-show="activeTab === 'WorkingOn'" class="summary__content__summary__tabs__tab">
+          <div v-show="activeTab === 'WorkingOn'" class="summary__content__summary__tabs__tab" id="workingon-tasks-list">
             <quick-task
               v-for="task in tasks"
               :key="task.id"
               :task="task" />
           </div>
 
-          <div v-show="activeTab === 'Deadlines'" class="summary__content__summary__tabs__tab">
+          <div v-show="activeTab === 'Deadlines'" class="summary__content__summary__tabs__tab" id="incoming-deadlines-list">
             <quick-deadline
               v-for="deadline in deadlines"
               :key="deadline.id"

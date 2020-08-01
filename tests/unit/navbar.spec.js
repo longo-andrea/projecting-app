@@ -1,4 +1,4 @@
-import { shallowMount, config, createLocalVue } from '@vue/test-utils';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import PNavbar from '@/components/navbar/index';

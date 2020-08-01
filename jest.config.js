@@ -3,7 +3,8 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/components/**/*.{js,vue}',
+    'src/views/**/*.{js,vue}',
     '!src/main.js',
-    '!src/**/index.js', // ignoring index of each component's folder
+    '!src/**/index.js',
   ],
 };

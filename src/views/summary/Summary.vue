@@ -59,20 +59,36 @@ export default {
   },
   computed: {
     uncompletedProjects() {
-      return this.projects
-        .filter((project) => !project.completed);
+      if (this.projects.length !== 0) {
+        return this.projects
+          .filter((project) => !project.completed);
+      }
+
+      return [];
     },
     completedProjects() {
-      return this.projects
-        .filter((project) => project.completed);
+      if (this.projects.length !== 0) {
+        return this.projects
+          .filter((project) => project.completed);
+      }
+
+      return [];
     },
     workingOnTasks() {
-      return this.tasks
-        .filter((task) => task.workingOn);
+      if (this.tasks.length !== 0) {
+        return this.tasks
+          .filter((task) => task.workingOn);
+      }
+
+      return [];
     },
     incomingDeadlines() {
-      return this.deadlines
-        .filter((deadline) => !deadline.completed);
+      if (this.deadlines.length !== 0) {
+        return this.deadlines
+          .filter((deadline) => !deadline.completed);
+      }
+
+      return [];
     },
   },
   mounted() {
