@@ -55,6 +55,7 @@ export default {
   font-size: 1.2rem;
   font-weight: $font-semi-bold;
   text-transform: uppercase;
+  text-align: center;
 
   &:hover {
     border-color: $primary-color;
@@ -101,6 +102,7 @@ export default {
   }
 
   &.button--xs {
+    margin: 0 auto;
     padding: .2rem .5rem;
     font-size: .7rem;
   }
