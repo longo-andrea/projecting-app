@@ -32,7 +32,7 @@ export default {
   }
 
   .card__content {
-    overflow: scroll;
+    overflow-x: hidden;
   }
 }
 </style>

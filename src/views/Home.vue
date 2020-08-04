@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="page home">
     <router-view />
 
     <div
@@ -43,7 +43,7 @@ export default {
   },
   data() {
     return {
-      isInstallPromptOpen: false,
+      isInstallPromptOpen: true,
       installEvent: null,
     };
   },
@@ -89,8 +89,6 @@ export default {
     height: 100%;
     padding: .5rem;
 
-    overflow-y: scroll;
-
     .page__title {
       margin: 1.5rem .5rem;
 
@@ -106,7 +104,7 @@ export default {
 
 .login__install-banner {
   width: 100%;
-  height: 30%;
+  height: 40%;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -141,10 +139,12 @@ export default {
 
     .login__install-banner__content__logo {
       max-width: 25%;
+      max-height: 50%;
     }
 
     .login__install-banner__content__install {
       flex-basis: 60%;
+      flex-grow: .5;
       display: flex;
       flex-direction: column;
 
