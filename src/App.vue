@@ -16,7 +16,7 @@
 
 html, body {
   width: 100%;
-  height: 100%z;
+  height: 100%;
 
   font-size: $base-font-size;
   color: $base-color;
