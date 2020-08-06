@@ -40,7 +40,9 @@
       <div class="add-project__form__submit">
         <p-button
           color="primary"
-          :disabled="projectDeadlines.length === 0"
+          :disabled="projectDeadlines.length === 0
+            || projectName === ''
+            || projectDescription === ''"
           @buttonClicked="addProject">
           <template #content>
             Create project
