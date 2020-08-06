@@ -79,7 +79,8 @@ export default {
 
 <style lang="scss">
 .summary__content__summary {
-  height: 70%;
+  height: 70vh;
+  max-height: 50vh;
 
   overflow-y: hidden;
 
