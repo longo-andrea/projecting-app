@@ -144,7 +144,7 @@ describe('Project page', () => {
       await wrapper.vm.$nextTick();
 
       expect(wrapper.vm.tasks.addTaskIsOpen).toBe(false);
-      expect(wrapper.vm.tasks.addTaskToDeadline).toBe(null);
+      expect(wrapper.vm.tasks.addTaskToDeadline).toBe('');
     });
 
     it('should add task', async () => {
