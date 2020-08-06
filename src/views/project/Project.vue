@@ -235,6 +235,9 @@ export default {
 
       this.updateProjectTasks(); // task list is updated
       this.tasks.addTaskIsOpen = false; // add task panel is closed
+      this.tasks.addTaskToDeadline = null; // add task to deadliene is cleared
+      this.tasks.addTaskName = null; // add task name is cleared
+      this.tasks.addTaskDescription = null; // add task description is cleared
     },
     dateToString(date) {
       const day = date.getDate();
