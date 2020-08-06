@@ -58,7 +58,10 @@
               </template>
             </p-button>
 
-            <p-button color="primary" @buttonClicked="addTask">
+            <p-button
+              color="primary"
+              @buttonClicked="addTask"
+              :disabled="tasks.addTaskName === '' || tasks.addTaskDescription === ''">
               <template #content>
                 Add task
               </template>
@@ -156,9 +159,9 @@ export default {
       },
       tasks: {
         addTaskIsOpen: false,
-        addTaskToDeadline: null,
-        addTaskName: null,
-        addTaskDescription: null,
+        addTaskToDeadline: '',
+        addTaskName: '',
+        addTaskDescription: '',
       },
       isSettingsOpen: false,
     };
@@ -218,7 +221,7 @@ export default {
       if (this.tasks.addTaskIsOpen) {
         this.tasks.addTaskToDeadline = deadlineId;
       } else {
-        this.tasks.addTaskToDeadline = null;
+        this.tasks.addTaskToDeadline = '';
       }
     },
     async addTask() {
@@ -235,9 +238,9 @@ export default {
 
       this.updateProjectTasks(); // task list is updated
       this.tasks.addTaskIsOpen = false; // add task panel is closed
-      this.tasks.addTaskToDeadline = null; // add task to deadliene is cleared
-      this.tasks.addTaskName = null; // add task name is cleared
-      this.tasks.addTaskDescription = null; // add task description is cleared
+      this.tasks.addTaskToDeadline = ''; // add task to deadliene is cleared
+      this.tasks.addTaskName = ''; // add task name is cleared
+      this.tasks.addTaskDescription = ''; // add task description is cleared
     },
     dateToString(date) {
       const day = date.getDate();
