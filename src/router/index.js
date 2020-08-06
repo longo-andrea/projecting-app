@@ -1,80 +1,69 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-
+import store from '../store/index';
 import Home from '../views/Home.vue';
-import About from '../views/About.vue';
-import AddProject from '../views/AddProject.vue';
-import Project from '../views/Project.vue';
-import Settings from '../views/Settings.vue';
-import Login from '../views/Login.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-    beforeEnter(to, from, next) {
-      if (firebase.auth().currentUser) {
-        next('/');
-      } else {
-        next();
-      }
-    },
-  },
-  {
     path: '/',
     name: 'Home',
     component: Home,
-    meta: { auth: true },
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: About,
-    meta: { auth: true },
-  },
-  {
-    path: '/settings',
-    name: 'Settings',
-    component: Settings,
-    meta: { auth: true },
-  },
-  {
-    path: '/add-project',
-    name: 'Add Project',
-    component: AddProject,
-    meta: { auth: true },
-  },
-  {
-    path: '/project/:id',
-    name: 'Project',
-    component: Project,
-    meta: { auth: true },
+    redirect: { path: '/login' },
+    children: [
+      {
+        path: '/login',
+        name: 'login',
+        component: () => import(/* webpackChunkName: "login" */ '../views/login/index.js'),
+      },
+      {
+        path: '/homepage',
+        name: 'homepage',
+        redirect: { path: 'homepage/summary' },
+        component: () => import(/* webpackChunkName: "homepage" */ '../views/Homepage.vue'),
+        beforeEnter: (to, from, next) => {
+          if (store.getters['settings/getUserSession'] !== null) {
+            // if the user is logged in, then he can going on
+            next();
+          } else {
+            // otherwise it will be redirected to login page
+            next('/login');
+          }
+        },
+        children: [
+          {
+            path: 'summary',
+            name: 'summary',
+            component: () => import(/* webpackChunkName: "summary" */ '../views/summary/index.js'),
+          },
+          {
+            path: 'addproject',
+            name: 'addproject',
+            component: () => import(/* webpackChunkName: "addproject" */ '../views/add-project/index.js'),
+          },
+          {
+            path: 'project/:projectId',
+            name: 'project',
+            component: () => import(/* webpackChunkName: "project" */ '../views/project/index.js'),
+            beforeEnter: (to, from, next) => {
+              if (store.getters['settings/getUserSession'] !== null) {
+                // if the user is logged in, then he can going on
+                next();
+              } else {
+                // otherwise it will be redirected to login page
+                next('/login');
+              }
+            },
+          },
+        ],
+      },
+    ],
   },
 ];
 
 const router = new VueRouter({
   routes,
-});
-
-router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.auth)) {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        next({
-          path: '/login',
-        });
-      } else {
-        next();
-      }
-    });
-  } else {
-    next();
-  }
 });
 
 export default router;

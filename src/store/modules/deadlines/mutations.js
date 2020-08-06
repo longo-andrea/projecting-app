@@ -1,62 +1,62 @@
+import Vue from 'vue';
+
 /**
- * Add a new deadline with given parameters
+ * Init deadline state
  *
  * @param {state} object the vuex state object.
- * @param {projectId} number that represents the deadline's project id
- * @param {deadlineId} number that represent the deadline's id
- * @param {deadlineDate} date that represets deadline's date
+ * @param {data} object that represent current user state
+ */
+const INIT_STATE = (state, data) => {
+  if (data.val() && data.val().deadlines) {
+    state.deadlines = Object.values(data.val().deadlines);
+  } else {
+    state.deadlines = [];
+  }
+};
+
+/**
+ * Add a deadline
+ *
+ * @param {state} object the vuex state object.
+ * @param {projectId} string which represents project's name
+ * @param {deadlineDate} date which contains deadline's date
  */
 const ADD_DEADLINE = (state, { projectId, deadlineId, deadlineDate }) => {
-  if (projectId !== undefined
-    && deadlineId !== undefined
-    && deadlineDate !== undefined) {
-    state.deadlines.push({
-      projectId,
-      id: deadlineId,
-      date: deadlineDate,
-      completed: false,
-    });
-  }
+  state.deadlines.push({
+    projectId,
+    id: deadlineId,
+    date: deadlineDate,
+    completed: false,
+  });
 };
 
 /**
  * Delete given deadline
  *
  * @param {state} object the vuex state object.
- * @param {projectId} number that represents the deadline's project id
- * @param {deadlineId} number that represent the deadline's id
+ * @param {deadlineId} string which represents deadline's id
  */
-const DELETE_DEADLINE = (state, { projectId, deadlineId }) => {
-  if (projectId !== undefined
-    && deadlineId !== undefined) {
-    /* eslint-disable no-param-reassign */
-    state.deadlines = state.deadlines.filter((deadline) => deadline.id !== deadlineId
-      && deadline.projectId !== projectId);
-  }
+const DELETE_DEADLINE = (state, { deadlineId }) => {
+  const deadlineIndex = state.deadlines.findIndex((deadline) => deadline.id === deadlineId);
+
+  state.deadlines.splice(deadlineIndex, 1);
 };
 
 /**
- * Set deadline's completed state
+ * Set deadline state
  *
  * @param {state} object the vuex state object.
- * @param {projectId} number that represents the deadline's project id
- * @param {deadlineId} number that represent the deadline's id
- * @param {completed} boolenad that represets deadline's completed state
+ * @param {deadlineId} string which represents deadline's id
+ * @param {completed} boolean which represents deadline's completion state
  */
-const SET_DEADLINE_COMPLETED = (state, { projectId, deadlineId, completed }) => {
-  if (projectId !== undefined
-    && deadlineId !== undefined
-    && completed !== undefined) {
-    const deadlineIndex = state.deadlines.findIndex((deadline) => deadline.id === deadlineId
-      && deadline.projectId === projectId);
+const SET_DEADLINE_COMPLETED = (state, { deadlineId, completed }) => {
+  const deadlineIndex = state.deadlines.findIndex((deadline) => deadline.id === deadlineId);
 
-    if (deadlineIndex > -1) {
-      state.deadlines[deadlineIndex].completed = completed;
-    }
-  }
+  Vue.set(state.deadlines[deadlineIndex], 'completed', completed);
 };
 
 export {
+  INIT_STATE,
   ADD_DEADLINE,
   DELETE_DEADLINE,
   SET_DEADLINE_COMPLETED,

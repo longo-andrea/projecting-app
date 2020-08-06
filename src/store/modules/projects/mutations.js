@@ -1,103 +1,92 @@
+import Vue from 'vue';
+
 /**
- * Add a new project with given parameters
+ * Init projects state
  *
  * @param {state} object the vuex state object.
- * @param {projectId} number that represents the task's project id
- * @param {projectName} string that represents the project's name
- * @param {projectDescription} string that represents the project's description.
+ * @param {data} object that represent current user state
+ */
+const INIT_STATE = (state, data) => {
+  if (data.val() && data.val().projects) {
+    state.projects = Object.values(data.val().projects);
+  } else {
+    state.projects = [];
+  }
+};
+
+/**
+ * Add a project
+ *
+ * @param {state} object the vuex state object.
+ * @param {projectId} string which represents project's id
+ * @param {projectName} string which represents project's name
+ * @param {projectDescription} string which represents project's description
  */
 const ADD_PROJECT = (state, { projectId, projectName, projectDescription }) => {
-  if (projectId !== undefined
-    && projectName !== ''
-    && projectDescription !== '') {
-    state.projects.push({
-      id: projectId,
-      name: projectName,
-      infos: [
-        {
-          description: projectDescription,
-        },
-      ],
-      completed: false,
-    });
+  state.projects.push({
+    id: projectId,
+    name: projectName,
+    description: projectDescription,
+    completed: false,
+  });
+};
 
-    /* eslint-disable no-param-reassign */
-    state.lastProjectIndex += 1;
-  }
+/**
+ * Sets the completion state of the project
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ * @param {complete} bool which represent completion state of the project
+ */
+const SET_PROJECT_COMPLETION_STATE = (state, { projectId, completed }) => {
+  const projectIndex = state.projects.findIndex((project) => project.id === projectId);
+
+  Vue.set(state.projects[projectIndex], 'completed', completed);
+};
+
+/**
+ * Sets project's name
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ * @param {projectName} string which represents new project's name
+ */
+const SET_PROJECT_NAME = (state, { projectId, projectName }) => {
+  const projectIndex = state.projects.findIndex((project) => project.id === projectId);
+
+  Vue.set(state.projects[projectIndex], 'name', projectName);
+};
+
+/**
+ * Sets project's description
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ * @param {projectDescription} string which represents new project's description
+ */
+const SET_PROJECT_DESCRIPTION = (state, { projectId, projectDescription }) => {
+  const projectIndex = state.projects.findIndex((project) => project.id === projectId);
+
+  Vue.set(state.projects[projectIndex], 'description', projectDescription);
 };
 
 /**
  * Delete given project
  *
- * @param {state} object the vuex state object.
- * @param {projectId} number that represents the task's project id
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
  */
 const DELETE_PROJECT = (state, { projectId }) => {
-  if (projectId !== undefined) {
-    state.projects = state.projects.filter((project) => project.id !== projectId);
-  }
-};
+  const projectIndex = state.projects.findIndex((project) => project.id === projectId);
 
-/**
- * Set project's completed state
- *
- * @param {state} object the vuex state object.
- * @param {projectId} number which represents task's project id
- * @param {completed} boolean which represents completed state
- */
-const SET_PROJECT_COMPLETED = (state, { projectId, completed }) => {
-  if (projectId !== undefined
-    && completed !== undefined) {
-    const projectIndex = state.projects.findIndex((project) => project.id === projectId);
-
-    if (projectIndex > -1) {
-      state.projects[projectIndex].completed = completed;
-    }
-  }
-};
-
-/**
- * Set project's name of given project
- *
- * @param {state} object the vuex state object.
- * @param {projectId} number that represents the task's project id
- * @param {projectName} string that represents the project's name
- */
-const SET_PROJECT_NAME = (state, { projectId, projectName }) => {
-  if (projectId !== undefined
-    && projectName !== '') {
-    const projectIndex = state.projects.findIndex((project) => project.id === projectId);
-
-    if (projectIndex > -1) {
-      /* eslint-disable no-param-reassign */
-      state.projects[projectIndex].name = projectName;
-    }
-  }
-};
-
-/**
- * Set project's description of given project
- *
- * @param {state} object the vuex state object.
- * @param {projectId} number that represents the task's project id
- * @param {projectDescription} string that represents the project's name
- */
-const SET_PROJECT_DESCRIPTION = (state, { projectId, projectDescription }) => {
-  if (projectId !== undefined
-    && projectDescription !== '') {
-    const projectIndex = state.projects.findIndex((project) => project.id === projectId);
-
-    if (projectIndex > -1) {
-      /* eslint-disable no-param-reassign */
-      state.projects[projectIndex].infos[0].description = projectDescription;
-    }
-  }
+  state.projects.splice(projectIndex, 1);
 };
 
 export {
+  INIT_STATE,
   ADD_PROJECT,
-  DELETE_PROJECT,
-  SET_PROJECT_COMPLETED,
+  SET_PROJECT_COMPLETION_STATE,
   SET_PROJECT_NAME,
   SET_PROJECT_DESCRIPTION,
+  DELETE_PROJECT,
 };

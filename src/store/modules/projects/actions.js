@@ -1,73 +1,136 @@
+import firebase from 'firebase/app';
+import 'firebase/database';
+
 /**
- * Add a new project with given information
+ * Init projects state
  *
- * @param {commit} object the vuex state object.
- * @param {projectName} String which represents project's name
- * @param {projectDescription} String which represents project's description
- * @param {deadlinesDate} Array which represents project's deadlines
+ * @param {commit} object the vuex state object
  */
-const addProject = ({ dispatch, commit, getters }, { projectName, projectDescription, deadlinesDate }) => {
-  const projectId = getters.getProjectIndex;
+const initState = ({ commit }) => {
+  const userId = firebase.auth().currentUser.uid;
+
+  return firebase
+    .database()
+    .ref(`users/${userId}`)
+    .once('value')
+    .then((data) => {
+      commit('INIT_STATE', data);
+    });
+};
+
+/**
+ * Add a new project
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectName} string which represents project's name
+ * @param {projectDescription} string which represents project's description
+ */
+const addProject = ({ commit }, { projectId, projectName, projectDescription }) => {
+  // project is stored locally
   commit('ADD_PROJECT', { projectId, projectName, projectDescription });
 
-  deadlinesDate.forEach((deadline) => {
-    dispatch('deadlines/addDeadline', {
-      projectId,
-      deadlineDate: deadline.date,
-    },
-    { root: true });
-  });
+  // then project is stored on firebase
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`projects/${projectId}`)
+    .update({
+      id: projectId,
+      name: projectName,
+      description: projectDescription,
+      completed: false,
+    });
 };
 
 /**
- * Edit selected project's information
+ * Sets the completion state of the project
  *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {projectName} String contains project's name
- * @param {projectDescription} String contains project's description
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ * @param {complete} bool which represent completion state of the project
  */
-const editProject = ({ commit }, {
-  projectId,
-  projectName,
-  projectDescription,
-}) => {
+const setCompletionState = ({ commit }, { projectId, completed }) => {
+  commit('SET_PROJECT_COMPLETION_STATE', { projectId, completed });
+
+  // then update the project state
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}/projects/${projectId}`)
+    .update({
+      /* eslint-disable object-shorthand */
+      completed: completed,
+    });
+};
+
+/**
+ * Sets project name
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ * @param {projectName} string which represents project's name
+ */
+const setProjectName = ({ commit }, { projectId, projectName }) => {
   commit('SET_PROJECT_NAME', { projectId, projectName });
+
+  // then update the project state
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}/projects/${projectId}`)
+    .update({
+      name: projectName,
+    });
+};
+
+/**
+ * Sets project name
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ * @param {projectDescription} string which represents project's description
+ */
+const setProjectDescription = ({ commit }, { projectId, projectDescription }) => {
   commit('SET_PROJECT_DESCRIPTION', { projectId, projectDescription });
+
+  // then update the project state
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}/projects/${projectId}`)
+    .update({
+      description: projectDescription,
+    });
 };
 
 /**
- * Set selected deadline's completed state, and whether is true complete project's deadlines
+ * Delete given project
  *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {completed} boolean represents completed state.
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
  */
-const setCompletedProject = ({ dispatch, commit }, { projectId, completed }) => {
-  commit('SET_PROJECT_COMPLETED', { projectId, completed });
-
-  // if completed is true, all project's deadlines are marked as completed
-  if (completed === true) {
-    dispatch('deadlines/setCompletedProjectDeadlines', { projectId }, { root: true });
-  }
-};
-
-/**
- * Delete given project and it's deadlines
- *
- * @param {commit} object the vuex state object.
- * @param {projectId} number which represents project's id
- */
-const deleteProject = ({ dispatch, commit }, { projectId }) => {
+const deleteProject = ({ commit }, { projectId }) => {
   commit('DELETE_PROJECT', { projectId });
 
-  // delete project's deadlines
-  dispatch('deadlines/deleteProjectDeadlines', { projectId }, { root: true });
+  // then update the project state
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}/projects/${projectId}`)
+    .remove();
 };
 
 export {
+  initState,
   addProject,
-  editProject,
-  setCompletedProject,
+  setCompletionState,
+  setProjectName,
+  setProjectDescription,
   deleteProject,
 };

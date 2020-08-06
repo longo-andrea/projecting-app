@@ -1,17 +1,13 @@
 import Vue from 'vue';
-
-// Element-ui imports
-import locale from 'element-ui/lib/locale/lang/en';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/display.css';
-import './style/element-variables.scss';
-
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-
+import './registerServiceWorker';
 import router from './router';
-/* eslint-disable */
-import store from './store/index';
+import store from './store';
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/js/all';
+
+import '@/style/app-variables.scss';
 
 import App from './App.vue';
 
@@ -29,13 +25,6 @@ const firebaseConfig = {
   measurementId: 'G-M1P2RQPD3F',
 };
 firebase.initializeApp(firebaseConfig);
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    store.commit('INITIALIZE_STORE');
-  }
-});
-
-Vue.use(ElementUI, { locale });
 
 new Vue({
   router,

@@ -1,141 +1,117 @@
+import Vue from 'vue';
+
 /**
- * Add a new task with given parameters
+ * Init tasks state
  *
  * @param {state} object the vuex state object.
- * @param {projectId} number that represents the task's project id
- * @param {deadlineId} number that represent the task's deadline id
- * @param {taskId} number that represets task's id
- * @param {taskName} string that represents the task's name.
- * @param {taskDescription} string that represents the tasks's description.
+ * @param {data} object that represent current user state
+ */
+const INIT_STATE = (state, data) => {
+  if (data.val() && data.val().tasks) {
+    state.tasks = Object.values(data.val().tasks);
+  } else {
+    state.tasks = [];
+  }
+};
+
+/**
+ * Add a task
+ *
+ * @param {state} object the vuex state object.
+ * @param {projectId} string which represents project's id
+ * @param {deadlineId} string which represents deadline's id
+ * @param {taskId} string which represents task's id
+ * @param {taskName} string which represents task's name
+ * @param {taskDescription} string which represents task's description
  */
 const ADD_TASK = (state, {
-  projectId, deadlineId, taskId, taskName, taskDescription,
+  projectId,
+  deadlineId,
+  taskId,
+  taskName,
+  taskDescription,
 }) => {
-  if (projectId !== undefined
-      && deadlineId !== undefined
-      && taskId !== undefined
-      && taskName !== ''
-      && taskDescription !== '') {
-    state.tasks.push({
-      projectId,
-      deadlineId,
-      id: taskId,
-      name: taskName,
-      description: taskDescription,
-      completed: false,
-      workingOn: false,
-    });
+  state.tasks.push({
+    projectId,
+    deadlineId,
+    id: taskId,
+    name: taskName,
+    description: taskDescription,
+    completed: false,
+    workingOn: false,
+  });
+};
 
-    /* eslint-disable no-param-reassign */
-    state.lastTaskIndex += 1;
-  }
+/**
+ * Set task completion state
+ *
+ * @param {state} object the vuex state object.
+ * @param {taskId} string which represents task's id
+ * @param {completed} boolean which represents task's completion state
+ */
+const SET_TASK_COMPLETED = (state, { taskId, completed }) => {
+  const taskIndex = state.tasks.findIndex((task) => task.id === taskId);
+
+  Vue.set(state.tasks[taskIndex], 'completed', completed);
+};
+
+/**
+ * Set task working on state
+ *
+ * @param {state} object the vuex state object.
+ * @param {taskId} string which represents task's id
+ * @param {workingOn} boolean which represents task's working on state
+ */
+const SET_TASK_WORKINGON = (state, { taskId, workingOn }) => {
+  const taskIndex = state.tasks.findIndex((task) => task.id === taskId);
+
+  Vue.set(state.tasks[taskIndex], 'workingOn', workingOn);
+};
+
+/**
+ * Set task name
+ *
+ * @param {state} object the vuex state object.
+ * @param {taskId} string which represents task's id
+ * @param {taskName} string which represents new task's name
+ */
+const SET_TASK_NAME = (state, { taskId, taskName }) => {
+  const taskIndex = state.tasks.findIndex((task) => task.id === taskId);
+
+  Vue.set(state.tasks[taskIndex], 'name', taskName);
+};
+
+/**
+ * Set task description
+ *
+ * @param {state} object the vuex state object.
+ * @param {taskId} string which represents task's id
+ * @param {taskDescription} string which represents new task's description
+ */
+const SET_TASK_DESCRIPTION = (state, { taskId, taskDescription }) => {
+  const taskIndex = state.tasks.findIndex((task) => task.id === taskId);
+
+  Vue.set(state.tasks[taskIndex], 'description', taskDescription);
 };
 
 /**
  * Delete given task
  *
  * @param {state} object the vuex state object.
- * @param {projectId} number that represents the task's project id
- * @param {taskId} number that represets task's id
+ * @param {taskId} string which represents task's id
  */
-const DELETE_TASK = (state, { projectId, taskId }) => {
-  if (projectId !== undefined
-    && taskId !== undefined) {
-    /* eslint-disable no-param-reassign */
-    state.tasks = state.tasks
-      .filter((task) => task.id !== taskId
-        || (task.id === taskId && task.projectId !== projectId));
-  }
-};
+const DELETE_TASK = (state, { taskId }) => {
+  const taskIndex = state.tasks.findIndex((task) => task.id === taskId);
 
-/**
- * Set task as working on
- *
- * @param {state} object the vuex state object.
- * @param {projectId} number which represents task's project id
- * @param {taskId} number which represents task's id
- * @param {workingOn} boolean which represents working on state
- */
-const SET_TASK_WORKING_ON = (state, { projectId, taskId, workingOn }) => {
-  if (taskId !== undefined
-      && workingOn !== undefined) {
-    const taskIndex = state.tasks.findIndex((task) => task.id === taskId && task.projectId === projectId);
-
-    if (taskIndex > -1) {
-      state.tasks[taskIndex].workingOn = workingOn;
-    }
-
-    // if task is already completed, throw new error
-    if (workingOn && state.tasks[taskIndex].completed) {
-      throw new Error('You can\'t set this task as working on, is already completed!');
-    }
-  }
-};
-
-/**
- * Set task as completed
- *
- * @param {state} object the vuex state object.
- * @param {projectId} number which represents task's project id
- * @param {taskId} number which represents task's id
- * @param {completed} boolean which represents completed state
- */
-const SET_TASK_COMPLETED = (state, { projectId, taskId, completed }) => {
-  if (taskId !== undefined
-    && completed !== undefined) {
-    const taskIndex = state.tasks.findIndex((task) => task.id === taskId && task.projectId === projectId);
-
-    if (taskIndex > -1) {
-      state.tasks[taskIndex].completed = completed;
-    }
-  }
-};
-
-/**
- * Set task's name
- *
- * @param {state} object the vuex state object.
- * @param {projectId} number which represents task's project id
- * @param {taskId} number which represents task's id
- * @param {taskName} String which represents new project's name
- */
-const SET_TASK_NAME = (state, { projectId, taskId, taskName }) => {
-  if (taskId !== undefined
-    && taskName !== '') {
-    const taskIndex = state.tasks.findIndex((task) => task.id === taskId && task.projectId === projectId);
-
-    if (taskIndex > -1) {
-      /* eslint-disable no-param-reassign */
-      state.tasks[taskIndex].name = taskName;
-    }
-  }
-};
-
-/**
- * Set task's description
- *
- * @param {state} object the vuex state object.
- * @param {projectId} number which represents task's project id
- * @param {taskId} number which represents task's id
- * @param {taskDescription} String which represents new project's description
- */
-const SET_TASK_DESCRIPTION = (state, { projectId, taskId, taskDescription }) => {
-  if (taskId !== undefined
-    && taskDescription !== '') {
-    const taskIndex = state.tasks.findIndex((task) => task.id === taskId && task.projectId === projectId);
-
-    if (taskIndex > -1) {
-      /* eslint-disable no-param-reassign */
-      state.tasks[taskIndex].description = taskDescription;
-    }
-  }
+  state.tasks.splice(taskIndex, 1);
 };
 
 export {
+  INIT_STATE,
   ADD_TASK,
-  DELETE_TASK,
-  SET_TASK_WORKING_ON,
   SET_TASK_COMPLETED,
+  SET_TASK_WORKINGON,
   SET_TASK_NAME,
   SET_TASK_DESCRIPTION,
+  DELETE_TASK,
 };

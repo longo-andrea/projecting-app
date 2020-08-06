@@ -1,46 +1,29 @@
 /**
- * Get tasks's list
+ * Get user tasks
  *
- * @param {state} object the vuex state object.
- * @return {Array} array of objects that contains all tasks.
+ * @param {state} object the vuex state object
+ * @return {object} which contains user's tasks
  */
-const getTasks = (state) => {
-  if (state.tasks) {
-    return state.tasks;
-  }
-  return [];
-};
+const getTasks = (state) => state.tasks;
 
 /**
- * Get the working on tasks
+ * Get task from specified project id
  *
- * @param {state} object the vuex state object.
- * @return {Array} array of objects that contains working on tasks.
+ * @param {state} object the vuex state object
+ * @return {function} which requires project's id and return its tasks
  */
-const getWorkingOnTasks = (state) => {
-  if (state.tasks) {
-    return state.tasks
-      .filter((task) => task.workingOn && !task.completed);
-  }
-  return [];
-};
+const getProjectTasks = (state) => (projectId) => state.tasks.filter((task) => task.projectId === projectId);
 
 /**
- * Get completed tasks
+ * Get task from specified deadline id
  *
- * @param {state} object the vuex state object.
- * @return {Array} array of objects that contains completed tasks.
+ * @param {state} object the vuex state object
+ * @return {function} which requires deadline's id and return its tasks
  */
-const getCompletedTasks = (state) => {
-  if (state.tasks) {
-    return state.tasks
-      .filter((task) => task.completed);
-  }
-  return [];
-};
+const getDeadlineTasks = (state) => (deadlineId) => state.tasks.filter((task) => task.deadlineId === deadlineId);
 
 export {
   getTasks,
-  getWorkingOnTasks,
-  getCompletedTasks,
+  getProjectTasks,
+  getDeadlineTasks,
 };

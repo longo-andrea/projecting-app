@@ -1,97 +1,125 @@
+import firebase from 'firebase/app';
+import 'firebase/database';
+
 /**
- * Add a new deadline with given information
+ * Init deadlines state
  *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {deadlineDate} date which represents deadlines's date
+ * @param {commit} object the vuex state object
  */
-const addDeadline = ({ commit, getters }, { projectId, deadlineDate }) => {
-  const deadlines = getters.getDeadlines
-    .filter((deadline) => deadline.projectId === projectId);
-  let deadlineId = 0;
+const initState = ({ commit }) => {
+  const userId = firebase.auth().currentUser.uid;
 
-  if (deadlines.length !== 0) {
-    let maxId = 0;
-
-    deadlines.forEach((deadline) => {
-      if (deadline.id > deadlineId) {
-        maxId = deadline.id;
-      }
+  return firebase
+    .database()
+    .ref(`users/${userId}`)
+    .once('value')
+    .then((data) => {
+      commit('INIT_STATE', data);
     });
+};
 
-    deadlineId = maxId + 1;
-  }
-
+/**
+ * Add a new deadlines
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ * @param {deadlines} array which contains deadline information
+ */
+const addDeadline = ({ commit }, { projectId, deadlineId, deadlineDate }) => {
+  // deadline is stored locally
   commit('ADD_DEADLINE', { projectId, deadlineId, deadlineDate });
+
+  // then deadline is stored on firebase
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`deadlines/${deadlineId}`)
+    .update({
+      projectId,
+      id: deadlineId,
+      date: deadlineDate,
+      completed: false,
+    });
 };
 
 /**
- * Delete given deadline and it's tasks
+ * Delete given deadline
  *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {deadlineId} number represents the deadline's id.
+ * @param {commit} object the vuex state object
+ * @param {deadlineId} string which represents deadline's id
  */
-const deleteDeadline = ({ dispatch, commit }, { projectId, deadlineId }) => {
-  commit('DELETE_DEADLINE', { projectId, deadlineId });
+const deleteDeadline = ({ commit }, { deadlineId }) => {
+  commit('DELETE_DEADLINE', { deadlineId });
 
-  // delete deadline's tasks
-  dispatch('tasks/deleteDeadlineTasks', { projectId, deadlineId }, { root: true });
+  // then the task is removed from database
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`deadlines/${deadlineId}`)
+    .remove();
 };
 
 /**
- * Set selected deadline's completed state, and whether is true complete deadline's tasks
+ * Delete all deadlines of given project
  *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {deadlineId} number represents deadline's id.
- * @param {completed} boolean represents completed state.
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
  */
-const setCompletedDeadline = ({ dispatch, commit }, { projectId, deadlineId, completed }) => {
-  commit('SET_DEADLINE_COMPLETED', { projectId, deadlineId, completed });
+const deleteProjectDeadlines = ({ getters, dispatch }, { projectId }) => {
+  const projectDeadlines = getters.getProjectDeadlines(projectId);
 
-  // if completed is true, all deadline's tasks are marked as completed
-  if (completed === true) {
-    dispatch('tasks/setCompletedDeadlineTasks', { projectId, deadlineId }, { root: true });
-  }
+  projectDeadlines.forEach((deadline) => dispatch('deleteDeadline', {
+    deadlineId: deadline.id,
+  }));
 };
 
 /**
- * Set project's deadlines as completed
+ * Set deadline completion state
  *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
+ * @param {commit} object the vuex state object
+ * @param {deadlineId} string which represents deadline's id
+ * @param {completed} boolean which represents deadline completion state
  */
-const setCompletedProjectDeadlines = ({ dispatch, getters }, { projectId }) => {
-  const projectDeadlines = getters.getDeadlines;
+const setDeadlineCompleted = ({ commit }, { deadlineId, completed }) => {
+  commit('SET_DEADLINE_COMPLETED', { deadlineId, completed });
 
-  projectDeadlines.forEach((deadline) => {
-    if (deadline.projectId === projectId) {
-      dispatch('setCompletedDeadline', { projectId, deadlineId: deadline.id, completed: true });
-    }
-  });
+  // then task is updated
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`deadlines/${deadlineId}`)
+    .update({
+      /* eslint-disable object-shorthand */
+      completed: completed,
+    });
 };
 
 /**
- * Delete project's deadlines
+ * Set all project's deadlines as completed
  *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
  */
-const deleteProjectDeadlines = ({ dispatch, getters }, { projectId }) => {
-  const projectDeadlines = getters.getDeadlines;
+const completeAllProjectDeadlines = ({ getters, dispatch }, { projectId }) => {
+  const projectDeadlines = getters.getProjectDeadlines(projectId);
 
-  projectDeadlines.forEach((deadline) => {
-    if (deadline.projectId === projectId) {
-      dispatch('deleteDeadline', { projectId, deadlineId: deadline.id });
-    }
-  });
+  projectDeadlines.forEach((deadline) => dispatch('setDeadlineCompleted', {
+    deadlineId: deadline.id,
+    completed: true,
+  }));
 };
 
 export {
+  initState,
   addDeadline,
   deleteDeadline,
-  setCompletedDeadline,
-  setCompletedProjectDeadlines,
   deleteProjectDeadlines,
+  setDeadlineCompleted,
+  completeAllProjectDeadlines,
 };

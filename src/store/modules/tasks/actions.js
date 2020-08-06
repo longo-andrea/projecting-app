@@ -1,132 +1,218 @@
+import firebase from 'firebase/app';
+import 'firebase/database';
+
 /**
- * Add a new taks with given information
+ * Init tasks state
  *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {deadlineId} number represents the deadline's id.
- * @param {taskName} String which represents task's name
- * @param {taskDescription} String which represents task's description
+ * @param {commit} object the vuex state object
  */
-const addTask = ({ commit, getters }, {
-  projectId, deadlineId, taskName, taskDescription,
-}) => {
-  const tasks = getters.getTasks
-    .filter((task) => task.projectId === projectId);
-  let taskId = 0;
+const initState = ({ commit }) => {
+  const userId = firebase.auth().currentUser.uid;
 
-  if (tasks.length !== 0) {
-    let maxId = 0;
-
-    tasks.forEach((task) => {
-      if (task.id > taskId) {
-        maxId = task.id;
-      }
+  return firebase
+    .database()
+    .ref(`users/${userId}`)
+    .once('value')
+    .then((data) => {
+      commit('INIT_STATE', data);
     });
-
-    taskId = maxId + 1;
-  }
-
-  commit('ADD_TASK', {
-    projectId, deadlineId, taskId, taskName, taskDescription,
-  });
 };
 
 /**
- * Edit selected task's information
+ * Add a new task
  *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {taskId} number represents task's id.
- * @param {taskName} String contains task's name
- * @param {taskDescription} String contains task's description
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ * @param {deadlineId} string which represents deadline's id
+ * @param {taskId} string which represents task's id
+ * @param {taskName} string which represents task's name
+ * @param {taskDescription} string which represents task's description
  */
-const editTask = ({ commit }, {
+const addTask = ({ commit }, {
   projectId,
+  deadlineId,
   taskId,
   taskName,
   taskDescription,
 }) => {
-  commit('SET_TASK_NAME', { projectId, taskId, taskName });
-  commit('SET_TASK_DESCRIPTION', { projectId, taskId, taskDescription });
-};
-
-/**
- * Delete specified task
- *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {taskId} number represents the task's id.
- */
-const deleteTask = ({ commit }, { projectId, taskId }) => {
-  commit('DELETE_TASK', { projectId, taskId });
-};
-
-/**
- * Set selected task's working on state
- *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {taskId} number represents task's id.
- * @param {workingOn} boolean represents working on state.
- */
-const setWorkingOnTask = ({ commit }, { projectId, taskId, workingOn }) => {
-  commit('SET_TASK_WORKING_ON', { projectId, taskId, workingOn });
-};
-
-/**
- * Set selected task's completed state
- *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {taskId} number represents task's id.
- * @param {completed} boolean represents completed state.
- */
-const setCompletedTask = ({ commit }, { projectId, taskId, completed }) => {
-  commit('SET_TASK_COMPLETED', { projectId, taskId, completed });
-  commit('SET_TASK_WORKING_ON', { projectId, taskId, workingOn: false });
-};
-
-/**
- * Set deadline's tasks as completed and not workingOn
- *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {deadlineId} number represents the deadline's id.
- */
-const setCompletedDeadlineTasks = ({ dispatch, getters }, { projectId, deadlineId }) => {
-  const deadlineTasks = getters.getTasks;
-
-  deadlineTasks.forEach((task) => {
-    if (task.projectId === projectId && task.deadlineId === deadlineId) {
-      dispatch('setCompletedTask', { projectId, taskId: task.id, completed: true });
-    }
+  // task is stored locally
+  commit('ADD_TASK', {
+    projectId,
+    deadlineId,
+    taskId,
+    taskName,
+    taskDescription,
   });
+
+  // then task is stored on firebase
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`tasks/${taskId}`)
+    .update({
+      projectId,
+      deadlineId,
+      id: taskId,
+      name: taskName,
+      description: taskDescription,
+      completed: false,
+      workingOn: false,
+    });
 };
 
 /**
- * Delete deadline's tasks
+ * Set task completion state
  *
- * @param {commit} object the vuex state object.
- * @param {projectId} number represents the project's id.
- * @param {deadlineId} number represents the deadline's id.
+ * @param {commit} object the vuex state object
+ * @param {taskId} string which represents task's id
+ * @param {completed} boolean which represents task completion state
  */
-const deleteDeadlineTasks = ({ dispatch, getters }, { projectId, deadlineId }) => {
-  const deadlineTasks = getters.getTasks;
+const setTaskCompleted = ({ commit, dispatch }, { taskId, completed }) => {
+  commit('SET_TASK_COMPLETED', { taskId, completed });
 
-  deadlineTasks.forEach((task) => {
-    if (task.projectId === projectId && task.deadlineId === deadlineId) {
-      dispatch('deleteTask', { projectId, taskId: task.id });
-    }
-  });
+  // then task is updated
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`tasks/${taskId}`)
+    .update({
+      /* eslint-disable object-shorthand */
+      completed: completed,
+    });
+
+  // task is unset as Working On
+  dispatch('setTaskWorkingOn', { taskId, workingOn: false });
 };
 
+/**
+ * Set task working on state
+ *
+ * @param {commit} object the vuex state object
+ * @param {taskId} string which represents task's id
+ * @param {workingOn} boolean which represents task working on state
+ */
+const setTaskWorkingOn = ({ commit }, { taskId, workingOn }) => {
+  commit('SET_TASK_WORKINGON', { taskId, workingOn });
+
+  // then task is updated
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`tasks/${taskId}`)
+    .update({
+      /* eslint-disable object-shorthand */
+      workingOn: workingOn,
+    });
+};
+
+/**
+ * Set task name
+ *
+ * @param {commit} object the vuex state object
+ * @param {taskId} string which represents task's id
+ * @param {taskName} boolean which represents task's name
+ */
+const setTaskName = ({ commit }, { taskId, taskName }) => {
+  commit('SET_TASK_NAME', { taskId, taskName });
+
+  // then the task is updated
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`tasks/${taskId}`)
+    .update({
+      /* eslint-disable object-shorthand */
+      name: taskName,
+    });
+};
+
+/**
+ * Set task description
+ *
+ * @param {commit} object the vuex state object
+ * @param {taskId} string which represents task's id
+ * @param {taskDescription} boolean which represents task's description
+ */
+const setTaskDescription = ({ commit }, { taskId, taskDescription }) => {
+  commit('SET_TASK_DESCRIPTION', { taskId, taskDescription });
+
+  // then the task is updated
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`tasks/${taskId}`)
+    .update({
+      /* eslint-disable object-shorthand */
+      description: taskDescription,
+    });
+};
+
+/**
+ * Delete given task
+ *
+ * @param {commit} object the vuex state object
+ * @param {taskId} string which represents task's id
+ */
+const deleteTask = ({ commit }, { taskId }) => {
+  commit('DELETE_TASK', { taskId });
+
+  // then the task is removed from database
+  const userId = firebase.auth().currentUser.uid;
+
+  firebase
+    .database()
+    .ref(`users/${userId}`)
+    .child(`tasks/${taskId}`)
+    .remove();
+};
+
+/**
+ * Delete all tasks of given project
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ */
+const deleteProjectTasks = ({ getters, dispatch }, { projectId }) => {
+  const projectTasks = getters.getProjectTasks(projectId);
+
+  projectTasks.forEach((task) => dispatch('deleteTask', {
+    taskId: task.id,
+  }));
+};
+
+/**
+ * Set all project's tasks as completed
+ *
+ * @param {commit} object the vuex state object
+ * @param {projectId} string which represents project's id
+ */
+const completeAllProjectTasks = ({ getters, dispatch }, { projectId }) => {
+  const projectTasks = getters.getProjectTasks(projectId);
+
+  projectTasks.forEach((task) => dispatch('setTaskCompleted', {
+    taskId: task.id,
+    completed: true,
+  }));
+};
 
 export {
+  initState,
   addTask,
-  editTask,
+  setTaskCompleted,
+  setTaskWorkingOn,
+  setTaskName,
+  setTaskDescription,
   deleteTask,
-  setWorkingOnTask,
-  setCompletedTask,
-  setCompletedDeadlineTasks,
-  deleteDeadlineTasks,
+  deleteProjectTasks,
+  completeAllProjectTasks,
 };
